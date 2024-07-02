@@ -69,6 +69,16 @@ const Layout = () => {
                         <Route path="/homeprofessor" requiredRole='professor' element={<HomeProfessor />} />
                         <Route element={<Private role='admin' />} >
                             <Route path="/homeadmin" element={<HomeAdmin />} />
+                            <Route path="/adminprofreg" element={<AdminProfReg />} />
+                            <Route path="/adminstudreg" element={<AdminStudReg />} />
+                            <Route path="/newcourse" element={<NewCourse />} />
+                        </Route>
+                        <Route element={<Private role='student' />} >
+                            <Route path="/homestudent" element={<HomeStudent />} />
+                            <Route path="/newcourse" element={<NewCourse />} />
+                        </Route>
+                        <Route element={<Private role='professor' />} >
+                            <Route path="/homeprofessor" element={<HomeProfessor />} />
                         </Route>
 
                         <Route path="/homegeneral" element={<HomeGeneral />} />
@@ -79,12 +89,10 @@ const Layout = () => {
                         <Route path="/infoprofessor" element={<InfoProfessor />} />
                         <Route path="/infoadmin" element={<InfoAdmin />} />
                         <Route path="/infostudent" element={<InfoStudent />} />
-                        <Route path="/newcourse" element={<NewCourse />} />
                         <Route path="/newmodality" element={<NewModality />} />
                         <Route path="/electronicinvoice" element={<ElectronicInvoice />} />
                         <Route path="/formprofessor" element={<FormProfessor />} />
-                        <Route path="/adminprofreg" element={<AdminProfReg />} />
-                        <Route path="/adminstudreg" element={<AdminStudReg />} />
+
                         <Route path="/undefined" element={<Undefined />} />
                         <Route path="*" element={<Undefined />} />
                     </Routes>
@@ -93,7 +101,7 @@ const Layout = () => {
                 </ScrollToTop>
             </BrowserRouter>
             <Toaster />
-        </div>
+        </div >
     );
 };
 

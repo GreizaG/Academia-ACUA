@@ -7,7 +7,6 @@ const Private = ({ role }) => {
     const token = localStorage.getItem('access_token')
     const userRole = localStorage.getItem("user_type")
 
-    //
     const userAuth = userRole == role
 
 

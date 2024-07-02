@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 import { useContext } from 'react';
 import { Context } from '../../store/appContext';
 import React from 'react';
+import { navigate, useNavigate } from 'react-router-dom';
 
 const useAuth = () => {
-
+    const navigate = useNavigate()
     const { store, actions } = useContext(Context)
 
     const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -36,8 +37,7 @@ const useAuth = () => {
     const logout = () => {
         localStorage.removeItem('access_token');
         localStorage.removeItem('user_type');
-        setIsLoggedIn(false);
-        setRole('');
+        navigate('/login')
     }
 
     return { isLoggedIn, role, login, logout }
