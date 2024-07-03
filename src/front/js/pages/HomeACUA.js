@@ -155,7 +155,7 @@ const HomeACUA = () => {
             </div>
             <div className="container" style={{ padding: '30px' }}>
               <div className="row justify-content-center">
-                <div className="col-xl-5 col-sm-11">
+                <div className="col-xl-5 col-sm-12">
                   <div className="topInfo d-flex flex-column mt-2 gap-2">
                     <ContactCardInfo
                       icon="fa-location-dot"
@@ -171,7 +171,7 @@ const HomeACUA = () => {
                       description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores " />
                   </div>
                 </div>
-                <div className="rightInfo col-xl-7 col-sm-11 mt-2">
+                <div className="rightInfo col-xl-7 col-sm-12 mt-2">
                   <ContactForm />
                 </div>
               </div>

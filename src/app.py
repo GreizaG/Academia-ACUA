@@ -17,6 +17,7 @@ from api.models import ProfessorPayment
 from api.models import StudentPayment
 from api.models import ElectronicInvoice
 from api.models import Course
+from api.models import ContactForm
 # from api.models import Modality
 from api.models import NewCourse
 from flask_cors import CORS
@@ -307,6 +308,37 @@ def get_single_course(name):
 
 #------------------------------------------#
 #App Route para los metodos POST
+
+
+@app.route('/api/contactform/new', methods=['PUT'])
+def new_contact_form():
+    body = request.get_json(silent=True)
+    if body is None: 
+        return jsonify({'msg' : 'Debes completar la informacion requerida para continuar'}) , 400
+    if 'body_name' not in body:
+        return jsonify({'msg' : 'body_name must be in body'})
+    if 'body_text' not in body:
+        return jsonify({'msg' : 'body_text must be in body'})
+    if 'body_email' not in body:
+        return jsonify({'msg' : 'body_email must be in body'})
+    if 'body_requeriment' not in body:
+        return jsonify({'msg' : 'body_requeriment must be in body'})
+    
+    new_contact_form = ContactForm()
+    new_contact_form.body_name = body['body_name']
+    new_contact_form.body_text = body['body_text']
+    new_contact_form.body_email = body['body_email']
+    new_contact_form.body_requeriment = body['body_requeriment']
+
+    try:
+        db.session.add(new_contact_form)
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        print(error)
+        return jsonify({"msg": "Ocurrió un error al crear una nueva form"}), 500
+
+    return jsonify({"new_contact_form": new_contact_form.serialize()}), 201
 
 @app.route('/api/createadministrator', methods=['POST'])
 def new_admin():
@@ -888,6 +920,7 @@ def update_modality(id):
         return jsonify({"msg": "Curso no encontrado"}), 404
     if "name" in body:
         modality_to_update.name = body["name"]
+
 
 #     try:
 #         db.session.add(modality_to_update)

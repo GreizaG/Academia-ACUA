@@ -3,7 +3,7 @@ import os
 from flask_admin import Admin
 from .models import db
 from flask_admin.contrib.sqla import ModelView
-from .models import Administrator, Professor, Student, ProfessorPayment, StudentPayment, ElectronicInvoice
+from .models import Administrator, Professor, Student, ProfessorPayment, StudentPayment, ElectronicInvoice, ContactForm
 from .models import Course, NewCourse
 
 def setup_admin(app):
@@ -19,6 +19,7 @@ def setup_admin(app):
     admin.add_view(ModelView(ProfessorPayment, db.session))
     admin.add_view(ModelView(StudentPayment, db.session))
     admin.add_view(ModelView(ElectronicInvoice, db.session))
+    admin.add_view(ModelView(ContactForm, db.session))
     admin.add_view(ModelView(Course, db.session))
     # admin.add_view(ModelView(Modality, db.session))
     admin.add_view(ModelView(NewCourse, db.session))
