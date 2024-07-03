@@ -104,7 +104,7 @@ def login():
     student = Student.query.filter_by(email=body["email"]).first()
     if student and student.password == body['password']:
         access_token = create_access_token(identity={"email": student.email, "user_type": "student"})
-        return jsonify({"msg": "ok", "access_token": access_token, "user_type": "student", "name": student.name, "last_name": student.last_name}), 200
+        return jsonify({"msg": "ok", "access_token": access_token, "user_type": "student", "email": student.email, "id": student.id}), 200
     
     # Verificar profesor
     professor = Professor.query.filter_by(email=body["email"]).first()
@@ -116,7 +116,7 @@ def login():
     administrator = Administrator.query.filter_by(email=body["email"]).first()
     if administrator and administrator.password == body['password']:
         access_token = create_access_token(identity={"email": administrator.email, "user_type": "admin"})
-        return jsonify({"msg": "ok", "access_token": access_token, "user_type": "admin"}), 200
+        return jsonify({"msg": "ok", "access_token": access_token, "user_type": "admin", "email": administrator.email, "id": administrator.id}), 200
 
 
     return jsonify({"msg": "Email o contraseña inválidos"}), 400
@@ -208,17 +208,17 @@ def get_all_registered_courses():
 #----------------------------------------------#
 #App Route para los metodos GET ID
 
-@app.route('/api/administrator/<number_cardID>', methods=['GET'])
+@app.route('/api/administrator/personalinfo', methods=['GET'])
 @jwt_required()
-def get_single_admin(number_cardID):
+def get_single_admin():
     identity = get_jwt_identity()
     print(identity['user_type'])
-    single_admin = Administrator.query.filter_by(number_cardID = number_cardID).first()
+    single_admin = Administrator.query.filter_by(email = identity['email']).first()
     if single_admin is None:
-        return jsonify({"msg": "El administrador con el número de identificación: {} no existe".format(number_cardID)}), 400
+        return jsonify({f'No existe administrador email o password indicado'}), 400
     if identity['user_type'] != "admin":
         return jsonify({"msg": "No tienes autorización para ingresar"}), 402 
-    return jsonify({"administrator": single_admin.serialize(), "identity": identity}), 200
+    return jsonify({"administrator": single_admin.serialize()}), 200
 
 @app.route('/api/professor/<int:number_cardID>', methods=['GET'])
 def get_single_profe(number_cardID):
@@ -227,11 +227,11 @@ def get_single_profe(number_cardID):
         return jsonify({"msg": "El profesor con N° identificación: {} no existe".format(number_cardID)}), 400
     return jsonify({"professor": single_profe.serialize()}), 200
 
-@app.route('/api/student/<int:number_cardID>', methods=['GET'])
-def get_single_stud(number_cardID):
-    single_stud = Student.query.filter_by(number_cardID = number_cardID).first()
+@app.route('/api/student/<email>', methods=['GET'])
+def get_single_stud(email):
+    single_stud = Student.query.filter_by(email = email).first()
     if single_stud is None:
-        return jsonify({"msg": "El estudiante con N° identificación: {} no existe".format(number_cardID)}), 400
+        return jsonify({"msg": "El estudiante con email: {} no existe".format(email)}), 400
     return jsonify({"student": single_stud.serialize()}), 200
 
 @app.route('/api/professorpayment/<int:id>', methods=['GET'])

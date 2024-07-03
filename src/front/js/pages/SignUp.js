@@ -31,7 +31,7 @@ export const SignUp = () => {
     const isCreated = await actions.newStudent(formData);
     if (isCreated) {
       showNotification("Estudiante registrado con éxito");
-      navigate("/Login");
+      navigate("/login");
     } else {
       showNotification("Ocurrió un error al registrarse", "error");
     }
@@ -49,7 +49,7 @@ export const SignUp = () => {
             <p>Sé parte de la familia ACUA</p>
           </div>
         </div>
-        <form onSubmit={handleSubmit} className="mt-4 p-4 rounded shadow mb-4" style={{ backgroundColor: '#e9ecef', maxWidth: '600px', width: '100%' }}>
+        <form className="mt-4 p-4 rounded shadow mb-4" style={{ backgroundColor: '#e9ecef', maxWidth: '600px', width: '100%' }}>
           <h3 className="mb-3">Crea tu usuario</h3>
           <div className="d-flex mb-3">
             <div className="me-2 flex-fill">
@@ -161,9 +161,9 @@ export const SignUp = () => {
             />
           </div>
           <div className="mb-4">
-            <button type="submit" className="btn btn-primary">Registrarse →</button>
+            <button type="button" className="btn btn-primary" onClick={handleSubmit} >Registrarse →</button>
           </div>
-          <Link to={`/Login`} className="mt-3">
+          <Link to={`/login`} className="mt-3">
             ¿Ya tienes un usuario? Inicia sesión aquí
           </Link>
         </form>

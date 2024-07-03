@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import LogButton from "../component/LogButton";
+import useAuth from "../component/frontAuth/useAuth";
 
 export const NavbarStudent = () => {
+	const { logout } = useAuth()
+
 	return (
 		<React.Fragment>
 			<nav className="navbar navbar-expand-lg bg-white">
@@ -33,7 +36,7 @@ export const NavbarStudent = () => {
 									</Link>
 								</li>
 							</ul>
-							<LogButton text="Salir" />
+							<LogButton text="Salir" action={logout}/>
 						</div>
 					</div>
 				</div>

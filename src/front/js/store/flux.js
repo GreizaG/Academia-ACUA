@@ -19,7 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			newcourses: [],
 
-			administrator: []
+			singleAdministrator: {}
 
 			// isAdministratorCreated: false,
 			// isProfessorCreated: false,
@@ -101,16 +101,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getSingleAdmin: () => {
 				const token = localStorage.getItem('access_token')
-				fetch(process.env.BACKEND_URL + "/api/administrator/<int:number_cardID>", {
+				fetch(process.env.BACKEND_URL + "/api/administrator/personalinfo", {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
 						'Authorization': 'Bearer ' + token
 					}
 				})
+					.then((response) => {
+						return response.json()
+					})
 					.then((data) => {
-						console.log("Data:", data)
 						console.log(data)
+						setStore({ singleAdministrator: data })
+						return data
 					})
 					.catch((error) => {
 						console.log(error)
@@ -337,8 +341,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					const data = await response.json();
 					localStorage.setItem("access_token", data.access_token);
-					console.log(data.access_token)
 					localStorage.setItem("user_type", data.user_type);  // Guarda el tipo de usuario en el localStorage
+					localStorage.setItem("id", `${data.id}`)
+					localStorage.setItem("email", data.email)
 					return { success: true };
 				} catch (error) {
 					console.error("Error:", error);

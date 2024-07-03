@@ -41,10 +41,6 @@ const AdminProfReg = () => {
             showNotification("Ocurrió un error al tratar de agregar un profesor", "error")
         }
 
-
-
-        // setInterval(navigate("/homeadmin"), 2000)
-
     }
 
     return (
