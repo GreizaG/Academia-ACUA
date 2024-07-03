@@ -251,3 +251,23 @@ class NewCourse(db.Model):
             "modality_id": self.modality_id,
             "course_id": self.course_id
         }
+    
+class ContactForm(db.Model):
+    __tablename__ = 'contactform'
+
+    id = db.Column(db.Integer, primary_key=True)
+    body_text = db.Column(db.String(300))
+    body_name = db.Column(db.String(30))
+    body_email = db.Column(db.String(30))
+    body_requeriment = db.Column(db.String(30))
+
+    def __repr__(self):
+        return f'Usuario: {self.body_name} con email {self.body_email}, envio un nuevo mensaje con el requerimiento {self.body_requeriment}'
+
+    def serialize(self):
+        return{
+            "id":  self.id,
+            "user_name": self.body_name,
+            "user_email" : self.body_email,
+            "user_requeriment" : self.body_requeriment
+        }
