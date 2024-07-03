@@ -19,7 +19,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			newcourses: [],
 
-			singleAdministrator: {}
+			singleAdministrator: {},
+
+			singleStudent: {},
+
+			singleProfessor: {},
+
+			professorCourses: {}
 
 			// isAdministratorCreated: false,
 			// isProfessorCreated: false,
@@ -114,6 +120,122 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then((data) => {
 						console.log(data)
 						setStore({ singleAdministrator: data })
+						return data
+					})
+					.catch((error) => {
+						console.log(error)
+					})
+			},
+
+			getSingleStudent: () => {
+				const token = localStorage.getItem('access_token')
+				fetch(process.env.BACKEND_URL + "/api/student/personalinfo", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						'Authorization': 'Bearer ' + token
+					}
+				})
+					.then((response) => {
+						return response.json()
+					})
+					.then((data) => {
+						console.log(data)
+						setStore({ singleStudent: data })
+						return data
+					})
+					.catch((error) => {
+						console.log(error)
+					})
+			},
+
+			// updateStudent: (formData) => {
+			// 	const token = localStorage.getItem('access_token')
+			// 	fetch(process.env.BACKEND_URL + "/api/personalinfo/editstudentinfo/", {
+			// 		method: "PUT",
+			// 		body: JSON.stringify(formData),
+			// 		headers: {
+			// 			"Content-Type": "application/json",
+			// 			'Authorization': 'Bearer ' + token
+			// 		}
+			// 	})
+			// 		.then((response) => {
+			// 			return response.json()
+			// 		})
+			// 		.then((data) => {
+			// 			console.log(data)
+			// 			setStore({ student: data.student })
+			// 			return data
+			// 		})
+			// 		.catch((error) => {
+			// 			console.log(error)
+			// 		})
+			// },
+
+			// updateStudent: async (formData) => {
+			// 	const token = localStorage.getItem('access_token')
+			// 	const actions = getActions()
+			// 	try {
+			// 		const response = await fetch(process.env.BACKEND_URL + "/api/personalinfo/editstudentinfo/", {
+			// 			method: "PUT",
+			// 			body: JSON.stringify(formData),
+			// 			headers: {
+			// 				"Content-Type": "application/json",
+			// 				'Authorization': 'Bearer ' + token
+			// 			}
+			// 		});
+			// 		const data = await response.json();
+
+			// 		if (response.ok) {
+			// 			setStore({ student: data.student });
+			// 			return true;
+			// 		} else {
+			// 			console.error("Error:", data.msg);
+			// 			return false;
+			// 		}
+			// 	} catch (error) {
+			// 		console.error("Error:", error);
+			// 		return false;
+			// 	}
+			// },
+
+			getSingleProfessor: () => {
+				const token = localStorage.getItem('access_token')
+				fetch(process.env.BACKEND_URL + "/api/professor/personalinfo", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						'Authorization': 'Bearer ' + token
+					}
+				})
+					.then((response) => {
+						return response.json()
+					})
+					.then((data) => {
+						console.log(data)
+						setStore({ singleProfessor: data })
+						return data
+					})
+					.catch((error) => {
+						console.log(error)
+					})
+			},
+
+			getProfessorCourses: () => {
+				const token = localStorage.getItem('access_token')
+				fetch(process.env.BACKEND_URL + "/api/professor/registeredcourses", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						'Authorization': 'Bearer ' + token
+					}
+				})
+					.then((response) => {
+						return response.json()
+					})
+					.then((data) => {
+						console.log(data)
+						setStore({ professorCourses: data })
 						return data
 					})
 					.catch((error) => {

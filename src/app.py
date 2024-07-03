@@ -215,24 +215,49 @@ def get_single_admin():
     print(identity['user_type'])
     single_admin = Administrator.query.filter_by(email = identity['email']).first()
     if single_admin is None:
-        return jsonify({f'No existe administrador email o password indicado'}), 400
+        return jsonify({"msg": "No existe administrador con la información indicada"}), 401
     if identity['user_type'] != "admin":
         return jsonify({"msg": "No tienes autorización para ingresar"}), 402 
     return jsonify({"administrator": single_admin.serialize()}), 200
 
-@app.route('/api/professor/<int:number_cardID>', methods=['GET'])
-def get_single_profe(number_cardID):
-    single_profe = Professor.query.filter_by(number_cardID = number_cardID).first()
+@app.route('/api/student/personalinfo', methods=['GET'])
+@jwt_required()
+def get_single_stud():
+    identity = get_jwt_identity()
+    single_stud = Student.query.filter_by(email = identity['email']).first()
+    if single_stud is None:
+        return jsonify({"msg": "No existe estudiante con la información indicada"}), 401
+    if identity['user_type'] != "student":
+        return jsonify({"msg": "No tienes autorización para ingresar"}), 402
+    return jsonify({"student": single_stud.serialize()}), 200
+
+@app.route('/api/professor/personalinfo', methods=['GET'])
+@jwt_required()
+def get_single_profe():
+    identity = get_jwt_identity()
+    single_profe = Professor.query.filter_by(email = identity['email']).first()
     if single_profe is None:
-        return jsonify({"msg": "El profesor con N° identificación: {} no existe".format(number_cardID)}), 400
+        return jsonify({"msg": "No existe profesor con la información indicada"}), 401
+    if identity['user_type'] != "professor":
+        return jsonify({"msg": "No tienes autorización para ingresar"}), 402
     return jsonify({"professor": single_profe.serialize()}), 200
 
-@app.route('/api/student/<email>', methods=['GET'])
-def get_single_stud(email):
-    single_stud = Student.query.filter_by(email = email).first()
-    if single_stud is None:
-        return jsonify({"msg": "El estudiante con email: {} no existe".format(email)}), 400
-    return jsonify({"student": single_stud.serialize()}), 200
+
+@app.route('/api/professor/registeredcourses', methods=['GET'])
+@jwt_required()
+def get_professor_courses():
+    identity = get_jwt_identity()
+    professor = Professor.query.filter_by(email = identity['email']).first()
+    professor_courses = NewCourse.query.filter_by(professor_id = professor.id)
+    if professor is None:
+        return jsonify({"msg": "No existe profesor con la información indicada"}), 401
+    if identity['user_type'] != "professor":
+        return jsonify({"msg": "No tienes autorización para ingresar"}), 402
+    professor_courses_serialized = []
+    for course in professor_courses:
+        professor_courses_serialized.append(course.serialize())
+        print(professor_courses_serialized)
+    return jsonify({"professor_courses": professor_courses_serialized}), 200
 
 @app.route('/api/professorpayment/<int:id>', methods=['GET'])
 def get_single_profpay(id):
@@ -724,18 +749,30 @@ def update_profe(number_cardID):
 
     return jsonify({"updated_professor": profe_to_update.serialize()}), 201
 
-@app.route('/api/editstudentinfo/<int:number_cardID>', methods=['PUT'])
-def update_student(number_cardID):
+@app.route('/api/personalinfo/editstudentinfo/', methods=['PUT'])
+@jwt_required()
+def update_student():
+    identity = get_jwt_identity()
     body = request.get_json(silent=True)
-    student_to_update = Student.query.filter_by(number_cardID = number_cardID).first()
+    student_to_update = Student.query.filter_by(email = identity['email']).first()
     if student_to_update is None:
-        return jsonify({"msg": "Profesor no encontrado"}), 404
+        return jsonify({"msg": "Estudiante no encontrado"}), 404
     if "name" in body:
         student_to_update.name = body["name"]
     if "last_name" in body:
         student_to_update.last_name = body["last_name"]
     if "phone_number" in body:
         student_to_update.phone_number = body["phone_number"]
+    if "birthday" in body:
+        student_to_update.birthday = body["birthday"]
+    if "email" in body:
+        student_to_update.email = body["email"]
+    if "province" in body:
+        student_to_update.province = body["province"]
+    if "canton" in body:
+        student_to_update.canton = body["canton"]
+    if "district" in body:
+        student_to_update.district = body["district"]
 
     try:
         db.session.add(student_to_update)

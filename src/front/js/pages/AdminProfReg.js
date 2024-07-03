@@ -105,7 +105,7 @@ const AdminProfReg = () => {
                     <input type="password" className="form-control" placeholder="Confirmar contraseña" />
                 </div>
                 <div className=" container d-flex justify-content-center mb-3">
-                    <button type="button" className="btn btn-primary" onClick={handleSubmit}>Enviar</button>
+                    <button type="button" className="btn btn-primary" onClick={handleSubmit}>Guardar</button>
 
                     {/* <Link className="text-decoration-none" to="/homeadmin"> */}
                     {/* <MultiButton color='purple' text='Guardar' width='200' /> */}
