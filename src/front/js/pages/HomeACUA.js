@@ -1,21 +1,21 @@
-import React, { useEffect } from 'react'
-import { NavbarACUA } from '../component/NavbarACUA'
-import { CircleIcon } from '../component/CircleIcon'
-import { MultiButton } from '../component/MultiButton'
-import { Carousel } from '../component/Carousel'
-import { CardGoals } from '../component/Card/CardGoals'
-import { CardPlan } from '../component/Card/CardPlan'
-import { Link } from 'react-router-dom'
-import { ContactCardInfo } from '../component/Card/ContactCardInfo'
-import { ContactForm } from '../component/ContactForm'
-import { useContext } from 'react'
-import { Context } from '../store/appContext'
-import { NewCarrousel } from '../component/NewCarrousel'
+import React, { useEffect, useContext } from 'react';
+import { NavbarACUA } from '../component/NavbarACUA';
+import { CircleIcon } from '../component/CircleIcon';
+import { MultiButton } from '../component/MultiButton';
+import { Carousel } from '../component/Carousel';
+import { CardGoals } from '../component/Card/CardGoals';
+import { CardPlan } from '../component/Card/CardPlan';
+import { Link } from 'react-router-dom';
+import { ContactCardInfo } from '../component/Card/ContactCardInfo';
+import { ContactForm } from '../component/ContactForm';
+import { Context } from '../store/appContext';
+import { NewCarrousel } from '../component/NewCarrousel';
+import CustomGoogleMap from './GoogleMap'; 
 
 const HomeACUA = () => {
-  const { actions, store } = useContext(Context)
+  const { actions, store } = useContext(Context);
 
-  console.log(store.professors)
+  console.log(store.professors);
   return (
     <React.Fragment>
       <NavbarACUA />
@@ -147,7 +147,7 @@ const HomeACUA = () => {
         </section>
       </div>
       <div id="contacto">
-        <section className="contactSection">
+      <section className="contactSection">
           <div className="contactBox container-fluid" style={{ padding: '20px 20px' }}>
             <div className="textContact" style={{ marginTop: "30px", marginBottom: "50px" }}>
               <h2 className='bigWeight fs-1 text-center text-white'>Contacta con nosotros!</h2>
@@ -174,12 +174,17 @@ const HomeACUA = () => {
                 <div className="rightInfo col-xl-7 col-sm-12 mt-2">
                   <ContactForm />
                 </div>
+                <div className="map-container" style={{ height: '400px', marginBottom: '50px', marginTop: '50px' }}>
+                  <CustomGoogleMap />
+                </div>
               </div>
             </div>
           </div>
         </section>
-      </div>
+      </div> 
+     
     </React.Fragment >
   )
 }
-export default HomeACUA
+
+export default HomeACUA;
