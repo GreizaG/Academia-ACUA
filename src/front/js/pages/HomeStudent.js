@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavbarStudent } from "./NavbarStudent"
 import "../../styles/home.css";
 import { MultiButton } from "../component/MultiButton";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Context } from "../store/appContext";
 
 export const HomeStudent = () => {
+	const { store, actions } = useContext(Context)
+
 	return (
 		<React.Fragment>
 			<NavbarStudent />

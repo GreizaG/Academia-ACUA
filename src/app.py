@@ -105,19 +105,19 @@ def login():
     # Verificar estudiante
     student = Student.query.filter_by(email=body["email"]).first()
     if student and student.password == body['password']:
-        access_token = create_access_token(identity={"email": student.email, "user_type": "student"})
+        access_token = create_access_token(identity={"email": student.email, "user_type": "student", "id": student.id})
         return jsonify({"msg": "ok", "access_token": access_token, "user_type": "student", "email": student.email, "id": student.id}), 200
     
     # Verificar profesor
     professor = Professor.query.filter_by(email=body["email"]).first()
     if professor and professor.password == body['password']:
-        access_token = create_access_token(identity={"email": professor.email, "user_type": "professor"})
+        access_token = create_access_token(identity={"email": professor.email, "user_type": "professor", "id": professor.id})
         return jsonify({"msg": "ok", "access_token": access_token, "user_type": "professor", "email": professor.email, "id": professor.id}), 200
     
     # Verificar admin
     administrator = Administrator.query.filter_by(email=body["email"]).first()
     if administrator and administrator.password == body['password']:
-        access_token = create_access_token(identity={"email": administrator.email, "user_type": "admin"})
+        access_token = create_access_token(identity={"email": administrator.email, "user_type": "admin", "id": administrator.id})
         return jsonify({"msg": "ok", "access_token": access_token, "user_type": "admin", "email": administrator.email, "id": administrator.id}), 200
 
 
@@ -266,9 +266,11 @@ def get_professor_courses():
         print(professor_courses_serialized)
     return jsonify({"professor_courses": professor_courses_serialized}), 200
 
-@app.route('/api/professorpayment/<int:id>', methods=['GET'])
-def get_single_profpay(id):
-    single_profpay = ProfessorPayment.query.get(id)
+@app.route('/api/professorpayment/', methods=['GET'])
+@jwt_required()
+def get_single_profpay():
+    identity = get_jwt_identity()
+    single_profpay = ProfessorPayment.query.filter_by(id = identity['id']).first()
     if single_profpay is None:
         return jsonify({"msg": "No existe información de pago para el profesor indicado"}), 400
     return jsonify({"professor_payment": single_profpay.serialize()}), 200
@@ -565,6 +567,7 @@ def new_studpay():
 @jwt_required()
 def new_electinv():
     identity = get_jwt_identity()
+    student = Student.query.filter_by(email = identity['email'])
     body = request.get_json(silent=True)
     if body is None:
         return jsonify({"msg": "Debes completar toda la informacion para continuar"}), 400
@@ -596,7 +599,7 @@ def new_electinv():
     new_electinv.province = body["province"]
     new_electinv.canton = body["canton"]
     new_electinv.distric = body["distric"]
-    new_electinv.student_id = body["student_id"]
+    new_electinv.student_id = student.id
 
     try:
         db.session.add(new_electinv)

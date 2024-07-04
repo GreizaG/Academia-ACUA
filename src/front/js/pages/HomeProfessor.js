@@ -10,14 +10,15 @@ import "../../styles/home.css";
 export const HomeProfessor = () => {
     const { store, actions } = useContext(Context)
 
-    const [professorCourseData, setProfessorCourseData] = useState({})
-
     useEffect(() => {
-        actions.getProfessorCourses()
+        // actions.getProfessorCourses()
+        actions.getSingleProfPay()
     }, [])
 
     console.log(store.singleProfessor)
     console.log(store.singleProfessor.professor?.name)
+    console.log(store.singleProfPay)
+    console.log(store.singleProfPay.professor_payment?.payment_method)
 
     return (
         <React.Fragment>
@@ -25,7 +26,7 @@ export const HomeProfessor = () => {
             <div className="container-fluid pb-5">
                 <div className="d-flex align-content-center justify-content-center mb-3 mt-3 py-4 jumbo rounded-3">
                     <div className="container-fluid align-content-center">
-                        <h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Estudiantes asignados</h4>
+                        <h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Cursos asignados</h4>
                     </div>
                 </div>
                 <div className="continer-fluid d-flex ps-5 ms-5">
@@ -70,30 +71,31 @@ export const HomeProfessor = () => {
                         </div>
                     </div>
                 </div>
-                {/* <div className="continer-fluid d-flex ps-5 my-5">
-                    <div className="card" style={{ width: '36rem' }}>
-                        <div className="container d-flex card-body">
+                <div className="d-flex align-content-center justify-content-center mb-3 mt-3 py-4 jumbo rounded-3">
+                    <div className="container-fluid align-content-center">
+                        <h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Información Bancaria</h4>
+                    </div>
+                </div>
+                <div className="continer-fluid d-flex ps-5 ms-5 my-5">
+                    <div className="cardProfessor" style={{ width: '36rem' }}>
+                        <div className="container d-flex card-body card cardProff" style={{ borderRadius: '20px' }}>
                             <table className="table table-borderless text-end">
                                 <tr className="pb-4">
-                                    <td className="text-secondary fs-4 fw-semibold">Fecha pago:</td>
-                                    <td className="fw-lighter fs-4">30 Junio 2024</td>
+                                    <td className="text-secondary fs-4 fw-semibold">Forma de pago:</td>
+                                    <td className="fw-lighter fs-4">{store.singleProfPay.professor_payment?.payment_method}</td>
                                 </tr>
                                 <tr className="pb-4">
-                                    <td className="text-secondary fs-4 fw-semibold">Monto por hora:</td>
-                                    <td className="fw-lighter fs-4">₡ 40.000</td>
+                                    <td className="text-secondary fs-4 fw-semibold">N° IBAN</td>
+                                    <td className="fw-lighter fs-4">{store.singleProfPay.professor_payment?.iban_account}</td>
                                 </tr>
                                 <tr>
-                                    <td className="text-secondary fs-4 fw-semibold">Cantidad de horas registradas:</td>
-                                    <td className="fw-lighter fs-4">20</td>
-                                </tr>
-                                <tr>
-                                    <td className="text-secondary fs-4 fw-semibold">Total pago:</td>
-                                    <td className="fw-lighter fs-4">₡ 800.000</td>
+                                    <td className="text-secondary fs-4 fw-semibold">Teléfono:</td>
+                                    <td className="fw-lighter fs-4">{store.singleProfPay.professor_payment?.phone_number}</td>
                                 </tr>
                             </table>
                         </div>
                     </div>
-                </div> */}
+                </div>
             </div>
         </React.Fragment>
     )

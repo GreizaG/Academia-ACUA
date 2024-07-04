@@ -144,7 +144,7 @@ class ProfessorPayment(db.Model):
             "id": self.id,
             "payment_method": self.payment_method,
             "phone_number": self.phone_number,
-            "iban_acount": self.iban_acount,
+            "iban_account": self.iban_account,
             "professor_id": self.professor_id
         }
     
