@@ -131,7 +131,7 @@ const FormStudent = () => {
                         <input className="form-control" placeholder="Distrito" name="distric" value={formData.distric} onChange={handleInputChange} />
                     </div>
                 </div>
-                <hr />
+                {/* <hr />
                 <div className="container d-flex-inline ps-0 mb-3 fst-italic" style={{ color: '#5751e1' }}>
                     <span>Gestiona tu contraseña</span>
                 </div>
@@ -142,7 +142,7 @@ const FormStudent = () => {
                 <div className="mb-4">
                     <label className="form-label">Confirmar contraseña</label>
                     <input type="password" className="form-control" placeholder="Confirmar contraseña" onChange={handleInputChange} />
-                </div>
+                </div> */}
                 <div className="container-fluid justify-content-between">
                     <button type="submit" className="btn btn-primary btn-sm">Guardar</button>
                     <Link to="/homestudent">

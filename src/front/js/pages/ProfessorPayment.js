@@ -1,7 +1,9 @@
-import React from "react";
-import LogButton from "../component/LogButton";
-import { MultiButton } from "../component/MultiButton";
+import React, { useState } from "react";
+import { useContext } from "react";
+import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { MultiButton } from "../component/MultiButton";
 import { showNotification } from "../utils/ShowNotification";
 
 export const ProfessorPayment = () => {
@@ -18,10 +20,10 @@ export const ProfessorPayment = () => {
     // const flag = store.isProfessorCreated
 
     const handleInputChange = (event) => {
-        const { payment_method, value } = event.target;
+        const { name, value } = event.target;
         setFormData((prevFormData) => ({
             ...prevFormData,
-            [payment_method]: value,
+            [name]: value,
         }))
     }
 
@@ -59,22 +61,30 @@ export const ProfessorPayment = () => {
                     <div className="d-flex mb-3 row">
                         <div className="me-2 flex-fill">
                             <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>Método de pago</label>
-                            <input className="form-control mb-3" placeholder="Método de pago" onClick={handleInputChange}/>
+                            <input className="form-control mb-3" placeholder="Método de pago" name="payment_method" value={formData.payment_method} onChange={handleInputChange} />
                         </div>
                         <div className="me-2 flex-fill">
                             <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>Número de teléfono</label>
-                            <input className="form-control mb-3" placeholder="Número de teléfono" onClick={handleInputChange}/>
+                            <input className="form-control mb-3" placeholder="Número de teléfono" name="phone_number" value={formData.phone_number} onChange={handleInputChange} />
                         </div>
                         <div className="me-2 flex-fill">
                             <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>N° cuenta IBAN</label>
-                            <input className="form-control mb-3" placeholder="N° cuenta IBAN" onClick={handleInputChange}/>
+                            <input className="form-control mb-3" placeholder="N° cuenta IBAN" name="iban_account" value={formData.iban_account} onChange={handleInputChange} />
+                        </div>
+                        <div className="me-2 flex-fill">
+                            <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>ID professor</label>
+                            <input className="form-control mb-3" placeholder="ID professor" name="professor_id" value={formData.professor_id} onChange={handleInputChange} />
                         </div>
                     </div>
                     <div className="d-flex justify-content-between">
+                        <button type="button" className="btn btn-primary" onClick={handleSubmit}>Guardar</button>
+                        {/* <Link to="/homeadmin" className="text-decoration-none">
+                            <MultiButton color='purple' text='Volver' width='100' onClick={handleSubmit} />
+                        </Link> */}
+                        {/* <MultiButton color='purple' text='Guardar' width='100' onClick={handleSubmit} /> */}
                         <Link to="/homeadmin" className="text-decoration-none">
-                            <MultiButton color='purple' text='Volver' width='100' onClick={handleSubmit}/>
+                            <button type="button" className="btn btn-warning">Cancelar</button>
                         </Link>
-                        <MultiButton color='purple' text='Guardar' width='100' onClick={handleSubmit}/>
                     </div>
                 </form>
             </div>

@@ -208,6 +208,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			updateProfessor: async (formData) => {
+				const token = localStorage.getItem('access_token')
+				const actions = getActions()
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "/api/personalinfo/editprofessorinfo/", {
+						method: "PUT",
+						body: JSON.stringify(formData),
+						headers: {
+							"Content-Type": "application/json",
+							'Authorization': 'Bearer ' + token
+						}
+					});
+					const data = await response.json();
+
+					if (response.ok) {
+						actions.getProfessors()
+						return true;
+					} else {
+						console.error("Error:", data.msg);
+						return false;
+					}
+				} catch (error) {
+					console.error("Error:", error);
+					return false;
+				}
+			},
+
 			getSingleProfessor: () => {
 				const token = localStorage.getItem('access_token')
 				fetch(process.env.BACKEND_URL + "/api/professor/personalinfo", {

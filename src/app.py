@@ -495,7 +495,7 @@ def new_stud():
 
     return jsonify({"new_stud": new_stud.serialize()}), 201
 
-@app.route('/api/createprofessorpayment', methods=['POST'])
+@app.route('/api/addprofessorpayment', methods=['POST'])
 def new_profpay():
     body = request.get_json(silent=True)
     if body is None:
@@ -533,7 +533,7 @@ def new_profpay():
 
     # return jsonify({"msg": "OK"}), 200
 
-@app.route('/api/createstudentpayment', methods=['POST'])
+@app.route('/api/addstudentpayment', methods=['POST'])
 def new_studpay():
     body = request.get_json(silent=True)
     if body is None:
@@ -732,10 +732,12 @@ def update_admin(number_cardID):
 
     return jsonify({"updated_admin": admin_to_update.serialize()}), 201
 
-@app.route('/api/editprofessorinfo/<int:number_cardID>', methods=['PUT'])
-def update_profe(number_cardID):
+@app.route('/api/personalinfo/editprofessorinfo', methods=['PUT'])
+@jwt_required()
+def update_profe():
+    identity = get_jwt_identity()
     body = request.get_json(silent=True)
-    profe_to_update = Professor.query.filter_by(number_cardID = number_cardID).first()
+    profe_to_update = Professor.query.filter_by(email = identity['email']).first()
     if profe_to_update is None:
         return jsonify({"msg": "Profesor no encontrado"}), 404
     if "name" in body:
@@ -744,6 +746,16 @@ def update_profe(number_cardID):
         profe_to_update.last_name = body["last_name"]
     if "phone_number" in body:
         profe_to_update.phone_number = body["phone_number"]
+    if "birthday" in body:
+        profe_to_update.birthday = body["birthday"]
+    if "email" in body:
+        profe_to_update.email = body["email"]
+    if "province" in body:
+        profe_to_update.province = body["province"]
+    if "canton" in body:
+        profe_to_update.canton = body["canton"]
+    if "district" in body:
+        profe_to_update.district = body["district"]
 
     try:
         db.session.add(profe_to_update)

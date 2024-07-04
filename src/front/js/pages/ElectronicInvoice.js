@@ -21,7 +21,7 @@ export const ElectronicInvoice = () => {
 
   useEffect(() => {
     actions.getSingleStudent();
-}, [])
+  }, [])
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -108,6 +108,10 @@ export const ElectronicInvoice = () => {
             <input className="form-control" placeholder="Distrito" name="distric" value={formData.distric} onChange={handleInputChange} />
           </div>
         </div>
+        <div className="me-2 flex-fill">
+            <label className="form-label">ID estudiante</label>
+            <input className="form-control" placeholder="ID estudiante" name="student_id" value={store.singleStudent.student?.student_id} onChange={handleInputChange} />
+          </div>
         <div className="container-fluid justify-content-between mt-3">
           <button type="submit" className="btn btn-warning btn-sm mt-2" style={{ borderRadius: '20px', boxShadow: '0px 4px 8px' }}> Guardar</button>
           <Link to="/homestudent">
