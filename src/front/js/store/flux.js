@@ -696,11 +696,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const actions = getActions()
 				return fetch(process.env.BACKEND_URL + "/api/addelectronicinvoiceinfo", {
 					method: "POST",
-					body: JSON.stringify(data),
 					headers: {
 						"Content-Type": "application/json",
-						'Authorization': 'Bearer' + token
-					}
+						'Authorization': 'Bearer ' + token
+					},
+					body: JSON.stringify(data)
 				})
 					.then(response => {
 						console.log(response)

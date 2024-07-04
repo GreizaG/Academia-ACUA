@@ -19,6 +19,8 @@ export const ElectronicInvoice = () => {
     student_id: store.singleStudent.student?.id
   })
 
+  const [formState, setFormState] = useState({})
+
   useEffect(() => {
     actions.getSingleStudent();
   }, [])
@@ -28,6 +30,7 @@ export const ElectronicInvoice = () => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
+      student_id: store.singleStudent.student?.id
     }))
   }
 
@@ -40,6 +43,14 @@ export const ElectronicInvoice = () => {
     } else {
       showNotification("Error al registrar los datos", "error")
     }
+  }
+
+  const handleSelectChange = (e) => {
+    const { value } = e.target;
+    setFormState({
+      ...formState,
+      selectedOption: value
+    })
   }
 
   return (
@@ -73,11 +84,11 @@ export const ElectronicInvoice = () => {
         <div className="d-flex mb-3">
           <div className="me-2 flex-fill">
             <label className="form-label">Tipo de identificación</label><br></br>
-            <select name="select">
+            <select name="select" onChange={handleSelectChange} value={formState.selectedOption}>
               <option value="value1" selected>Seleccione</option>
-              <option value="value2">Cedula Nacional</option>
-              <option value="value3">Cedula Juridica</option>
-              <option value="value3">DIMEX</option>
+              <option value="Cédula Nacional">Cedula Nacional</option>
+              <option value="Cédula Juridica">Cedula Juridica</option>
+              <option value="DIMEX">DIMEX</option>
             </select>
             {/* <input className="form-control" placeholder="Tipo de identificación" onChange={handleInputChange} /> */}
           </div>
@@ -113,7 +124,7 @@ export const ElectronicInvoice = () => {
           <input className="form-control" placeholder="ID estudiante" name="student_id" value={store.singleStudent.student?.id} onChange={handleInputChange} />
         </div>
         <div className="container-fluid justify-content-between mt-3">
-          <button type="submit" className="btn btn-warning btn-sm mt-2" style={{ borderRadius: '20px', boxShadow: '0px 4px 8px' }}> Guardar</button>
+          <button type="button" className="btn btn-warning btn-sm mt-2" style={{ borderRadius: '20px', boxShadow: '0px 4px 8px' }} onClick={handleSubmit}> Guardar</button>
           <Link to="/homestudent">
             <button type="button" className="btn btn-warning btn-sm ms-5 mt-2" style={{ borderRadius: '20px', boxShadow: '0px 4px 8px' }}>
               Cancelar</button>

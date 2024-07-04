@@ -271,3 +271,20 @@ class ContactForm(db.Model):
             "user_email" : self.body_email,
             "user_requeriment" : self.body_requeriment
         }
+    
+    # class ProfessorNextPayment(db.Model):
+    #     __tablename__ = 'professor_next_payment'
+
+    #     id = db.Column(db.Integer, primary_key=True)
+    #     date = db.Column(db.String(300))
+    #     mount_per_hour = db.Column(db.String(30))
+    #     registered_hours = db.Column(db.String(30))
+    #     total_payment = db.Column(db.String(30))
+
+    #     def serialize(self):
+    #         return{
+    #             "id":  self.id,
+    #             "date": self.date,
+    #             "mount_per_hour" : self.mount_per_hour,
+    #             "total_payment" : self.total_payment
+    #         }
