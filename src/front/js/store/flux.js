@@ -27,7 +27,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			professorCourses: [],
 
-			singleProfPay: {}
+			studentCourses: [],
+
+			singleProfPay: {},
+
+			singleStudPay: {}
 
 			// isAdministratorCreated: false,
 			// isProfessorCreated: false,
@@ -296,6 +300,50 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then((data) => {
 						console.log(data)
 						setStore({ professorCourses: data })
+						return data
+					})
+					.catch((error) => {
+						console.log(error)
+					})
+			},
+
+			getStudentCourses: () => {
+				const token = localStorage.getItem('access_token')
+				fetch(process.env.BACKEND_URL + "/api/student/registeredcourses", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						'Authorization': 'Bearer ' + token
+					}
+				})
+					.then((response) => {
+						return response.json()
+					})
+					.then((data) => {
+						console.log(data)
+						setStore({ studentCourses: data })
+						return data
+					})
+					.catch((error) => {
+						console.log(error)
+					})
+			},
+
+			getSingleStudPay: () => {
+				const token = localStorage.getItem('access_token')
+				fetch(process.env.BACKEND_URL + "/api/studentpayment", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						'Authorization': 'Bearer ' + token
+					}
+				})
+					.then((response) => {
+						return response.json()
+					})
+					.then((data) => {
+						console.log(data)
+						setStore({ singleStudPay: data })
 						return data
 					})
 					.catch((error) => {

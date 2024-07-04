@@ -6,12 +6,6 @@ import { Context } from '../../store/appContext'
 export const ListProfRegCourses = ({ course, id, student }) => {
     const { store, actions } = useContext(Context);
 
-    useEffect(() => {
-        actions.getSingleProfPay()
-    }, [])
-
-    console.log(store.singleProfPay)
-
     return (
         <tr className="table-row">
             <th className="text-center" scope="row">{id}</th>

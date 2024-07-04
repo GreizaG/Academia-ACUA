@@ -275,9 +275,27 @@ def get_single_profpay():
         return jsonify({"msg": "No existe información de pago para el profesor indicado"}), 400
     return jsonify({"professor_payment": single_profpay.serialize()}), 200
 
-@app.route('/api/studentpayment/<int:id>', methods=['GET'])
-def get_single_studpay(id):
-    single_studpay = StudentPayment.query.get(id)
+@app.route('/api/student/registeredcourses', methods=['GET'])
+@jwt_required()
+def get_student_courses():
+    identity = get_jwt_identity()
+    student = Student.query.filter_by(email = identity['email']).first()
+    student_courses = NewCourse.query.filter_by(student_id = student.id)
+    if student is None:
+        return jsonify({"msg": "No existe estudiante con la información indicada"}), 401
+    if identity['user_type'] != "student":
+        return jsonify({"msg": "No tienes autorización para ingresar"}), 402
+    student_courses_serialized = []
+    for course in student_courses:
+        student_courses_serialized.append(course.serialize())
+        print(student_courses_serialized)
+    return jsonify({"student_courses": student_courses_serialized}), 200
+
+@app.route('/api/studentpayment/', methods=['GET'])
+@jwt_required()
+def get_single_studpay():
+    identity = get_jwt_identity()
+    single_studpay = StudentPayment.query.filter_by(id = identity['id']).first()
     if single_studpay is None:
         return jsonify({"msg": "No existe información de pago para el estudiante indicado"}), 400
     return jsonify({"student_payment": single_studpay.serialize()}), 200
