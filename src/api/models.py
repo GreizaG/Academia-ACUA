@@ -248,7 +248,7 @@ class NewCourse(db.Model):
             "id": self.id,
             "professor_id": self.professor_id,
             "student_id": self.student_id,
-            "modality_id": self.modality_id,
+            # "modality_id": self.modality_id,
             "course_id": self.course_id
         }
     

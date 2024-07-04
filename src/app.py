@@ -681,15 +681,15 @@ def new_course_registration():
         return jsonify({"msg": "Debes seleccionar un profesor"}), 400
     if "student_id" not in body:
         return jsonify({"msg": "Debes seleccionar un estudiante"}), 400
-    if "modality_id" not in body:
-        return jsonify({"msg": "Debes seleccionar una modalidad del curso"}), 400
+    # if "modality_id" not in body:
+    #     return jsonify({"msg": "Debes seleccionar una modalidad del curso"}), 400
     if "course_id" not in body:
         return jsonify({"msg": "Debes seleccionar un curso"}), 400
     
     new_course_registration = NewCourse()
     new_course_registration.professor_id = body["professor_id"]
     new_course_registration.student_id = body["student_id"]
-    new_course_registration.modality_id = body["modality_id"]
+    # new_course_registration.modality_id = body["modality_id"]
     new_course_registration.course_id = body["course_id"]
 
     try:

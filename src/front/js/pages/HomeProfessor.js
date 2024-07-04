@@ -6,12 +6,13 @@ import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { NavbarProfessor } from "./NavbarProfessor";
 import "../../styles/home.css";
+import { ListProfRegCourses } from "../component/Card/ListProfREgCourses";
 
 export const HomeProfessor = () => {
     const { store, actions } = useContext(Context)
 
     useEffect(() => {
-        // actions.getProfessorCourses()
+        actions.getProfessorCourses()
         actions.getSingleProfPay()
     }, [])
 
@@ -19,6 +20,7 @@ export const HomeProfessor = () => {
     console.log(store.singleProfessor.professor?.name)
     console.log(store.singleProfPay)
     console.log(store.singleProfPay.professor_payment?.payment_method)
+    console.log(store.professorCourses?.professor_courses)
 
     return (
         <React.Fragment>
@@ -30,7 +32,23 @@ export const HomeProfessor = () => {
                     </div>
                 </div>
                 <div className="continer-fluid d-flex ps-5 ms-5">
-                    <div className="cardProfessor" style={{ width: '20rem' }}>
+                    <div className="cardProfessor" style={{ width: '18rem' }}>
+                        <table className="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th className="text-center" scope="col">N°</th>
+                                    <th className="text-center" scope="col">Nombre del curso</th>
+                                    <th className="text-center" scope="col">Nombre del estudiante</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {store.professorCourses?.professor_courses && store.professorCourses?.professor_courses.map(professorCourse =>
+                                    (<ListProfRegCourses course={professorCourse.course_id} student={professorCourse.student_id} key={professorCourse.course_id} id={professorCourse.course_id} />)
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                    {/* <div className="cardProfessor" style={{ width: '20rem' }}>
                         <div className="card cardProff" style={{ borderRadius: '20px' }}>
                             <img src="https://i.imgur.com/qTL6olW.png" className="card-img-top" alt="..." style={{ height: 'auto', padding: '30px' }} />
                             <div className="card-body">
@@ -40,7 +58,7 @@ export const HomeProfessor = () => {
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="d-flex align-content-center justify-content-center mb-3 mt-3 py-4 jumbo rounded-3">
                     <div className="container-fluid align-content-center">

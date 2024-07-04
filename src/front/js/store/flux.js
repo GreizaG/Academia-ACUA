@@ -17,7 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			electronicinvoices: [],
 
-			newcourses: [],
+			newcourses: {},
 
 			singleAdministrator: {},
 
@@ -25,7 +25,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			singleProfessor: {},
 
-			professorCourses: {},
+			professorCourses: [],
 
 			singleProfPay: {}
 

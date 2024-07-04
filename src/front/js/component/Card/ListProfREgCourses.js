@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { MultiButton } from '../MultiButton'
 import { Link } from 'react-router-dom'
 import { Context } from '../../store/appContext'
 
-export const ListProfRegCourses = ({ name, id, last_name }) => {
+export const ListProfRegCourses = ({ course, id, student }) => {
     const { store, actions } = useContext(Context);
 
     useEffect(() => {
@@ -14,8 +14,9 @@ export const ListProfRegCourses = ({ name, id, last_name }) => {
 
     return (
         <tr className="table-row">
-            <th scope="row">{id}</th>
-            <td>{name}</td>
+            <th className="text-center" scope="row">{id}</th>
+            <td className="text-center">{course}</td>
+            <td className="text-center">{student}</td>
         </tr>
     )
 }
