@@ -310,19 +310,19 @@ def get_single_course(name):
 #App Route para los metodos POST
 
 
-@app.route('/api/contactform/new', methods=['PUT'])
+@app.route('/api/contactform/new', methods=['POST'])
 def new_contact_form():
     body = request.get_json(silent=True)
     if body is None: 
         return jsonify({'msg' : 'Debes completar la informacion requerida para continuar'}) , 400
     if 'body_name' not in body:
-        return jsonify({'msg' : 'body_name must be in body'})
+        return jsonify({'msg' : 'body_name must be in body'}), 400
     if 'body_text' not in body:
-        return jsonify({'msg' : 'body_text must be in body'})
+        return jsonify({'msg' : 'body_text must be in body'}), 400
     if 'body_email' not in body:
-        return jsonify({'msg' : 'body_email must be in body'})
+        return jsonify({'msg' : 'body_email must be in body'}), 400
     if 'body_requeriment' not in body:
-        return jsonify({'msg' : 'body_requeriment must be in body'})
+        return jsonify({'msg' : 'body_requeriment must be in body'}), 400
     
     new_contact_form = ContactForm()
     new_contact_form.body_name = body['body_name']
