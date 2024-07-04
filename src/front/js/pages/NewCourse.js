@@ -4,6 +4,7 @@ import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { MultiButton } from "../component/MultiButton";
+import { MultiButtonNew } from "../component/MultibuttonNew";
 import { showNotification } from "../utils/ShowNotification";
 
 export const NewCourse = () => {
@@ -65,7 +66,9 @@ export const NewCourse = () => {
                         <Link to="/homeadmin" className="text-decoration-none">
                             <MultiButton color='purple' text='Volver' width='100' onClick={handleSubmit} />
                         </Link>
-                        <button type="button" className="btn btn-primary" onClick={handleSubmit}>Guardar</button>
+                        <div onClick={handleSubmit}>
+                            <MultiButtonNew color="orange" text="Guardar" width="100" Btype='button' link='' />
+                        </div>
                         {/* <Link to="/homeadmin" className="text-decoration-none">
                             <MultiButton color='purple' text='Guardar' width='100' onClick={handleSubmit} />
                         </Link> */}

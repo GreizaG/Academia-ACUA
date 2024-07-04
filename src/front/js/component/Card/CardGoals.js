@@ -47,7 +47,7 @@ export const CardGoals = ({ color, text, iconName, iconColor, iconBackgroundColo
                     <p className="mediumWeight fs-5">{text}</p>
                 </div>
                 <div className="goalBody">
-                    <p className='text-dark p-4 text-center' style={{ fontSize: '15px' }}> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda repudiandae, eligendi!</p>
+                    <p className='text-dark p-4 text-left' style={{ fontSize: '15px' }}> {textBody}</p>
                 </div>
             </div>
         </React.Fragment >
