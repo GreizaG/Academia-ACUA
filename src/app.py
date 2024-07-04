@@ -90,6 +90,7 @@ def serve_any_other_file(path):
 
 #--------------------------------------#
 
+# INGRESO ESTUDIANTE / PROFESOR / ADMINISTRADOR
 @app.route("/api/login", methods=["POST"])
 def login():
     body = request.get_json(silent=True)
@@ -104,26 +105,25 @@ def login():
     # Verificar estudiante
     student = Student.query.filter_by(email=body["email"]).first()
     if student and student.password == body['password']:
-        access_token = create_access_token(identity={"email": student.email, "user_type": "student"})
+        access_token = create_access_token(identity={"email": student.email, "user_type": "student", "id": student.id})
         return jsonify({"msg": "ok", "access_token": access_token, "user_type": "student", "email": student.email, "id": student.id}), 200
     
     # Verificar profesor
     professor = Professor.query.filter_by(email=body["email"]).first()
     if professor and professor.password == body['password']:
-        access_token = create_access_token(identity={"email": professor.email, "user_type": "professor"})
-        return jsonify({"msg": "ok", "access_token": access_token, "user_type": "professor"}), 200
+        access_token = create_access_token(identity={"email": professor.email, "user_type": "professor", "id": professor.id})
+        return jsonify({"msg": "ok", "access_token": access_token, "user_type": "professor", "email": professor.email, "id": professor.id}), 200
     
     # Verificar admin
     administrator = Administrator.query.filter_by(email=body["email"]).first()
     if administrator and administrator.password == body['password']:
-        access_token = create_access_token(identity={"email": administrator.email, "user_type": "admin"})
+        access_token = create_access_token(identity={"email": administrator.email, "user_type": "admin", "id": administrator.id})
         return jsonify({"msg": "ok", "access_token": access_token, "user_type": "admin", "email": administrator.email, "id": administrator.id}), 200
 
 
     return jsonify({"msg": "Email o contraseña inválidos"}), 400
 
-#App Route para los metodos GET
-
+# MÉTODO GET --> TRAER TODOS LOS ADMINISTRADORES --> ¡NO SE USA!
 @app.route('/api/administrators', methods=['GET'])
 def get_all_administrator():
     all_admins = Administrator.query.all()
@@ -133,6 +133,7 @@ def get_all_administrator():
         print(admins_serialized)
     return jsonify({"administrators": admins_serialized}), 200
 
+# MÉTODO GET --> TRAER TODOS LOS PROFESORES --> HOME ADMINISTRADOR Y LANDING PAGE
 @app.route('/api/professors', methods=['GET'])
 def get_all_professor():
     all_profes = Professor.query.all()
@@ -142,8 +143,11 @@ def get_all_professor():
         print(profes_serialized)
     return jsonify({"professors": profes_serialized}), 200
 
+# MÉTODO GET --> TRAER TODOS LOS ESTUDIANTES --> HOME ADMINISTRADOR
 @app.route('/api/students', methods=['GET'])
+# @jwt_required()
 def get_all_student():
+    # identity = get_jwt_identity()
     all_studs = Student.query.all()
     studs_serialized = []
     for stud in all_studs:
@@ -151,6 +155,7 @@ def get_all_student():
         print(studs_serialized)
     return jsonify({"students": studs_serialized}), 200
 
+# MÉTODO GET --> TRAER TODA LA INFORMACIÓN DE PAGO DE LOS PROFESORES
 @app.route('/api/professorspayment', methods=['GET'])
 def get_all_profpay():
     all_profpays = ProfessorPayment.query.all()
@@ -160,6 +165,7 @@ def get_all_profpay():
         print(profpays_serialized)
     return jsonify({"profpays": profpays_serialized}), 200
 
+# MÉTODO GET --> TRAER TODA LA INFORMACIÓN DE PRÓXIMO PAGO DE ESTUDIANTES
 @app.route('/api/studentspayment', methods=['GET'])
 def get_all_studpay():
     all_studpays = StudentPayment.query.all()
@@ -260,16 +266,36 @@ def get_professor_courses():
         print(professor_courses_serialized)
     return jsonify({"professor_courses": professor_courses_serialized}), 200
 
-@app.route('/api/professorpayment/<int:id>', methods=['GET'])
-def get_single_profpay(id):
-    single_profpay = ProfessorPayment.query.get(id)
+@app.route('/api/professorpayment/', methods=['GET'])
+@jwt_required()
+def get_single_profpay():
+    identity = get_jwt_identity()
+    single_profpay = ProfessorPayment.query.filter_by(id = identity['id']).first()
     if single_profpay is None:
         return jsonify({"msg": "No existe información de pago para el profesor indicado"}), 400
     return jsonify({"professor_payment": single_profpay.serialize()}), 200
 
-@app.route('/api/studentpayment/<int:id>', methods=['GET'])
-def get_single_studpay(id):
-    single_studpay = StudentPayment.query.get(id)
+@app.route('/api/student/registeredcourses', methods=['GET'])
+@jwt_required()
+def get_student_courses():
+    identity = get_jwt_identity()
+    student = Student.query.filter_by(email = identity['email']).first()
+    student_courses = NewCourse.query.filter_by(student_id = student.id)
+    if student is None:
+        return jsonify({"msg": "No existe estudiante con la información indicada"}), 401
+    if identity['user_type'] != "student":
+        return jsonify({"msg": "No tienes autorización para ingresar"}), 402
+    student_courses_serialized = []
+    for course in student_courses:
+        student_courses_serialized.append(course.serialize())
+        print(student_courses_serialized)
+    return jsonify({"student_courses": student_courses_serialized}), 200
+
+@app.route('/api/studentpayment/', methods=['GET'])
+@jwt_required()
+def get_single_studpay():
+    identity = get_jwt_identity()
+    single_studpay = StudentPayment.query.filter_by(id = identity['id']).first()
     if single_studpay is None:
         return jsonify({"msg": "No existe información de pago para el estudiante indicado"}), 400
     return jsonify({"student_payment": single_studpay.serialize()}), 200
@@ -448,6 +474,7 @@ def new_profe():
 
     return jsonify({"new_professor": new_profe.serialize()}), 201
 
+# CREACIÓN NUEVO ESTUDIANTE --> ADMINISTRADOR
 @app.route('/api/createstudent', methods=['POST'])
 def new_stud():
     body = request.get_json(silent=True)
@@ -457,66 +484,38 @@ def new_stud():
         return jsonify({"msg": "Debes escribir un nombre"}), 400
     if "last_name" not in body:
         return jsonify({"msg": "Debes escribir un apellido"}), 400
-    # if "photo" not in body:
-    #     return jsonify({"msg": "Debes agregar una photo"}), 400
     if "cardID_type" not in body:
         return jsonify({"msg": "Debes seleccionar un tipo de identificacion"}), 400
     if "number_cardID" not in body:
        return jsonify({"msg": "Debes escribir un numero de identificacion"}), 400
-    # if "birthday" not in body:
-    #     return jsonify({"msg": "Debes registrar su nacimiento"}), 400
     if "email" not in body:
         return jsonify({"msg": "El campo email es obligatorio"}), 400
     if "phone_number" not in body:
         return jsonify({"msg": "Debes registrar un telefono"}), 400
-    # if "province" not in body:
-    #     return jsonify({"msg": "Debes escribir una provincia"}), 400
-    # if "canton" not in body:
-    #     return jsonify({"msg": "Debes escribir un canton"}), 400
-    # if "distric" not in body:
-    #     return jsonify({"msg": "Debes escribir un distrito"}), 400
     if "password" not in body:
         return jsonify({"msg": "Debes escribir una contraseña"}), 400
-    # if "student_payment" not in body:
-    #     return jsonify({"msg": "Debes seleccionar un pago"}), 400
-    # if "electronic_invoice" not in body:
-    #     return jsonify({"msg": "Debes seleccionar si desea factura electronica"}), 400
-    # if "new_course_student" not in body:
-    #     return jsonify({"msg": "Debes seleccionar un estudiante"}), 400
     
     new_stud = Student()
     new_stud.name = body["name"]
     new_stud.last_name = body["last_name"]
-    # new_stud.photo = body["photo"]
     new_stud.cardID_type = body["cardID_type"]
     new_stud.number_cardID = body["number_cardID"]
-    # new_stud.birthday = body["birthday"]
     new_stud.email = body["email"]
     new_stud.phone_number = body["phone_number"]
-    # new_stud.province = body["province"]
-    # new_stud.canton = body["canton"]
-    # new_stud.distric = body["distric"]
     new_stud.password = body["password"]
     new_stud.user_type = "student"
-    # new_stud.student_payment = body["student_payment"]
-    # new_stud.electronic_invoice = body["electronic_invoice"]
-    # new_stud.new_course_student = body["new_course_student"]
+   
     try:
         db.session.add(new_stud)
         db.session.commit()
     except Exception as error:
-        return jsonify({"msg": error.args[0]}), 500
+        db.session.rollback()
+        print(error)
+        return jsonify({"msg": "Ocurrió un error al crear un nuevo estudiante"}), 500
 
-    return jsonify({"msg": "OK"}), 200
-    # try:
-    #     db.session.add(new_stud)
-    #     db.session.commit()
-    # except Exception as error:
-    #     return jsonify({"msg": error.args[0]}), 500
+    return jsonify({"new_stud": new_stud.serialize()}), 201
 
-    # return jsonify({"msg": "OK"}), 200
-
-@app.route('/api/createprofessorpayment', methods=['POST'])
+@app.route('/api/addprofessorpayment', methods=['POST'])
 def new_profpay():
     body = request.get_json(silent=True)
     if body is None:
@@ -554,7 +553,7 @@ def new_profpay():
 
     # return jsonify({"msg": "OK"}), 200
 
-@app.route('/api/createstudentpayment', methods=['POST'])
+@app.route('/api/addstudentpayment', methods=['POST'])
 def new_studpay():
     body = request.get_json(silent=True)
     if body is None:
@@ -581,16 +580,12 @@ def new_studpay():
 
     return jsonify({"new_studpay": new_studpay.serialize()}), 201
 
-    # try:
-    #     db.session.add(new_studpay)
-    #     db.session.commit()
-    # except Exception as error:
-    #     return jsonify({"msg": error.args[0]}), 500
-
-    # return jsonify({"msg": "OK"}), 200
-
-@app.route('/api/createnewelectronicinvoice', methods=['POST'])
+# MÉTODO POST --> AGREGAR DATOS PARA FACTURA ELECTRONICA --> ESTUDIANTES
+@app.route('/api/addelectronicinvoiceinfo', methods=['POST'])
+@jwt_required()
 def new_electinv():
+    identity = get_jwt_identity()
+    student = Student.query.filter_by(email = identity['email'])
     body = request.get_json(silent=True)
     if body is None:
         return jsonify({"msg": "Debes completar toda la informacion para continuar"}), 400
@@ -622,7 +617,7 @@ def new_electinv():
     new_electinv.province = body["province"]
     new_electinv.canton = body["canton"]
     new_electinv.distric = body["distric"]
-    new_electinv.student_id = body["student_id"]
+    new_electinv.student_id = student.id
 
     try:
         db.session.add(new_electinv)
@@ -704,15 +699,15 @@ def new_course_registration():
         return jsonify({"msg": "Debes seleccionar un profesor"}), 400
     if "student_id" not in body:
         return jsonify({"msg": "Debes seleccionar un estudiante"}), 400
-    if "modality_id" not in body:
-        return jsonify({"msg": "Debes seleccionar una modalidad del curso"}), 400
+    # if "modality_id" not in body:
+    #     return jsonify({"msg": "Debes seleccionar una modalidad del curso"}), 400
     if "course_id" not in body:
         return jsonify({"msg": "Debes seleccionar un curso"}), 400
     
     new_course_registration = NewCourse()
     new_course_registration.professor_id = body["professor_id"]
     new_course_registration.student_id = body["student_id"]
-    new_course_registration.modality_id = body["modality_id"]
+    # new_course_registration.modality_id = body["modality_id"]
     new_course_registration.course_id = body["course_id"]
 
     try:
@@ -758,10 +753,12 @@ def update_admin(number_cardID):
 
     return jsonify({"updated_admin": admin_to_update.serialize()}), 201
 
-@app.route('/api/editprofessorinfo/<int:number_cardID>', methods=['PUT'])
-def update_profe(number_cardID):
+@app.route('/api/personalinfo/editprofessorinfo', methods=['PUT'])
+@jwt_required()
+def update_profe():
+    identity = get_jwt_identity()
     body = request.get_json(silent=True)
-    profe_to_update = Professor.query.filter_by(number_cardID = number_cardID).first()
+    profe_to_update = Professor.query.filter_by(email = identity['email']).first()
     if profe_to_update is None:
         return jsonify({"msg": "Profesor no encontrado"}), 404
     if "name" in body:
@@ -770,6 +767,16 @@ def update_profe(number_cardID):
         profe_to_update.last_name = body["last_name"]
     if "phone_number" in body:
         profe_to_update.phone_number = body["phone_number"]
+    if "birthday" in body:
+        profe_to_update.birthday = body["birthday"]
+    if "email" in body:
+        profe_to_update.email = body["email"]
+    if "province" in body:
+        profe_to_update.province = body["province"]
+    if "canton" in body:
+        profe_to_update.canton = body["canton"]
+    if "district" in body:
+        profe_to_update.district = body["district"]
 
     try:
         db.session.add(profe_to_update)
@@ -789,6 +796,8 @@ def update_student():
     student_to_update = Student.query.filter_by(email = identity['email']).first()
     if student_to_update is None:
         return jsonify({"msg": "Estudiante no encontrado"}), 404
+    if body is None:
+        return jsonify({"msg": "Debes agregar la información solicitada"}), 400
     if "name" in body:
         student_to_update.name = body["name"]
     if "last_name" in body:

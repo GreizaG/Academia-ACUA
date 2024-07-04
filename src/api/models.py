@@ -144,7 +144,7 @@ class ProfessorPayment(db.Model):
             "id": self.id,
             "payment_method": self.payment_method,
             "phone_number": self.phone_number,
-            "iban_acount": self.iban_acount,
+            "iban_account": self.iban_account,
             "professor_id": self.professor_id
         }
     
@@ -248,7 +248,7 @@ class NewCourse(db.Model):
             "id": self.id,
             "professor_id": self.professor_id,
             "student_id": self.student_id,
-            "modality_id": self.modality_id,
+            # "modality_id": self.modality_id,
             "course_id": self.course_id
         }
     

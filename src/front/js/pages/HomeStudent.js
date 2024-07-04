@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavbarStudent } from "./NavbarStudent"
 import "../../styles/home.css";
 import { MultiButton } from "../component/MultiButton";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Context } from "../store/appContext";
+import { CardStudentCourses } from "../component/Card/CardStudentCourses";
 
 export const HomeStudent = () => {
+	const { store, actions } = useContext(Context)
+
+	useEffect(() => {
+		actions.getStudentCourses()
+		actions.getSingleStudPay()
+	}, [])
+
+	console.log(store.studentCourses?.student_courses)
+	console.log(store.singleStudPay)
+
 	return (
 		<React.Fragment>
 			<NavbarStudent />
@@ -15,7 +28,15 @@ export const HomeStudent = () => {
 					</div>
 				</div>
 				<div className="continer-fluid d-flex ps-5 ms-5">
-					<div className="cardProfessor" style={{ width: '20rem' }}>
+					<>
+						{store.studentCourses?.student_courses && store.studentCourses?.student_courses.map(studentCourse => {
+							return (
+								<CardStudentCourses course={studentCourse.course_id} professor={studentCourse.professor_id} key={studentCourse.course_id} id={studentCourse.course_id} />
+							)
+						})}
+					</>
+
+					{/* <div className="cardProfessor" style={{ width: '20rem' }}>
 						<div className="card cardProff" style={{ borderRadius: '20px' }}>
 							<div className="card-body">
 								<p className="card-title fs-5 text-center mediumWeight">Guitarra eléctrica</p>
@@ -26,12 +47,12 @@ export const HomeStudent = () => {
 									</tr>
 									<tr>
 										<td className="text-secondary fs-5 fw-semibold">Modalidad:</td>
-										<td className="fw-lighter fs-5 ps-3">Presencial</td>
+										<td className="fw-lighter fs-5 ps-3">Por definir</td>
 									</tr>
 								</table>
 							</div>
 						</div>
-					</div>
+					</div> */}
 				</div>
 				<div className="d-flex align-content-center justify-content-center mb-3 mt-3 py-4 jumbo rounded-3">
 					<div className="container-fluid align-content-center">
@@ -65,16 +86,16 @@ export const HomeStudent = () => {
 							<table className="table table-borderless text-end">
 								<tr className="pb-4">
 									<td className="text-secondary fs-4 fw-semibold">Fecha pago:</td>
-									<td className="fw-lighter fs-4">30 Junio 2024</td>
+									<td className="fw-lighter fs-4">{store.singleStudPay.student_payment?.date}</td>
 								</tr>
 								<tr className="pb-4">
 									<td className="text-secondary fs-4 fw-semibold">Monto a pagar:</td>
-									<td className="fw-lighter fs-4">₡ 75.000</td>
+									<td className="fw-lighter fs-4">{store.singleStudPay.student_payment?.mount}</td>
 								</tr>
-								<tr>
+								{/* <tr>
 									<td className="text-secondary fs-4 fw-semibold">Fecha vencimiento:</td>
 									<td className="fw-lighter fs-4">05 Julio 2024</td>
-								</tr>
+								</tr> */}
 							</table>
 						</div>
 					</div>
