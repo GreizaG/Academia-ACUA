@@ -722,9 +722,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			// Registrar nuevo curso
-			registerNewCourse: (data) => {
+			newCourseRegistration: (data) => {
 				const actions = getActions()
-				return fetch(process.env.BACKEND_URL + "/api/registernewcourse", {
+				return fetch(process.env.BACKEND_URL + "/api/newcourseregistration", {
 					method: "POST",
 					body: JSON.stringify(data),
 					headers: { "Content-Type": "application/json" }

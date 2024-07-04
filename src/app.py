@@ -987,6 +987,38 @@ def handle_search_students():
         return jsonify({"msg": "No se encuentran estudiantes"}), 404
     return jsonify({"msg": "Es necesario el término de búsqueda"}), 400
 
+@app.route('/api/search/professors',methods=['POST'])
+def handle_search_professors():
+    body = request.get_json(silent=True)
+    print(body, "BODY")
+    term = body.get('term', None)
+    print(term, "TERMINO")
+    if term is not None:
+        professors = Professor.query.filter((unaccent(Professor.name).ilike("%"+term+"%"))).all()
+        response = [professor.serialize() for professor in professors]
+
+        if professors:
+            return jsonify({"result": response}), 200
+        
+        return jsonify({"msg": "No se encuentran profesores"}), 404
+    return jsonify({"msg": "Es necesario el término de búsqueda"}), 400
+
+@app.route('/api/search/courses',methods=['POST'])
+def handle_search_courses():
+    body = request.get_json(silent=True)
+    print(body, "BODY")
+    term = body.get('term', None)
+    print(term, "TERMINO")
+    if term is not None:
+        courses = Course.query.filter((unaccent(Course.name).ilike("%"+term+"%"))).all()
+        response = [course.serialize() for course in courses]
+
+        if courses:
+            return jsonify({"result": response}), 200
+        
+        return jsonify({"msg": "No se encuentran cursos"}), 404
+    return jsonify({"msg": "Es necesario el término de búsqueda"}), 400
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
