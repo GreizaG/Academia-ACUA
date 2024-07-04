@@ -71,7 +71,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 
-			// Todos los administradores
+			// FUNCIÓN PARA BORRAR LOS NOMBRES DE USUARIO AL CERRAR SESIÓN
+			logout: () => {
+				setStore({ singleStudent: {} })
+				setStore({ singleProfessor: {} })
+				setStore({ singleAdministrator: {} })
+			},
+
+			// FUNCIÓN PARA TRAER TODOS LOS ADMINISTRADORES --> ¡NO SE USA!
 			getAdmins: () => {
 				fetch(process.env.BACKEND_URL + "/api/administrators")
 					.then(response => {
@@ -88,7 +95,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 			},
 
-			// Todos los profesores
+			// FUNCIÓN PARA TRAER TODO LOS PROFESORES --> HOME ADMINISTRADOR Y HOME PRINCIPAL
 			getProfessors: () => {
 				fetch(process.env.BACKEND_URL + "/api/professors")
 					.then(response => {
@@ -151,6 +158,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			// updateStudent: (formData) => {
 			// 	const token = localStorage.getItem('access_token')
+			// 	let responseResult = false
 			// 	fetch(process.env.BACKEND_URL + "/api/personalinfo/editstudentinfo/", {
 			// 		method: "PUT",
 			// 		body: JSON.stringify(formData),
@@ -164,40 +172,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// 		})
 			// 		.then((data) => {
 			// 			console.log(data)
-			// 			setStore({ student: data.student })
-			// 			return data
+			// 			setStore({ students: data.updated_student })
+			// 			responseResult = true
 			// 		})
 			// 		.catch((error) => {
 			// 			console.log(error)
 			// 		})
+			// 		return responseResult
 			// },
 
-			// updateStudent: async (formData) => {
-			// 	const token = localStorage.getItem('access_token')
-			// 	const actions = getActions()
-			// 	try {
-			// 		const response = await fetch(process.env.BACKEND_URL + "/api/personalinfo/editstudentinfo/", {
-			// 			method: "PUT",
-			// 			body: JSON.stringify(formData),
-			// 			headers: {
-			// 				"Content-Type": "application/json",
-			// 				'Authorization': 'Bearer ' + token
-			// 			}
-			// 		});
-			// 		const data = await response.json();
+			updateStudent: async (formData) => {
+				const token = localStorage.getItem('access_token')
+				const actions = getActions()
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "/api/personalinfo/editstudentinfo/", {
+						method: "PUT",
+						body: JSON.stringify(formData),
+						headers: {
+							"Content-Type": "application/json",
+							'Authorization': 'Bearer ' + token
+						}
+					});
+					const data = await response.json();
 
-			// 		if (response.ok) {
-			// 			setStore({ student: data.student });
-			// 			return true;
-			// 		} else {
-			// 			console.error("Error:", data.msg);
-			// 			return false;
-			// 		}
-			// 	} catch (error) {
-			// 		console.error("Error:", error);
-			// 		return false;
-			// 	}
-			// },
+					if (response.ok) {
+						actions.getStudents()
+						return true;
+					} else {
+						console.error("Error:", data.msg);
+						return false;
+					}
+				} catch (error) {
+					console.error("Error:", error);
+					return false;
+				}
+			},
 
 			getSingleProfessor: () => {
 				const token = localStorage.getItem('access_token')
@@ -584,11 +593,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			// Agregar factura electronica
 			newElectronicInvoice: (data) => {
+				const token = localStorage.getItem('access_token')
 				const actions = getActions()
 				return fetch(process.env.BACKEND_URL + "/api/addelectronicinvoiceinfo", {
 					method: "POST",
 					body: JSON.stringify(data),
-					headers: { "Content-Type": "application/json" }
+					headers: {
+						"Content-Type": "application/json",
+						'Authorization': 'Bearer' + token
+					}
 				})
 					.then(response => {
 						console.log(response)

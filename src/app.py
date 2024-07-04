@@ -90,6 +90,7 @@ def serve_any_other_file(path):
 
 #--------------------------------------#
 
+# INGRESO ESTUDIANTE / PROFESOR / ADMINISTRADOR
 @app.route("/api/login", methods=["POST"])
 def login():
     body = request.get_json(silent=True)
@@ -111,7 +112,7 @@ def login():
     professor = Professor.query.filter_by(email=body["email"]).first()
     if professor and professor.password == body['password']:
         access_token = create_access_token(identity={"email": professor.email, "user_type": "professor"})
-        return jsonify({"msg": "ok", "access_token": access_token, "user_type": "professor"}), 200
+        return jsonify({"msg": "ok", "access_token": access_token, "user_type": "professor", "email": professor.email, "id": professor.id}), 200
     
     # Verificar admin
     administrator = Administrator.query.filter_by(email=body["email"]).first()
@@ -122,8 +123,7 @@ def login():
 
     return jsonify({"msg": "Email o contraseña inválidos"}), 400
 
-#App Route para los metodos GET
-
+# MÉTODO GET --> TRAER TODOS LOS ADMINISTRADORES --> ¡NO SE USA!
 @app.route('/api/administrators', methods=['GET'])
 def get_all_administrator():
     all_admins = Administrator.query.all()
@@ -133,6 +133,7 @@ def get_all_administrator():
         print(admins_serialized)
     return jsonify({"administrators": admins_serialized}), 200
 
+# MÉTODO GET --> TRAER TODOS LOS PROFESORES --> HOME ADMINISTRADOR Y LANDING PAGE
 @app.route('/api/professors', methods=['GET'])
 def get_all_professor():
     all_profes = Professor.query.all()
@@ -142,8 +143,11 @@ def get_all_professor():
         print(profes_serialized)
     return jsonify({"professors": profes_serialized}), 200
 
+# MÉTODO GET --> TRAER TODOS LOS ESTUDIANTES --> HOME ADMINISTRADOR
 @app.route('/api/students', methods=['GET'])
+# @jwt_required()
 def get_all_student():
+    # identity = get_jwt_identity()
     all_studs = Student.query.all()
     studs_serialized = []
     for stud in all_studs:
@@ -151,6 +155,7 @@ def get_all_student():
         print(studs_serialized)
     return jsonify({"students": studs_serialized}), 200
 
+# MÉTODO GET --> TRAER TODA LA INFORMACIÓN DE PAGO DE LOS PROFESORES
 @app.route('/api/professorspayment', methods=['GET'])
 def get_all_profpay():
     all_profpays = ProfessorPayment.query.all()
@@ -160,6 +165,7 @@ def get_all_profpay():
         print(profpays_serialized)
     return jsonify({"profpays": profpays_serialized}), 200
 
+# MÉTODO GET --> TRAER TODA LA INFORMACIÓN DE PRÓXIMO PAGO DE ESTUDIANTES
 @app.route('/api/studentspayment', methods=['GET'])
 def get_all_studpay():
     all_studpays = StudentPayment.query.all()
@@ -448,6 +454,7 @@ def new_profe():
 
     return jsonify({"new_professor": new_profe.serialize()}), 201
 
+# CREACIÓN NUEVO ESTUDIANTE --> ADMINISTRADOR
 @app.route('/api/createstudent', methods=['POST'])
 def new_stud():
     body = request.get_json(silent=True)
@@ -457,64 +464,36 @@ def new_stud():
         return jsonify({"msg": "Debes escribir un nombre"}), 400
     if "last_name" not in body:
         return jsonify({"msg": "Debes escribir un apellido"}), 400
-    # if "photo" not in body:
-    #     return jsonify({"msg": "Debes agregar una photo"}), 400
     if "cardID_type" not in body:
         return jsonify({"msg": "Debes seleccionar un tipo de identificacion"}), 400
     if "number_cardID" not in body:
        return jsonify({"msg": "Debes escribir un numero de identificacion"}), 400
-    # if "birthday" not in body:
-    #     return jsonify({"msg": "Debes registrar su nacimiento"}), 400
     if "email" not in body:
         return jsonify({"msg": "El campo email es obligatorio"}), 400
     if "phone_number" not in body:
         return jsonify({"msg": "Debes registrar un telefono"}), 400
-    # if "province" not in body:
-    #     return jsonify({"msg": "Debes escribir una provincia"}), 400
-    # if "canton" not in body:
-    #     return jsonify({"msg": "Debes escribir un canton"}), 400
-    # if "distric" not in body:
-    #     return jsonify({"msg": "Debes escribir un distrito"}), 400
     if "password" not in body:
         return jsonify({"msg": "Debes escribir una contraseña"}), 400
-    # if "student_payment" not in body:
-    #     return jsonify({"msg": "Debes seleccionar un pago"}), 400
-    # if "electronic_invoice" not in body:
-    #     return jsonify({"msg": "Debes seleccionar si desea factura electronica"}), 400
-    # if "new_course_student" not in body:
-    #     return jsonify({"msg": "Debes seleccionar un estudiante"}), 400
     
     new_stud = Student()
     new_stud.name = body["name"]
     new_stud.last_name = body["last_name"]
-    # new_stud.photo = body["photo"]
     new_stud.cardID_type = body["cardID_type"]
     new_stud.number_cardID = body["number_cardID"]
-    # new_stud.birthday = body["birthday"]
     new_stud.email = body["email"]
     new_stud.phone_number = body["phone_number"]
-    # new_stud.province = body["province"]
-    # new_stud.canton = body["canton"]
-    # new_stud.distric = body["distric"]
     new_stud.password = body["password"]
     new_stud.user_type = "student"
-    # new_stud.student_payment = body["student_payment"]
-    # new_stud.electronic_invoice = body["electronic_invoice"]
-    # new_stud.new_course_student = body["new_course_student"]
+   
     try:
         db.session.add(new_stud)
         db.session.commit()
     except Exception as error:
-        return jsonify({"msg": error.args[0]}), 500
+        db.session.rollback()
+        print(error)
+        return jsonify({"msg": "Ocurrió un error al crear un nuevo estudiante"}), 500
 
-    return jsonify({"msg": "OK"}), 200
-    # try:
-    #     db.session.add(new_stud)
-    #     db.session.commit()
-    # except Exception as error:
-    #     return jsonify({"msg": error.args[0]}), 500
-
-    # return jsonify({"msg": "OK"}), 200
+    return jsonify({"new_stud": new_stud.serialize()}), 201
 
 @app.route('/api/createprofessorpayment', methods=['POST'])
 def new_profpay():
@@ -581,16 +560,11 @@ def new_studpay():
 
     return jsonify({"new_studpay": new_studpay.serialize()}), 201
 
-    # try:
-    #     db.session.add(new_studpay)
-    #     db.session.commit()
-    # except Exception as error:
-    #     return jsonify({"msg": error.args[0]}), 500
-
-    # return jsonify({"msg": "OK"}), 200
-
-@app.route('/api/createnewelectronicinvoice', methods=['POST'])
+# MÉTODO POST --> AGREGAR DATOS PARA FACTURA ELECTRONICA --> ESTUDIANTES
+@app.route('/api/addelectronicinvoiceinfo', methods=['POST'])
+@jwt_required()
 def new_electinv():
+    identity = get_jwt_identity()
     body = request.get_json(silent=True)
     if body is None:
         return jsonify({"msg": "Debes completar toda la informacion para continuar"}), 400
@@ -789,6 +763,8 @@ def update_student():
     student_to_update = Student.query.filter_by(email = identity['email']).first()
     if student_to_update is None:
         return jsonify({"msg": "Estudiante no encontrado"}), 404
+    if body is None:
+        return jsonify({"msg": "Debes agregar la información solicitada"}), 400
     if "name" in body:
         student_to_update.name = body["name"]
     if "last_name" in body:

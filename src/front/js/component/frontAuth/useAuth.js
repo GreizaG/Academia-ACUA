@@ -37,6 +37,7 @@ const useAuth = () => {
     const logout = () => {
         localStorage.removeItem('access_token');
         localStorage.removeItem('user_type');
+        actions.logout();
         navigate('/login')
     }
 

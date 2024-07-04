@@ -89,7 +89,7 @@ export const HomeAdmin = () => {
 						<h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Estudiantes</h4>
 					</div>
 				</div>
-				<div className="continer-fluid d-flex">
+				<div className="continer-fluid d-flex ms-5 ps-5">
 
 					{/* <CarouselAdminStudents array={store.students} /> */}
 					<>
