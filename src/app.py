@@ -30,7 +30,13 @@ from werkzeug.security import check_password_hash
 
 from flask_bcrypt import Bcrypt
 
+from datetime import timedelta
+from sqlalchemy.sql.functions import ReturnTypeFromArgs
+
 # from models import Person
+
+class unaccent(ReturnTypeFromArgs):
+    pass
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
@@ -40,6 +46,7 @@ CORS(app)
 app.url_map.strict_slashes = False
 
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT-KEY") #super secret
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=2)
 jwt = JWTManager(app)
 
 bcrypt = Bcrypt(app)
@@ -266,11 +273,12 @@ def get_professor_courses():
         print(professor_courses_serialized)
     return jsonify({"professor_courses": professor_courses_serialized}), 200
 
-@app.route('/api/professorpayment/', methods=['GET'])
+@app.route('/api/professorpayment', methods=['GET'])
 @jwt_required()
 def get_single_profpay():
     identity = get_jwt_identity()
-    single_profpay = ProfessorPayment.query.filter_by(id = identity['id']).first()
+    print(identity, "TOKEN")
+    single_profpay = ProfessorPayment.query.filter_by(professor_id = identity['id']).first()
     if single_profpay is None:
         return jsonify({"msg": "No existe información de pago para el profesor indicado"}), 400
     return jsonify({"professor_payment": single_profpay.serialize()}), 200
@@ -585,7 +593,8 @@ def new_studpay():
 @jwt_required()
 def new_electinv():
     identity = get_jwt_identity()
-    student = Student.query.filter_by(email = identity['email'])
+    print(identity, "TOKEN")
+    student = Student.query.filter_by(id = identity['id']).first()
     body = request.get_json(silent=True)
     if body is None:
         return jsonify({"msg": "Debes completar toda la informacion para continuar"}), 400
@@ -961,6 +970,54 @@ def update_registered_course(id):
         return jsonify({"msg": "Ocurrió un error al tratar de actualizar la información"}), 500
 
     return jsonify({"updated_registered_course": registered_course_to_update.serialize()}), 201
+
+@app.route('/api/search/students',methods=['POST'])
+def handle_search_students():
+    body = request.get_json(silent=True)
+    print(body, "BODY")
+    term = body.get('term', None)
+    print(term, "TERMINO")
+    if term is not None:
+        students = Student.query.filter((unaccent(Student.name).ilike("%"+term+"%"))).all()
+        response = [student.serialize() for student in students]
+
+        if students:
+            return jsonify({"result": response}), 200
+        
+        return jsonify({"msg": "No se encuentran estudiantes"}), 404
+    return jsonify({"msg": "Es necesario el término de búsqueda"}), 400
+
+@app.route('/api/search/professors',methods=['POST'])
+def handle_search_professors():
+    body = request.get_json(silent=True)
+    print(body, "BODY")
+    term = body.get('term', None)
+    print(term, "TERMINO")
+    if term is not None:
+        professors = Professor.query.filter((unaccent(Professor.name).ilike("%"+term+"%"))).all()
+        response = [professor.serialize() for professor in professors]
+
+        if professors:
+            return jsonify({"result": response}), 200
+        
+        return jsonify({"msg": "No se encuentran profesores"}), 404
+    return jsonify({"msg": "Es necesario el término de búsqueda"}), 400
+
+@app.route('/api/search/courses',methods=['POST'])
+def handle_search_courses():
+    body = request.get_json(silent=True)
+    print(body, "BODY")
+    term = body.get('term', None)
+    print(term, "TERMINO")
+    if term is not None:
+        courses = Course.query.filter((unaccent(Course.name).ilike("%"+term+"%"))).all()
+        response = [course.serialize() for course in courses]
+
+        if courses:
+            return jsonify({"result": response}), 200
+        
+        return jsonify({"msg": "No se encuentran cursos"}), 404
+    return jsonify({"msg": "Es necesario el término de búsqueda"}), 400
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
