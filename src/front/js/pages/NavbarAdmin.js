@@ -45,12 +45,17 @@ export const NavbarAdmin = () => {
                                 <span className="me-4">Información personal</span>
                             </li>
                             <li>
+                                <Link to="/newcourseregister" className="nav-link">
+                                    <span className="me-4">Registrar curso</span>
+                                </Link>
+                            </li>
+                            <li>
                                 <Link to="/professorpayment" className="nav-link">
                                     <span className="me-4">Pago profesores</span>
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/professorpayment" className="nav-link">
+                                <Link to="/studentpayment" className="nav-link">
                                     <span className="me-4">Pago estudiantes</span>
                                 </Link>
                             </li>
