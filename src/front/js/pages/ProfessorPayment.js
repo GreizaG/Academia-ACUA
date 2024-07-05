@@ -37,7 +37,7 @@ export const ProfessorPayment = () => {
         console.log(isCreated)
         if (isCreated) {
             showNotification("Nuevo pago creado con éxito")
-            navigate("/homeadmin")
+            navigate("/professorspaymentregister")
         } else {
             showNotification("Ocurrió un error al tratar de agregar un nuevo pago", "error")
         }
@@ -143,7 +143,7 @@ export const ProfessorPayment = () => {
                             <MultiButton color='purple' text='Volver' width='100' onClick={handleSubmit} />
                         </Link> */}
                         {/* <MultiButton color='purple' text='Guardar' width='100' onClick={handleSubmit} /> */}
-                        <Link to="/homeadmin" className="text-decoration-none">
+                        <Link to="/professorspaymentregister" className="text-decoration-none">
                             <button type="button" className="btn btn-warning">Cancelar</button>
                         </Link>
                     </div>
