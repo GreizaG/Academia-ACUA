@@ -20,7 +20,7 @@ export const HomeProfessor = () => {
     console.log(store.singleProfessor.professor?.name)
     console.log(store.singleProfPay)
     console.log(store.singleProfPay.professor_payment?.payment_method)
-    console.log(store.professorCourses?.professor_courses)
+    console.log(store.professorCourses)
 
     return (
         <React.Fragment>
@@ -43,7 +43,7 @@ export const HomeProfessor = () => {
                             </thead>
                             <tbody>
                                 {store.professorCourses?.professor_courses && store.professorCourses?.professor_courses.map(professorCourse =>
-                                    (<ListProfRegCourses course={professorCourse.course_id} student={professorCourse.student_id} key={professorCourse.course_id} id={professorCourse.course_id} />)
+                                    (<ListProfRegCourses course={professorCourse.course_name} student={`${professorCourse.student_name}` + ' ' + `${professorCourse.student_last_name}`} key={professorCourse.new_course_id} id={professorCourse.new_course_id} />)
                                 )}
                             </tbody>
                         </table>

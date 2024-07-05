@@ -315,20 +315,48 @@ def get_single_profe():
     return jsonify({"professor": single_profe.serialize()}), 200
 
 
+# @app.route('/api/professor/registeredcourses', methods=['GET'])
+# @jwt_required()
+# def get_professor_courses():
+#     identity = get_jwt_identity()
+#     professor = Professor.query.filter_by(email = identity['email']).first()
+#     professor_courses = NewCourse.query.filter_by(professor_id = professor.id)
+#     if professor is None:
+#         return jsonify({"msg": "No existe profesor con la información indicada"}), 401
+#     if identity['user_type'] != "professor":
+#         return jsonify({"msg": "No tienes autorización para ingresar"}), 402
+#     professor_courses_serialized = []
+#     for course in professor_courses:
+#         professor_courses_serialized.append(course.serialize())
+#         print(professor_courses_serialized)
+#     return jsonify({"professor_courses": professor_courses_serialized}), 200
+
 @app.route('/api/professor/registeredcourses', methods=['GET'])
 @jwt_required()
 def get_professor_courses():
     identity = get_jwt_identity()
     professor = Professor.query.filter_by(email = identity['email']).first()
-    professor_courses = NewCourse.query.filter_by(professor_id = professor.id)
     if professor is None:
-        return jsonify({"msg": "No existe profesor con la información indicada"}), 401
+        return jsonify({"msg": "No existe profesor con la información indicada"})
     if identity['user_type'] != "professor":
         return jsonify({"msg": "No tienes autorización para ingresar"}), 402
+    professor_courses = db.session.query(
+        NewCourse, Course, Student
+        ).join(
+           Course, NewCourse.course_id == Course.id
+        ).join(
+            Student, NewCourse.student_id == Student.id
+        ).filter(NewCourse.professor_id == professor.id).all()
+    
     professor_courses_serialized = []
-    for course in professor_courses:
-        professor_courses_serialized.append(course.serialize())
-        print(professor_courses_serialized)
+    for new_course, course, student in professor_courses:
+        professor_courses_serialized.append({
+            'new_course_id': new_course.id,
+            'course_name': course.name,
+            'student_name': student.name,
+            'student_last_name': student.last_name
+        })
+    
     return jsonify({"professor_courses": professor_courses_serialized}), 200
 
 @app.route('/api/professorpayment', methods=['GET'])
