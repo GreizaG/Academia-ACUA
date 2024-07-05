@@ -11,6 +11,7 @@ import { ContactForm } from '../component/ContactForm'
 import { useContext } from 'react'
 import { Context } from '../store/appContext'
 import { NewCarrousel } from '../component/NewCarrousel'
+import Maps from './Maps'
 
 const HomeACUA = () => {
   const { actions, store } = useContext(Context)
@@ -173,6 +174,9 @@ const HomeACUA = () => {
                 </div>
                 <div className="rightInfo col-xl-7 col-sm-12 mt-2">
                   <ContactForm />
+                </div>
+                <div className="map-container" style={{ height: '400px', marginBottom: '50px', marginTop: '50px' }}>
+                  <Maps />
                 </div>
               </div>
             </div>
