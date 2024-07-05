@@ -43,7 +43,7 @@ export const MultiButton = ({ color, text, width, link }) => {
 
     return (
         <React.Fragment>
-            <div id='multiButton' style={colorComparator(color)} onClick={(e) => { console.log(navigate(`${link}`)) }}>
+            <div id='multiButton' style={colorComparator(color)} onClick={(e) => { navigate(`${link}`) }}>
                 {text}
             </div>
         </React.Fragment>
