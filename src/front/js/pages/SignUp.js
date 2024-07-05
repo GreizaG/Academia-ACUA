@@ -2,7 +2,8 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { NavbarACUA } from '../component/NavbarACUA';
 import { showNotification } from "../utils/ShowNotification";
-import { Context } from "../store/appContext"; 
+import { Context } from "../store/appContext";
+import { MultiButtonNew } from "../component/MultibuttonNew";
 
 export const SignUp = () => {
   const { actions } = useContext(Context);
@@ -31,7 +32,7 @@ export const SignUp = () => {
     const isCreated = await actions.newStudent(formData);
     if (isCreated) {
       showNotification("Estudiante registrado con éxito");
-      navigate("/Login"); 
+      navigate("/login");
     } else {
       showNotification("Ocurrió un error al registrarse", "error");
     }
@@ -39,7 +40,6 @@ export const SignUp = () => {
 
   return (
     <React.Fragment>
-      <NavbarACUA />
       <div className="d-flex flex-column justify-content-center align-items-center" style={{ backgroundColor: '#f8f9fa' }}>
         <div style={{ position: 'relative', width: '100%' }}>
           <img src="https://i.postimg.cc/XJ784zpy/Whats-App-Image-2024-06-17-at-19-29-08.jpg"
@@ -49,7 +49,7 @@ export const SignUp = () => {
             <p>Sé parte de la familia ACUA</p>
           </div>
         </div>
-        <form onSubmit={handleSubmit} className="mt-4 p-4 rounded shadow mb-4" style={{ backgroundColor: '#e9ecef', maxWidth: '600px', width: '100%' }}>
+        <form className="mt-4 p-4 rounded shadow mb-4" style={{ backgroundColor: '#e9ecef', maxWidth: '600px', width: '100%' }}>
           <h3 className="mb-3">Crea tu usuario</h3>
           <div className="d-flex mb-3">
             <div className="me-2 flex-fill">
@@ -111,15 +111,21 @@ export const SignUp = () => {
           </div>
           <div className="d-flex mb-3">
             <div className="me-2 flex-fill">
-              <label className="form-label">Tipo de Identificación</label>
-              <input
+              <label className="form-label">Tipo de Identificación</label><br></br>
+              <select name="select">
+                <option value="value1" selected>-----------</option>
+                <option value="value2">Cedula Nacional</option>
+                <option value="value3">DIMEX</option>
+                <option value="value3">Pasaporte</option>
+              </select>
+              {/* <input
                 className="form-control"
                 placeholder="Tipo de Identificación"
                 name="cardID_type"
                 value={formData.cardID_type}
                 onChange={handleInputChange}
                 required
-              />
+              /> */}
             </div>
             <div className="ms-2 flex-fill">
               <label className="form-label">Número de Identificación</label>
@@ -154,10 +160,15 @@ export const SignUp = () => {
               required
             />
           </div>
-          <div className="mb-4">
-            <button type="submit" className="btn btn-primary">Registrarse →</button>
+          <div className="d-flex flex-row justify-content-center gap-4 mb-3 mt-3">
+            <Link to='/'>
+              <MultiButtonNew color="purple" text="Atras" width="100" Btype='button' />
+            </Link>
+            <div onClick={handleSubmit}>
+              <MultiButtonNew color="orange" text="Enviar" width="100" Btype='button' />
+            </div>
           </div>
-          <Link to={`/Login`} className="mt-3">
+          <Link to={`/login`} className="mt-3">
             ¿Ya tienes un usuario? Inicia sesión aquí
           </Link>
         </form>

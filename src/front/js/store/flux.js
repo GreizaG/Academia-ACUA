@@ -11,13 +11,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			modalities: [],
 
-			professorspayment: [],
+			professorsPayment: [],
 
 			studentspayment: [],
 
 			electronicinvoices: [],
 
-			newcourses: [],
+			registeredCourses: [],
+
+			singleAdministrator: {},
+
+			singleStudent: {},
+
+			singleProfessor: {},
+
+			professorCourses: {},
+
+			studentCourses: {},
+
+			singleProfPay: {},
+
+			singleStudPay: {}
 
 			// isAdministratorCreated: false,
 			// isProfessorCreated: false,
@@ -63,7 +77,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 
-			// Todos los administradores
+			// FUNCIÓN PARA BORRAR LOS NOMBRES DE USUARIO AL CERRAR SESIÓN
+			logout: () => {
+				setStore({ singleStudent: {} })
+				setStore({ singleProfessor: {} })
+				setStore({ singleAdministrator: {} })
+			},
+
+			// FUNCIÓN PARA TRAER TODOS LOS ADMINISTRADORES --> ¡NO SE USA!
 			getAdmins: () => {
 				fetch(process.env.BACKEND_URL + "/api/administrators")
 					.then(response => {
@@ -80,7 +101,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 			},
 
-			// Todos los profesores
+			// FUNCIÓN PARA TRAER TODO LOS PROFESORES --> HOME ADMINISTRADOR Y HOME PRINCIPAL
 			getProfessors: () => {
 				fetch(process.env.BACKEND_URL + "/api/professors")
 					.then(response => {
@@ -97,11 +118,243 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 			},
 
+			getSingleAdmin: () => {
+				const token = localStorage.getItem('access_token')
+				fetch(process.env.BACKEND_URL + "/api/administrator/personalinfo", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						'Authorization': 'Bearer ' + token
+					}
+				})
+					.then((response) => {
+						return response.json()
+					})
+					.then((data) => {
+						console.log(data)
+						setStore({ singleAdministrator: data })
+						return data
+					})
+					.catch((error) => {
+						console.log(error)
+					})
+			},
+
+			getSingleStudent: () => {
+				const token = localStorage.getItem('access_token')
+				fetch(process.env.BACKEND_URL + "/api/student/personalinfo", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						'Authorization': 'Bearer ' + token
+					}
+				})
+					.then((response) => {
+						return response.json()
+					})
+					.then((data) => {
+						console.log(data)
+						setStore({ singleStudent: data })
+						return data
+					})
+					.catch((error) => {
+						console.log(error)
+					})
+			},
+
+			// updateStudent: (formData) => {
+			// 	const token = localStorage.getItem('access_token')
+			// 	let responseResult = false
+			// 	fetch(process.env.BACKEND_URL + "/api/personalinfo/editstudentinfo/", {
+			// 		method: "PUT",
+			// 		body: JSON.stringify(formData),
+			// 		headers: {
+			// 			"Content-Type": "application/json",
+			// 			'Authorization': 'Bearer ' + token
+			// 		}
+			// 	})
+			// 		.then((response) => {
+			// 			return response.json()
+			// 		})
+			// 		.then((data) => {
+			// 			console.log(data)
+			// 			setStore({ students: data.updated_student })
+			// 			responseResult = true
+			// 		})
+			// 		.catch((error) => {
+			// 			console.log(error)
+			// 		})
+			// 		return responseResult
+			// },
+
+			updateStudent: async (formData) => {
+				const token = localStorage.getItem('access_token')
+				const actions = getActions()
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "/api/personalinfo/editstudentinfo/", {
+						method: "PUT",
+						body: JSON.stringify(formData),
+						headers: {
+							"Content-Type": "application/json",
+							'Authorization': 'Bearer ' + token
+						}
+					});
+					const data = await response.json();
+
+					if (response.ok) {
+						actions.getStudents()
+						return true;
+					} else {
+						console.error("Error:", data.msg);
+						return false;
+					}
+				} catch (error) {
+					console.error("Error:", error);
+					return false;
+				}
+			},
+
+			updateProfessor: async (formData) => {
+				const token = localStorage.getItem('access_token')
+				const actions = getActions()
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "/api/personalinfo/editprofessorinfo/", {
+						method: "PUT",
+						body: JSON.stringify(formData),
+						headers: {
+							"Content-Type": "application/json",
+							'Authorization': 'Bearer ' + token
+						}
+					});
+					const data = await response.json();
+
+					if (response.ok) {
+						actions.getProfessors()
+						return true;
+					} else {
+						console.error("Error:", data.msg);
+						return false;
+					}
+				} catch (error) {
+					console.error("Error:", error);
+					return false;
+				}
+			},
+
+			getSingleProfessor: () => {
+				const token = localStorage.getItem('access_token')
+				fetch(process.env.BACKEND_URL + "/api/professor/personalinfo", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						'Authorization': 'Bearer ' + token
+					}
+				})
+					.then((response) => {
+						return response.json()
+					})
+					.then((data) => {
+						console.log(data)
+						setStore({ singleProfessor: data })
+						return data
+					})
+					.catch((error) => {
+						console.log(error)
+					})
+			},
+
+			getSingleProfPay: () => {
+				const token = localStorage.getItem('access_token')
+				fetch(process.env.BACKEND_URL + "/api/professorpayment", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						'Authorization': 'Bearer ' + token
+					}
+				})
+					.then((response) => {
+						return response.json()
+					})
+					.then((data) => {
+						console.log(data)
+						setStore({ singleProfPay: data })
+						return data
+					})
+					.catch((error) => {
+						console.log(error)
+					})
+			},
+
+			getProfessorCourses: () => {
+				const token = localStorage.getItem('access_token')
+				fetch(process.env.BACKEND_URL + "/api/professor/registeredcourses", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						'Authorization': 'Bearer ' + token
+					}
+				})
+					.then((response) => {
+						return response.json()
+					})
+					.then((data) => {
+						console.log(data)
+						setStore({ professorCourses: data })
+						return data
+					})
+					.catch((error) => {
+						console.log(error)
+					})
+			},
+
+			getStudentCourses: () => {
+				const token = localStorage.getItem('access_token')
+				fetch(process.env.BACKEND_URL + "/api/student/registeredcourses", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						'Authorization': 'Bearer ' + token
+					}
+				})
+					.then((response) => {
+						return response.json()
+					})
+					.then((data) => {
+						console.log(data)
+						setStore({ studentCourses: data })
+						return data
+					})
+					.catch((error) => {
+						console.log(error)
+					})
+			},
+
+			getSingleStudPay: () => {
+				const token = localStorage.getItem('access_token')
+				fetch(process.env.BACKEND_URL + "/api/studentpayment", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						'Authorization': 'Bearer ' + token
+					}
+				})
+					.then((response) => {
+						return response.json()
+					})
+					.then((data) => {
+						console.log(data)
+						setStore({ singleStudPay: data })
+						return data
+					})
+					.catch((error) => {
+						console.log(error)
+					})
+			},
+
 			// Todos los estudiantes
 			getStudents: () => {
 				fetch(process.env.BACKEND_URL + "/api/students")
 					.then(response => {
-						console.log(response);
 						return response.json();
 					})
 					.then((data) => {
@@ -158,7 +411,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then((data) => {
 						console.log("Data:", data)
 						console.log(data.profpays)
-						setStore({ professorspayment: data.profpays })
+						setStore({ professorsPayment: data.profpays })
 					})
 					.catch((error) => {
 						console.log(error)
@@ -201,15 +454,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			// Todos los cursos registrados
 			getRegisteredCourses: () => {
-				fetch(process.env.BACKEND_URL + "/api/registeredcourses")
+				fetch(process.env.BACKEND_URL + "/api/allregisteredcourses")
 					.then(response => {
 						console.log(response);
 						return response.json();
 					})
 					.then((data) => {
 						console.log("Data:", data)
-						console.log(data.newcourses)
-						setStore({ newcourses: data.newcourses })
+						console.log(data.all_registered_courses)
+						setStore({ registeredCourses: data.all_registered_courses })
 					})
 					.catch((error) => {
 						console.log(error)
@@ -261,7 +514,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(data => {
 						console.log(data)
 						// setStore({ isProfessorCreated: true })
-						actions.getProfessors()
 						localStorage.setItem("userType", "profesor"); // Guardar el tipo de usuario en localStorage
 						console.log("Tipo de usuario guardado en localStorage");
 						return true
@@ -318,6 +570,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await response.json();
 					localStorage.setItem("access_token", data.access_token);
 					localStorage.setItem("user_type", data.user_type);  // Guarda el tipo de usuario en el localStorage
+					localStorage.setItem("id", `${data.id}`)
+					localStorage.setItem("email", data.email)
 					return { success: true };
 				} catch (error) {
 					console.error("Error:", error);
@@ -436,11 +690,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			// Agregar factura electronica
 			newElectronicInvoice: (data) => {
+				const token = localStorage.getItem('access_token')
 				const actions = getActions()
 				return fetch(process.env.BACKEND_URL + "/api/addelectronicinvoiceinfo", {
 					method: "POST",
-					body: JSON.stringify(data),
-					headers: { "Content-Type": "application/json" }
+					headers: {
+						"Content-Type": "application/json",
+						'Authorization': 'Bearer ' + token
+					},
+					body: JSON.stringify(data)
 				})
 					.then(response => {
 						console.log(response)
@@ -462,9 +720,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			// Registrar nuevo curso
-			registerNewCourse: (data) => {
+			newCourseRegistration: (data) => {
 				const actions = getActions()
-				return fetch(process.env.BACKEND_URL + "/api/registernewcourse", {
+				return fetch(process.env.BACKEND_URL + "/api/newcourseregistration", {
 					method: "POST",
 					body: JSON.stringify(data),
 					headers: { "Content-Type": "application/json" }

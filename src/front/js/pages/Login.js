@@ -1,10 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
 import { NavbarACUA } from '../component/NavbarACUA';
 import { showNotification } from "../utils/ShowNotification";
 import useAuth from "../component/frontAuth/useAuth";
+import { MultiButtonNew } from "../component/MultibuttonNew";
+
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -41,7 +43,6 @@ const Login = () => {
 
     return (
         <React.Fragment>
-            <NavbarACUA />
             <div className="d-flex flex-column justify-content-between min-vh-100" style={{ backgroundColor: "#f8f9fa", margin: "0" }}>
                 <div style={{ position: "relative", width: "100%" }}>
                     <img src="https://i.postimg.cc/XJ784zpy/Whats-App-Image-2024-06-17-at-19-29-08.jpg" alt="Jumbotron" className="img-fluid mb-3" style={{ width: "100%", maxHeight: "150px", objectFit: "cover" }} />
@@ -60,6 +61,7 @@ const Login = () => {
                                 placeholder="Email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
+                                required
                             />
                         </div>
                         <div className="mb-3">
@@ -70,10 +72,14 @@ const Login = () => {
                                 placeholder="Contraseña"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                required
                             />
                         </div>
-                        <div className="mb-3">
-                            <button type="submit" className="btn btn-primary">Inicia sesión →</button>
+                        <div className="mb-2 mt-4 d-flex flex-row justify-content-center gap-3">
+                            <Link to='/'>
+                                <MultiButtonNew color="purple" text="Atras" width="100" Btype='button' />
+                            </Link>
+                            <MultiButtonNew color="orange" text="Inicia sesión" width="130" Btype='submit' />
                         </div>
                     </form>
                 </div>

@@ -24,7 +24,7 @@ import InfoStudent from "./pages/InfoStudent";
 import { ProfessorPayment } from "./pages/ProfessorPayment";
 import { StudentPayment } from "./pages/StudentPayment";
 
-import { Course } from "./pages/Course";
+import { Course } from "./pages/NewCourseRegister";
 import { ElectronicInvoice } from "./pages/ElectronicInvoice";
 import { NewCourse } from "./pages/NewCourse";
 import { NewModality } from "./pages/NewModality";
@@ -41,6 +41,9 @@ import { Toaster } from "react-hot-toast";
 import AdminStudReg from "./pages/AdminStudReg";
 import ProtectedRoute from "./component/frontAuth/ProtectedRoute";
 import Private from "./component/frontAuth/Private";
+import { NewCourseRegister } from "./pages/NewCourseRegister";
+import { RegisteredCourses } from "./pages/RegisteredCourses";
+import { ProfPayReg } from "./pages/ProfPayReg";
 
 
 
@@ -92,6 +95,11 @@ const Layout = () => {
                         <Route path="/newmodality" element={<NewModality />} />
                         <Route path="/electronicinvoice" element={<ElectronicInvoice />} />
                         <Route path="/formprofessor" element={<FormProfessor />} />
+                        <Route path="/professorpayment" element={< ProfessorPayment />} />
+                        <Route path="/studentpayment" element={< StudentPayment />} />
+                        <Route path="/newcourseregister" element={< NewCourseRegister />} />
+                        <Route path="/registeredcourses" element={< RegisteredCourses />} />
+                        <Route path="/professorspaymentregister" element={< ProfPayReg />} />
                         <Route path="/undefined" element={<Undefined />} />
                         <Route path="*" element={<Undefined />} />
                     </Routes>

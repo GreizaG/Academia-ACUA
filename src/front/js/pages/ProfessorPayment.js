@@ -1,7 +1,9 @@
-import React from "react";
-import LogButton from "../component/LogButton";
-import { MultiButton } from "../component/MultiButton";
+import React, { useState, useEffect } from "react";
+import { useContext } from "react";
+import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { MultiButton } from "../component/MultiButton";
 import { showNotification } from "../utils/ShowNotification";
 
 export const ProfessorPayment = () => {
@@ -15,13 +17,17 @@ export const ProfessorPayment = () => {
         professor_id: 0,
     })
 
+    const [searchTerm, setSearchTerm] = useState("")
+    const [options, setOptions] = useState([])
+    const [selectedOption, setSelectedOption] = useState(null)
+
     // const flag = store.isProfessorCreated
 
     const handleInputChange = (event) => {
-        const { payment_method, value } = event.target;
+        const { name, value } = event.target;
         setFormData((prevFormData) => ({
             ...prevFormData,
-            [payment_method]: value,
+            [name]: value,
         }))
     }
 
@@ -31,12 +37,50 @@ export const ProfessorPayment = () => {
         console.log(isCreated)
         if (isCreated) {
             showNotification("Nuevo pago creado con éxito")
-            navigate("/homeadmin")
+            navigate("/professorspaymentregister")
         } else {
             showNotification("Ocurrió un error al tratar de agregar un nuevo pago", "error")
         }
 
     }
+
+    const handleSelectChange = (e) => {
+        const selectedId = e.target.value
+        const selectedObj = options.find(option => option.id === parseInt(selectedId))
+        console.log(selectedObj)
+        setSelectedOption(selectedObj)
+        setFormData({
+            ...formData,
+            professor_id: selectedObj?.id
+        })
+    }
+
+    useEffect(() => {
+        if (searchTerm.length > 0) {
+            const searchProfessor = async () => {
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/search/professors`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 'term': searchTerm })
+                    });
+                    if (response.ok) {
+                        const data = await response.json()
+                        setOptions(data.result)
+                    } else {
+                        console.log("Error obteniendo data")
+                    }
+                } catch (error) {
+                    console.log("Error obteniendo data", error)
+                }
+            };
+            searchProfessor()
+        } else {
+            setOptions([])
+        }
+    }, [searchTerm])
+
+
 
     return (
         <React.Fragment>
@@ -59,22 +103,49 @@ export const ProfessorPayment = () => {
                     <div className="d-flex mb-3 row">
                         <div className="me-2 flex-fill">
                             <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>Método de pago</label>
-                            <input className="form-control mb-3" placeholder="Método de pago" onClick={handleInputChange}/>
+                            <input className="form-control mb-3" placeholder="Método de pago" name="payment_method" value={formData.payment_method} onChange={handleInputChange} />
                         </div>
                         <div className="me-2 flex-fill">
                             <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>Número de teléfono</label>
-                            <input className="form-control mb-3" placeholder="Número de teléfono" onClick={handleInputChange}/>
+                            <input className="form-control mb-3" placeholder="Número de teléfono" name="phone_number" value={formData.phone_number} onChange={handleInputChange} />
                         </div>
                         <div className="me-2 flex-fill">
                             <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>N° cuenta IBAN</label>
-                            <input className="form-control mb-3" placeholder="N° cuenta IBAN" onClick={handleInputChange}/>
+                            <input className="form-control mb-3" placeholder="N° cuenta IBAN" name="iban_account" value={formData.iban_account} onChange={handleInputChange} />
+                        </div>
+                        <div className="me-2 flex-fill">
+                            <>
+                                <label htmlFor="searcInput" className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>
+                                    Seleccione profesor
+                                </label>
+                                <input
+                                    className="form-control mb-3"
+                                    type="text"
+                                    id="searchInput"
+                                    placeholder="Buscar profesor"
+                                    value={searchTerm}
+                                    onChange={(e) => { setSearchTerm(e.target.value) }}
+                                />
+                                <select id="selectInput" className="form-control" value={selectedOption ? selectedOption.id : ""} onChange={handleSelectChange}>
+                                    <option value="">Seleccionar profesor</option>
+                                    {options.map((option) => {
+                                        return <option key={option.id} value={option.id}>{option.name} {option.last_name}</option>
+                                    })}
+                                </select>
+                            </>
+                            {/* <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>ID professor</label>
+                            <input className="form-control mb-3" placeholder="ID professor" name="professor_id" value={formData.professor_id} onChange={handleInputChange} /> */}
                         </div>
                     </div>
                     <div className="d-flex justify-content-between">
-                        <Link to="/homeadmin" className="text-decoration-none">
-                            <MultiButton color='purple' text='Volver' width='100' onClick={handleSubmit}/>
+                        <button type="button" className="btn btn-primary" onClick={handleSubmit}>Guardar</button>
+                        {/* <Link to="/homeadmin" className="text-decoration-none">
+                            <MultiButton color='purple' text='Volver' width='100' onClick={handleSubmit} />
+                        </Link> */}
+                        {/* <MultiButton color='purple' text='Guardar' width='100' onClick={handleSubmit} /> */}
+                        <Link to="/professorspaymentregister" className="text-decoration-none">
+                            <button type="button" className="btn btn-warning">Cancelar</button>
                         </Link>
-                        <MultiButton color='purple' text='Guardar' width='100' onClick={handleSubmit}/>
                     </div>
                 </form>
             </div>

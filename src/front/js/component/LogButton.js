@@ -3,7 +3,6 @@ import useAuth from './frontAuth/useAuth'
 
 const LogButton = ({ text, action }) => {
 
-    console.log(action)
     return (
         <React.Fragment>
             <div id='loginButton' onClick={action}>

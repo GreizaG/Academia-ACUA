@@ -24,7 +24,6 @@ export const NewCarrousel = ({ array }) => {
             <div className="container">
                 <Swiper
                     loop='true'
-                    slidesPerView={4}
                     spaceBetween={10}
                     pagination={{
                         clickable: true,
@@ -33,6 +32,22 @@ export const NewCarrousel = ({ array }) => {
                     navigation={{
                         nextEl: '.swiper-button-next',
                         prevEl: '.swiper-button-prev',
+                    }}
+                    slidesPerView={1}
+                    slidesPerGroup={1}
+                    breakpoints={{
+                        700: {
+                            slidesPerView: 2,
+                            slidesPerGroup: 1,
+                        },
+                        900: {
+                            slidesPerView: 3,
+                            slidesPerGroup: 1,
+                        },
+                        1080: {
+                            slidesPerView: 4,
+                            slidesPerGroup: 1,
+                        }
                     }}
                     className="mySwiper"
                 >
