@@ -192,9 +192,9 @@ const HomeACUA = () => {
                 <div className="rightInfo col-xl-7 col-sm-12 mt-2">
                   <ContactForm />
                 </div>
-                <div className="map-container" style={{ height: '400px', marginBottom: '50px', marginTop: '50px' }}>
+                {/* <div className="map-container" style={{ height: '400px', marginBottom: '50px', marginTop: '50px' }}>
                   <CustomGoogleMap />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
