@@ -1,13 +1,15 @@
 import React from 'react'
 import { MultiButton } from '../MultiButton'
+import { MultiButtonNew } from '../MultibuttonNew'
+import { Link } from 'react-router-dom'
 
 
 
 
-export const CardPlan = ({ planType, planModality, price, firstFeature, secondFeature, thirdFeature, fontSz }) => {
+export const CardPlan = ({ planType, planModality, price, firstFeature, secondFeature, thirdFeature, fontSz, gapSize }) => {
     return (
         <React.Fragment>
-            <div className="cardPlan d-flex flex-column align-items-center justify-content-center" style={{ gap: '35px' }}>
+            <div className="cardPlan d-flex flex-column align-items-center justify-content-center" style={{ gap: gapSize + 'px' }}>
                 <div className="planType">
                     <span>{planType}</span>
                 </div>
@@ -22,8 +24,10 @@ export const CardPlan = ({ planType, planModality, price, firstFeature, secondFe
                         <li> {thirdFeature} </li>
                     </ul>
                 </div>
-                <MultiButton color="orange" text="Suscribete" width="160" link='/signup' />
+                <Link to='/signup'>
+                    <MultiButtonNew color="orange" text="Suscribete" width="160" BType='button' />
+                </Link>
             </div>
-        </React.Fragment>
+        </React.Fragment >
     )
 }

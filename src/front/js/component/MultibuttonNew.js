@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
-export const MultiButton = ({ color, text, width, link }) => {
+export const MultiButtonNew = ({ color, text, width, link, BType }) => {
     /*
     background-color: #ffc224;
     border: 2px solid #d0a42e;
@@ -44,9 +44,9 @@ export const MultiButton = ({ color, text, width, link }) => {
 
     return (
         <React.Fragment>
-            <div id='multiButton' style={colorComparator(color)} onClick={(e) => { navigate(`${link}`) }}>
+            <button id='multiButton' style={colorComparator(color)} type={`${BType}`}>
                 {text}
-            </div>
+            </button>
         </React.Fragment>
     )
 }

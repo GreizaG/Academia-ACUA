@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { MultiButton } from "../component/MultiButton";
 import { showNotification } from "../utils/ShowNotification";
+import { MultiButtonNew } from "../component/MultibuttonNew";
 
 const AdminProfReg = () => {
 
@@ -83,7 +84,7 @@ const AdminProfReg = () => {
                     <div className="me-2 flex-fill">
                         <label className="form-label">Tipo de identificación</label><br></br>
                         <select name="select">
-                            <option value="value1" selected>-----------</option>
+                            <option value="value1" defaultValue disabled>-----------</option>
                             <option value="value2">Cedula Nacional</option>
                             <option value="value3">DIMEX</option>
                             <option value="value3">Pasaporte</option>
@@ -98,15 +99,19 @@ const AdminProfReg = () => {
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Contraseña</label>
-                    <input type="password" className="form-control" placeholder="Contraseña" name="password" value={formData.password} onChange={handleInputChange} />
+                    <input type="password" className="form-control" placeholder="Contraseña" name="password" value={formData.password} onChange={handleInputChange} autoComplete="new-password" />
                 </div>
                 <div className="mb-4">
                     <label className="form-label">Confirmar contraseña</label>
-                    <input type="password" className="form-control" placeholder="Confirmar contraseña" />
+                    <input type="password" className="form-control" placeholder="Confirmar contraseña" autoComplete="new-password" />
                 </div>
-                <div className=" container d-flex justify-content-center mb-3">
-                    <button type="button" className="btn btn-primary" onClick={handleSubmit}>Guardar</button>
-
+                <div className=" container d-flex justify-content-center mb-3 gap-3">
+                    <Link to='/homeadmin'>
+                        <MultiButtonNew color="purple" text="Atras" width="130" Btype='button' />
+                    </Link>
+                    <div onClick={handleSubmit}>
+                        <MultiButtonNew color="orange" text="Guardar" width="130" Btype='button' />
+                    </div>
                     {/* <Link className="text-decoration-none" to="/homeadmin"> */}
                     {/* <MultiButton color='purple' text='Guardar' width='200' /> */}
                     {/* </Link> */}

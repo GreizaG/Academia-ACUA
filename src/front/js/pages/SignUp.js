@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { NavbarACUA } from '../component/NavbarACUA';
 import { showNotification } from "../utils/ShowNotification";
 import { Context } from "../store/appContext";
+import { MultiButtonNew } from "../component/MultibuttonNew";
 
 export const SignUp = () => {
   const { actions } = useContext(Context);
@@ -39,7 +40,6 @@ export const SignUp = () => {
 
   return (
     <React.Fragment>
-      <NavbarACUA />
       <div className="d-flex flex-column justify-content-center align-items-center" style={{ backgroundColor: '#f8f9fa' }}>
         <div style={{ position: 'relative', width: '100%' }}>
           <img src="https://i.postimg.cc/XJ784zpy/Whats-App-Image-2024-06-17-at-19-29-08.jpg"
@@ -160,8 +160,13 @@ export const SignUp = () => {
               required
             />
           </div>
-          <div className="mb-4">
-            <button type="button" className="btn btn-primary" onClick={handleSubmit} >Registrarse →</button>
+          <div className="d-flex flex-row justify-content-center gap-4 mb-3 mt-3">
+            <Link to='/'>
+              <MultiButtonNew color="purple" text="Atras" width="100" Btype='button' />
+            </Link>
+            <div onClick={handleSubmit}>
+              <MultiButtonNew color="orange" text="Enviar" width="100" Btype='button' />
+            </div>
           </div>
           <Link to={`/login`} className="mt-3">
             ¿Ya tienes un usuario? Inicia sesión aquí
