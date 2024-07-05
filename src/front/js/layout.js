@@ -92,7 +92,6 @@ const Layout = () => {
                         <Route path="/newmodality" element={<NewModality />} />
                         <Route path="/electronicinvoice" element={<ElectronicInvoice />} />
                         <Route path="/formprofessor" element={<FormProfessor />} />
-
                         <Route path="/undefined" element={<Undefined />} />
                         <Route path="*" element={<Undefined />} />
                     </Routes>
