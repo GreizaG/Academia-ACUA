@@ -13,21 +13,29 @@ export const NewCourseRegister = () => {
     const [formData, setFormData] = useState({
         professor_id: 0,
         course_id: 0,
-        student_id: 0,
+        student_id: 0
     })
 
-    const [searchTerm, setSearchTerm] = useState("")
-    const [options, setOptions] = useState([])
-    const [selectedOption, setSelectedOption] = useState(null)
+    const [searchStudentTerm, setSearchStudentTerm] = useState("")
+    const [studentOptions, setStudentOptions] = useState([])
+    const [selectedStudentOption, setSelectedStudentOption] = useState(null)
 
-    // const handleInputChange = (event) => {
-    //     const { name, value } = event.target;
-    //     setFormData((prevFormData) => ({
-    //         ...prevFormData,
-    //         [name]: value,
+    const [searchProfessorTerm, setSearchProfessorTerm] = useState("")
+    const [professorOptions, setProfessorOptions] = useState([])
+    const [selectedProfessorOption, setSelectedProfessorOption] = useState(null)
 
-    //     }))
-    // }
+    const [searchCourseTerm, setSearchCourseTerm] = useState("")
+    const [courseOptions, setCourseOptions] = useState([])
+    const [selectedCourseOption, setSelectedCourseOption] = useState(null)
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: value,
+
+        }))
+    }
 
     const handleSubmit = async () => {
         // event.preventDefault();
@@ -42,29 +50,57 @@ export const NewCourseRegister = () => {
 
     }
 
-    const handleSelectChange = (e) => {
-        const selectedId = e.target.value
-        const selectedObj = options.find(option => option.id === parseInt(selectedId))
-        console.log(selectedObj)
-        setSelectedOption(selectedObj)
+    const handleSelectStudentChange = (e) => {
+        const selectedStudentId = e.target.value
+        const selectedStudentObj = studentOptions.find(studentOption => studentOption.id === parseInt(selectedStudentId))
+        console.log(selectedStudentObj)
+        setSelectedStudentOption(selectedStudentObj)
         setFormData({
             ...formData,
-            student_id: selectedObj?.id
+            // course_id: selectedObj?.id,
+            // professor_id: selectedObj?.id,
+            student_id: selectedStudentObj?.id
+        })
+    }
+
+    const handleSelectProfessorChange = (e) => {
+        const selectedProfessorId = e.target.value
+        const selectedProfessorObj = professorOptions.find(professorOption => professorOption.id === parseInt(selectedProfessorId))
+        console.log(selectedProfessorObj)
+        setSelectedProfessorOption(selectedProfessorObj)
+        setFormData({
+            ...formData,
+            // course_id: selectedObj?.id,
+            professor_id: selectedProfessorObj?.id
+            // student_id: selectedStudentObj?.id
+        })
+    }
+
+    const handleSelectCourseChange = (e) => {
+        const selectedCourseId = e.target.value
+        const selectedCourseObj = courseOptions.find(courseOption => courseOption.id === parseInt(selectedCourseId))
+        console.log(selectedCourseObj)
+        setSelectedCourseOption(selectedCourseObj)
+        setFormData({
+            ...formData,
+            course_id: selectedCourseObj?.id
+            // professor_id: selectedObj?.id,
+            // student_id: selectedStudentObj?.id
         })
     }
 
     useEffect(() => {
-        if (searchTerm.length > 0) {
+        if (searchStudentTerm.length > 0) {
             const searchStudent = async () => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}/api/search/students`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 'term': searchTerm })
+                        body: JSON.stringify({ 'term': searchStudentTerm })
                     });
                     if (response.ok) {
                         const data = await response.json()
-                        setOptions(data.result)
+                        setStudentOptions(data.result)
                     } else {
                         console.log("Error obteniendo data")
                     }
@@ -74,9 +110,59 @@ export const NewCourseRegister = () => {
             };
             searchStudent()
         } else {
-            setOptions([])
+            setStudentOptions([])
         }
-    }, [searchTerm])
+    }, [searchStudentTerm])
+
+    useEffect(() => {
+        if (searchProfessorTerm.length > 0) {
+            const searchProfessor = async () => {
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/search/professors`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 'term': searchProfessorTerm })
+                    });
+                    if (response.ok) {
+                        const data = await response.json()
+                        setProfessorOptions(data.result)
+                    } else {
+                        console.log("Error obteniendo data")
+                    }
+                } catch (error) {
+                    console.log("Error obteniendo data", error)
+                }
+            };
+            searchProfessor()
+        } else {
+            setProfessorOptions([])
+        }
+    }, [searchProfessorTerm])
+
+    useEffect(() => {
+        if (searchCourseTerm.length > 0) {
+            const searchCourse = async () => {
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/search/courses`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 'term': searchCourseTerm })
+                    });
+                    if (response.ok) {
+                        const data = await response.json()
+                        setCourseOptions(data.result)
+                    } else {
+                        console.log("Error obteniendo data")
+                    }
+                } catch (error) {
+                    console.log("Error obteniendo data", error)
+                }
+            };
+            searchCourse()
+        } else {
+            setCourseOptions([])
+        }
+    }, [searchCourseTerm])
 
     return (
         <React.Fragment>
@@ -99,21 +185,21 @@ export const NewCourseRegister = () => {
                     <div className="d-flex mb-3 row">
                         <div className="me-2 flex-fill">
                             <>
-                                <label htmlFor="searcInput" className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>
-                                    Buscar estudiante
+                                <label htmlFor="searchStudentInput" className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>
+                                    Seleccionar estudiante
                                 </label>
                                 <input
                                     className="form-control mb-3"
                                     type="text"
-                                    id="searchInput"
+                                    id="searchStudentInput"
                                     placeholder="Buscar estudiante"
-                                    value={searchTerm}
-                                    onChange={(e) => { setSearchTerm(e.target.value) }}
+                                    value={searchStudentTerm}
+                                    onChange={(e) => { setSearchStudentTerm(e.target.value) }}
                                 />
-                                <select id="selectInput" className="form-control" value={selectedOption ? selectedOption.id : ""} onChange={handleSelectChange}>
+                                <select id="selectStudentInput" className="form-control" value={selectedStudentOption ? selectedStudentOption.id : ""} onChange={handleSelectStudentChange}>
                                     <option value="">Seleccionar estudiante</option>
-                                    {options.map((option) => {
-                                        return <option key={option.id} value={option.id}>{option.name} {option.last_name}</option>
+                                    {studentOptions.map((studentOption) => {
+                                        return <option key={studentOption.id} value={studentOption.id}>{studentOption.name} {studentOption.last_name}</option>
                                     })}
                                 </select>
                             </>
@@ -122,49 +208,45 @@ export const NewCourseRegister = () => {
                         </div>
                         <div className="me-2 flex-fill">
                             <>
-                                <label htmlFor="searcInput" className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>
-                                    Buscar estudiante
+                                <label htmlFor="searchProfessorInput" className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>
+                                    Buscar profesor
                                 </label>
                                 <input
                                     className="form-control mb-3"
                                     type="text"
-                                    id="searchInput"
-                                    placeholder="Buscar estudiante"
-                                    value={searchTerm}
-                                    onChange={(e) => { setSearchTerm(e.target.value) }}
+                                    id="searchProfessorInput"
+                                    placeholder="Buscar profesor"
+                                    value={searchProfessorTerm}
+                                    onChange={(e) => { setSearchProfessorTerm(e.target.value) }}
                                 />
-                                <select id="selectInput" className="form-control" value={selectedOption ? selectedOption.id : ""} onChange={handleSelectChange}>
-                                    <option value="">Seleccionar estudiante</option>
-                                    {options.map((option) => {
-                                        return <option key={option.id} value={option.id}>{option.name} {option.last_name}</option>
+                                <select id="selectProfessorInput" className="form-control" value={selectedProfessorOption ? selectedProfessorOption.id : ""} onChange={handleSelectProfessorChange}>
+                                    <option value="">Seleccionar profesor</option>
+                                    {professorOptions.map((professorOption) => {
+                                        return <option key={professorOption.id} value={professorOption.id}>{professorOption.name} {professorOption.last_name}</option>
                                     })}
                                 </select>
                             </>
-                            {/* <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>ID estudiante</label>
-                            <input className="form-control mb-3" placeholder="ID estudiante" name="student_id" value={formData.student_id} onChange={handleInputChange} /> */}
                         </div>
                         <div className="me-2 flex-fill">
                             <>
-                                <label htmlFor="searcInput" className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>
-                                    Buscar estudiante
+                                <label htmlFor="searchCourseInput" className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>
+                                    Buscar curso
                                 </label>
                                 <input
                                     className="form-control mb-3"
                                     type="text"
-                                    id="searchInput"
-                                    placeholder="Buscar estudiante"
-                                    value={searchTerm}
-                                    onChange={(e) => { setSearchTerm(e.target.value) }}
+                                    id="searchCourseInput"
+                                    placeholder="Buscar curso"
+                                    value={searchCourseTerm}
+                                    onChange={(e) => { setSearchCourseTerm(e.target.value) }}
                                 />
-                                <select id="selectInput" className="form-control" value={selectedOption ? selectedOption.id : ""} onChange={handleSelectChange}>
-                                    <option value="">Seleccionar estudiante</option>
-                                    {options.map((option) => {
-                                        return <option key={option.id} value={option.id}>{option.name} {option.last_name}</option>
+                                <select id="selectCourseInput" className="form-control" value={selectedCourseOption ? selectedCourseOption.id : ""} onChange={handleSelectCourseChange}>
+                                    <option value="">Seleccionar curso</option>
+                                    {courseOptions.map((courseOption) => {
+                                        return <option key={courseOption.id} value={courseOption.id}>{courseOption.name} {courseOption.last_name}</option>
                                     })}
                                 </select>
                             </>
-                            {/* <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>ID estudiante</label>
-                            <input className="form-control mb-3" placeholder="ID estudiante" name="student_id" value={formData.student_id} onChange={handleInputChange} /> */}
                         </div>
                     </div>
                     <div className="d-flex justify-content-between">
@@ -173,7 +255,7 @@ export const NewCourseRegister = () => {
                             <MultiButton color='purple' text='Volver' width='100' onClick={handleSubmit} />
                         </Link>
                         <MultiButton color='purple' text='Guardar' width='100' onClick={handleSubmit} /> */}
-                        <Link to="/homeadmin" className="text-decoration-none">
+                        <Link to="/registeredcourses" className="text-decoration-none">
                             <button type="button" className="btn btn-warning">Cancelar</button>
                         </Link>
                     </div>

@@ -42,6 +42,7 @@ import AdminStudReg from "./pages/AdminStudReg";
 import ProtectedRoute from "./component/frontAuth/ProtectedRoute";
 import Private from "./component/frontAuth/Private";
 import { NewCourseRegister } from "./pages/NewCourseRegister";
+import { RegisteredCourses } from "./pages/RegisteredCourses";
 
 
 
@@ -96,6 +97,7 @@ const Layout = () => {
                         <Route path="/professorpayment" element={< ProfessorPayment />} />
                         <Route path="/studentpayment" element={< StudentPayment />} />
                         <Route path="/newcourseregister" element={< NewCourseRegister />} />
+                        <Route path="/registeredcourses" element={< RegisteredCourses />} />
                         <Route path="/undefined" element={<Undefined />} />
                         <Route path="*" element={<Undefined />} />
                     </Routes>

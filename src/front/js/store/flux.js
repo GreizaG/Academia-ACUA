@@ -17,7 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			electronicinvoices: [],
 
-			newcourses: {},
+			registeredCourses: [],
 
 			singleAdministrator: {},
 
@@ -455,15 +455,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			// Todos los cursos registrados
 			getRegisteredCourses: () => {
-				fetch(process.env.BACKEND_URL + "/api/registeredcourses")
+				fetch(process.env.BACKEND_URL + "/api/allregisteredcourses")
 					.then(response => {
 						console.log(response);
 						return response.json();
 					})
 					.then((data) => {
 						console.log("Data:", data)
-						console.log(data.newcourses)
-						setStore({ newcourses: data.newcourses })
+						console.log(data.all_registered_courses)
+						setStore({ registeredCourses: data.all_registered_courses })
 					})
 					.catch((error) => {
 						console.log(error)

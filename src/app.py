@@ -209,14 +209,48 @@ def get_all_course():
 #         print(modalities_serialized)
 #     return jsonify({"modalities": modalities_serialized}), 200
 
+# @app.route('/api/allregisteredcourses', methods=['GET'])
+# def get_all_registered_courses():
+#     all_registered_courses = NewCourse.query.all()
+#     all_registered_courses_serialized = []
+#     for registered_course in all_registered_courses:
+#         all_registered_courses_serialized.append(registered_course.serialize())
+#         print(all_registered_courses_serialized)
+#     return jsonify({"all_registered_courses": all_registered_courses_serialized}), 200
+
 @app.route('/api/allregisteredcourses', methods=['GET'])
 def get_all_registered_courses():
-    all_registered_courses = NewCourse.query.all()
+    all_registered_courses = db.session.query(
+        NewCourse, Professor, Student, Course
+        ).join(
+            Professor, NewCourse.professor_id == Professor.id
+        ).join(
+            Student, NewCourse.student_id == Student.id
+        ).join(
+            Course, NewCourse.course_id == Course.id
+        ).all()
+    
     all_registered_courses_serialized = []
-    for registered_course in all_registered_courses:
-        all_registered_courses_serialized.append(registered_course.serialize())
-        print(all_registered_courses_serialized)
-    return jsonify({"all_register_courses": all_registered_courses_serialized}), 200
+    for new_course, professor, student, course in all_registered_courses:
+        all_registered_courses_serialized.append({
+            'new_course_id': new_course.id,
+            'professor_id': {
+                'id': professor.id,
+                'name': professor.name,
+                'last_name': professor.last_name
+            },
+            'student_id': {
+                'id': student.id,
+                'name': student.name,
+                'last_name': student.last_name
+            },
+            'course_id': {
+                'id': course.id,
+                'name': course.name
+            }
+        })
+    
+    return jsonify({"all_registered_courses": all_registered_courses_serialized}), 200
 
 
 #----------------------------------------------#
