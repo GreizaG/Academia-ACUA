@@ -36,6 +36,7 @@ const AdminProfReg = () => {
         const isCreated = await actions.newProfessor(formData)
         console.log(isCreated)
         if (isCreated) {
+            actions.getProfessors()
             showNotification("Profesor creado con éxito")
             navigate("/homeadmin")
         } else {

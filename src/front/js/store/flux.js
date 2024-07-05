@@ -355,7 +355,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getStudents: () => {
 				fetch(process.env.BACKEND_URL + "/api/students")
 					.then(response => {
-						console.log(response);
 						return response.json();
 					})
 					.then((data) => {
@@ -515,7 +514,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(data => {
 						console.log(data)
 						// setStore({ isProfessorCreated: true })
-						actions.getProfessors()
 						localStorage.setItem("userType", "profesor"); // Guardar el tipo de usuario en localStorage
 						console.log("Tipo de usuario guardado en localStorage");
 						return true

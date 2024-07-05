@@ -31,7 +31,7 @@ const GoogleMap = () => {
   return (
     <div
       ref={mapRef}
-      style={{ width: '100%', height: '400px', marginBottom: '50px' }}
+      style={{ width: '100%', height: '400px', marginBottom: '50px', borderRadius: '15px' }}
     ></div>
   );
 };
