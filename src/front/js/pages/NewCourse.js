@@ -35,7 +35,14 @@ export const NewCourse = () => {
         } else {
             showNotification("Ocurrió un error al tratar de agregar un nuevo curso", "error")
         }
+    }
 
+    const handleAll = () => {
+        const str = formData.name
+        if (str.trim().length > 0) {
+            handleSubmit()
+        }
+        showNotification("El campo no puede estar vacio", "error")
     }
 
     return (
@@ -64,11 +71,18 @@ export const NewCourse = () => {
                     </div>
                     <div className="d-flex justify-content-between">
                         <Link to="/homeadmin" className="text-decoration-none">
-                            <MultiButton color='purple' text='Volver' width='100' onClick={handleSubmit} />
+                            <MultiButton color='purple' text='Volver' width='100' />
                         </Link>
-                        <div onClick={handleSubmit}>
-                            <MultiButtonNew color="orange" text="Guardar" width="100" Btype='button' link='' />
-                        </div>
+                        <button type="button" class="btn btn-warning" id="multiButton" onClick={handleAll} style={{
+                            backgroundColor: '#ffc224',
+                            boxShadow: '4px 6px 0px #3d3d3d',
+                            border: '1px solid #000000',
+                            color: '#161439',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            width: '130px',
+                            paddingBottom: '28px',
+                        }}>Guardar</button>
                         {/* <Link to="/homeadmin" className="text-decoration-none">
                             <MultiButton color='purple' text='Guardar' width='100' onClick={handleSubmit} />
                         </Link> */}

@@ -3,13 +3,14 @@ import { useContext } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { MultiButton } from "../component/MultiButton";
+import { MultiButtonNew } from "../component/MultibuttonNew";
 import { showNotification } from "../utils/ShowNotification";
 
 const AdminStudReg = () => {
 
     const navigate = useNavigate()
     const { store, actions } = useContext(Context)
+    const [comparePassword, setComparePassword] = useState('')
     const [formData, setFormData] = useState({
         name: "",
         last_name: "",
@@ -42,9 +43,7 @@ const AdminStudReg = () => {
         }
 
 
-
         // setInterval(navigate("/homeadmin"), 2000)
-
     }
 
     return (
@@ -86,11 +85,11 @@ const AdminStudReg = () => {
                 <div className="d-flex mb-3">
                     <div className="me-2 flex-fill">
                         <label className="form-label">Tipo de identificación</label><br></br>
-                        <select name="select">
-                            <option value="value1" selected>-----------</option>
-                            <option value="value2">Cedula Nacional</option>
-                            <option value="value3">DIMEX</option>
-                            <option value="value3">Pasaporte</option>
+                        <select name="cardID_type" onChange={handleInputChange}>
+                            <option value="value1" defaultValue disabled>-----------</option>
+                            <option value="Cedula Naciona">Cedula Nacional</option>
+                            <option value="DIMEX">DIMEX</option>
+                            <option value="Pasaport">Pasaporte</option>
                         </select>
                         {/* <input className="form-control" placeholder="Tipo de identificación" name="cardID_type" value={formData.cardID_type} onChange={handleInputChange} /> */}
                     </div>
@@ -107,8 +106,20 @@ const AdminStudReg = () => {
                     <label className="form-label">Confirmar contraseña</label>
                     <input type="password" className="form-control" placeholder="Confirmar contraseña" />
                 </div>
-                <div className=" container d-flex justify-content-center mb-3">
-                    <button type="button" className="btn btn-primary" onClick={handleSubmit}>Enviar</button>
+                <div className=" container d-flex justify-content-center mb-3 gap-3">
+                    <Link to='/homeadmin'>
+                        <MultiButtonNew color="purple" text="Atras" width="130" Btype='button' />
+                    </Link>
+                    <button type="button" class="btn btn-warning" id="multiButton" onClick={handleSubmit} style={{
+                        backgroundColor: '#ffc224',
+                        boxShadow: '4px 6px 0px #3d3d3d',
+                        border: '1px solid #000000',
+                        color: '#161439',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        width: '130px',
+                        paddingBottom: '28px',
+                    }}>Enviar</button>
 
                     {/* <Link className="text-decoration-none" to="/homeadmin"> */}
                     {/* <MultiButton color='purple' text='Guardar' width='200' /> */}

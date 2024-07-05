@@ -16,6 +16,7 @@ const AdminProfReg = () => {
         last_name: "",
         cardID_type: "",
         number_cardID: 0,
+        cardID_type: '',
         email: "",
         phone_number: 0,
         password: ""
@@ -66,36 +67,40 @@ const AdminProfReg = () => {
                 <div className="d-flex mb-3">
                     <div className="me-2 flex-fill">
                         <label className="form-label">Nombre</label>
-                        <input className="form-control" placeholder="Nombre" name="name" value={formData.name} onChange={handleInputChange} />
+                        <input className="form-control" placeholder="Nombre" name="name" value={formData.name} onChange={handleInputChange}
+                            required />
                     </div>
                     <div className="ms-2 flex-fill">
                         <label className="form-label">Apellido</label>
-                        <input className="form-control" placeholder="Apellido" name="last_name" value={formData.last_name} onChange={handleInputChange} />
+                        <input className="form-control" placeholder="Apellido" name="last_name" value={formData.last_name} onChange={handleInputChange}
+                            required />
                     </div>
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Email</label>
-                    <input className="form-control" placeholder="Email" name="email" value={formData.email} onChange={handleInputChange} />
+                    <input className="form-control" placeholder="Email" name="email" value={formData.email} onChange={handleInputChange}
+                        required />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Número telefónico</label>
-                    <input className="form-control" placeholder="Número telefónico" name="phone_number" value={formData.phone_number} onChange={handleInputChange} />
+                    <input className="form-control" placeholder="Número telefónico" name="phone_number" value={formData.phone_number} onChange={handleInputChange}
+                        required />
                 </div>
                 <div className="d-flex mb-3">
                     <div className="me-2 flex-fill">
                         <label className="form-label">Tipo de identificación</label><br></br>
-                        <select name="select">
+                        <select name="cardID_type" onChange={handleInputChange}>
                             <option value="value1" defaultValue disabled>-----------</option>
-                            <option value="value2">Cedula Nacional</option>
-                            <option value="value3">DIMEX</option>
-                            <option value="value3">Pasaporte</option>
+                            <option value="Cedula Naciona">Cedula Nacional</option>
+                            <option value="DIMEX">DIMEX</option>
+                            <option value="Pasaport">Pasaporte</option>
                         </select>
 
                         {/*<input className="form-control" placeholder="Tipo de identificación" name="cardID_type" value={formData.cardID_type} onChange={handleInputChange}*/}
                     </div>
                     <div className="ms-2 flex-fill">
                         <label className="form-label">Número de identificación</label>
-                        <input className="form-control" placeholder="Número de identificación" name="number_cardID" value={formData.number_cardID} onChange={handleInputChange} />
+                        <input className="form-control" placeholder="Número de identificación" name="number_cardID" value={formData.number_cardID} onChange={handleInputChange} required />
                     </div>
                 </div>
                 <div className="mb-3">
@@ -110,9 +115,16 @@ const AdminProfReg = () => {
                     <Link to='/homeadmin'>
                         <MultiButtonNew color="purple" text="Atras" width="130" Btype='button' />
                     </Link>
-                    <div onClick={handleSubmit}>
-                        <MultiButtonNew color="orange" text="Guardar" width="130" Btype='button' />
-                    </div>
+                    <button type="button" class="btn btn-warning" id="multiButton" onClick={handleSubmit} style={{
+                        backgroundColor: '#ffc224',
+                        boxShadow: '4px 6px 0px #3d3d3d',
+                        border: '1px solid #000000',
+                        color: '#161439',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        width: '130px',
+                        paddingBottom: '28px',
+                    }}>Enviar</button>
                     {/* <Link className="text-decoration-none" to="/homeadmin"> */}
                     {/* <MultiButton color='purple' text='Guardar' width='200' /> */}
                     {/* </Link> */}
