@@ -52,7 +52,7 @@ const FormProfessor = () => {
         console.log(isCreated)
         if (isCreated) {
             showNotification("Datos modificados con éxito")
-            navigate("/homeadmin")
+            navigate("/homeprofessor")
         } else {
             showNotification("Ocurrió un error al tratar de modificar tu información", "error")
         }

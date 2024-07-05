@@ -60,7 +60,7 @@ export const HomeProfessor = () => {
                         </div>
                     </div> */}
                 </div>
-                <div className="d-flex align-content-center justify-content-center mb-3 mt-3 py-4 jumbo rounded-3">
+                {/* <div className="d-flex align-content-center justify-content-center mb-3 mt-3 py-4 jumbo rounded-3">
                     <div className="container-fluid align-content-center">
                         <h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Información próximo pago</h4>
                     </div>
@@ -88,7 +88,7 @@ export const HomeProfessor = () => {
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div className="d-flex align-content-center justify-content-center mb-3 mt-3 py-4 jumbo rounded-3">
                     <div className="container-fluid align-content-center">
                         <h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Información Bancaria</h4>

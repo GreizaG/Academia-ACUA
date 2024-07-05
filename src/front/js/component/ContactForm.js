@@ -27,9 +27,9 @@ export const ContactForm = () => {
                             <div className="col-xl-3 col-lg-4 col-md-6 mt-2">
                                 <select className="form-select" aria-label="Default select example">
                                     <option selected disabled> Requerimiento </option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    <option value="1">Pagos y servicios</option>
+                                    <option value="2">Informacion de pago</option>
+                                    <option value="3">Informacion de profesores</option>
                                 </select>
                             </div>
                         </div>

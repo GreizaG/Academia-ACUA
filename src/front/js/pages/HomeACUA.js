@@ -27,7 +27,7 @@ const HomeACUA = () => {
               <img className='pointsUpper' src="https://i.imgur.com/hJ1Q7yE.png" alt="" />
             </div>
             <h1 className='acuaTitle' id='bannerTitle'>ACUA</h1>
-            <p className='acuaShortResume mb-4'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nobis nesciunt alias consequuntur debitis hic excepturi id rem aut, expedit</p>
+            <p className='acuaShortResume mb-4'>Promovemos la formación y el disfrute de la música mediante capacitaciones, conciertos y talleres dirigidos todos los costarricenses. Nuestros valores incluyen la inclusión, profesionalismo y solidaridad. ¡Se parte de nuestra familia!</p>
             <MultiButton color='purple' text='Suscribete!' width='160' link='/signup' />
           </div>
         </div>
@@ -80,19 +80,23 @@ const HomeACUA = () => {
                 color="purple"
                 iconName="fa-solid fa-book"
                 iconColor="white"
-                iconBackgroundColor='#5751e1' />
+                iconBackgroundColor='#5751e1'
+                textBody={"¡Profesores altamente capacitados para enseñarte en tu proceso de aprendizaje!"
+                } />
               <CardGoals
                 text='Clases efectivas'
                 color="yellow"
                 iconName="fa-solid fa-certificate"
                 iconColor="white"
-                iconBackgroundColor='#ffc224' />
+                iconBackgroundColor='#ffc224'
+                textBody={"¡Disfruta de las clases presenciales o virtuales de la manera en que mejor te convenga!"} />
               <CardGoals
                 text=' Multiples instrumentos'
                 color="blue"
                 iconName="fa-solid fa-graduation-cap"
                 iconColor="white"
-                iconBackgroundColor='#1bcbe3' />
+                iconBackgroundColor='#1bcbe3'
+                textBody={"piano, batería, marimba, percusión clásica y popular, guitarra, guitarra eléctrica, ukelele, violín, violonchelo, etc."} />
             </div>
           </div>
         </div>
@@ -122,7 +126,7 @@ const HomeACUA = () => {
             <CardPlan
               planType='Personalizado'
               price='Contacta con nosotros'
-              fontSz='40'
+              fontSz='35'
               firstFeature='Clases de 1 hora'
               secondFeature='1 vez por semana'
               thirdFeature='Instrumentos a disposicion' />
@@ -135,8 +139,11 @@ const HomeACUA = () => {
           <div className="sectionAboutUs container d-flex flex-row flex-wrap justify-content-around align-items-center" style={{ paddingLeft: '30px', paddingRight: '30px' }}>
             <div className="textUs" style={{ width: '500px' }}>
               <h2 className='portraitPrimaryColor bigWeight fs-1 text-center text-white' style={{ zIndex: '3', paddingBottom: '55px' }}> Quienes <strong style={{ backgroundColor: '#ffc224', borderRadius: '15px', padding: '4px', fontWeight: '600' }}> Somos </strong></h2>
-              <p className='text-white mt-0 text-left'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus laudantium accusantium magni? Minus laboriosam, sequi temporibus animi ratione, blanditiis illum quidem perferendis quae exercitationem quibusdam aliquam nisi nostrum nihil aliquid?</p>
-              <p className='text-white mt-0 text-left'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus laudantium accusantium magni? Minus laboriosam, sequi temporibus animi ratione</p>
+              <p className='text-white mt-0 text-left'>La Fundación ACUA para el Aprendizaje y la Cultura Artística es una organización que promueve la formación y el disfrute de la música mediante capacitaciones, conciertos y talleres dirigidos a toda la población costarricense. Se caracteriza por sus valores de inclusión, profesionalismo y solidaridad.
+                La fundación ACUA cuenta con una academia de Música que se encuentra ubicada en Sabanilla, Montes de Oca y se especializa en la enseñanza musical de la primera infancia.
+              </p>
+              <p className='text-white mt-0 text-left'>Además, se realizan clases de piano, piano jazz, canto lírico y popular, batería, marimba, percusión clásica y popular, guitarra, guitarra eléctrica, ukelele, violín, violonchelo,  iniciación musical, composición, talleres de educación musical, producción musical, etc.
+              </p>
               <Link to='/signup'>
                 <p className='text-white mt-0 text-center' style={{ paddingTop: '30px' }}> <strong>¡Comienza ahora mismo!</strong></p>
               </Link>
@@ -161,15 +168,16 @@ const HomeACUA = () => {
                     <ContactCardInfo
                       icon="fa-location-dot"
                       title="Direccion"
-                      description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores " />
+                      description="San Jose, Montes de Oca, Mercedes, Barrio Alma Mater, Avenida 23, Calles Cartaga y La Cosecha, casa 15B" />
                     <ContactCardInfo
                       icon="fa-phone-volume"
                       title="Teléfono"
-                      description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores " />
+                      description="(+506) 84724586"
+                    />
                     <ContactCardInfo
                       icon="fa-envelope"
                       title="E-mail"
-                      description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores " />
+                      description="acua.academia@gmail.com" />
                   </div>
                 </div>
                 <div className="rightInfo col-xl-7 col-sm-12 mt-2">
