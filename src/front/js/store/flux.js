@@ -27,7 +27,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			professorCourses: [],
 
-			studentCourses: [],
+			studentCourses: {},
 
 			singleProfPay: {},
 

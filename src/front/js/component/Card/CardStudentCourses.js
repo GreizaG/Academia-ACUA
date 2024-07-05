@@ -8,7 +8,7 @@ export const CardStudentCourses = ({ professor, id, course }) => {
     const { store, actions } = useContext(Context);
 
     return (
-        <div className="cardProfessor me-3" style={{ width: '16rem' }}>
+        <div className="cardProfessor me-3" style={{ width: '20rem' }}>
             <div className="card cardProff" style={{ borderRadius: '20px' }}>
                 <div className="card-body">
                     <p className="card-title fs-5 text-center mediumWeight">{course}</p>
