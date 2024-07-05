@@ -11,7 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			modalities: [],
 
-			professorspayment: [],
+			professorsPayment: [],
 
 			studentspayment: [],
 
@@ -411,7 +411,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then((data) => {
 						console.log("Data:", data)
 						console.log(data.profpays)
-						setStore({ professorspayment: data.profpays })
+						setStore({ professorsPayment: data.profpays })
 					})
 					.catch((error) => {
 						console.log(error)

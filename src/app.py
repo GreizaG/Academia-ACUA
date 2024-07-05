@@ -163,14 +163,38 @@ def get_all_student():
     return jsonify({"students": studs_serialized}), 200
 
 # MÉTODO GET --> TRAER TODA LA INFORMACIÓN DE PAGO DE LOS PROFESORES
+# @app.route('/api/professorspayment', methods=['GET'])
+# def get_all_profpay():
+#     all_profpays = ProfessorPayment.query.all()
+#     profpays_serialized = []
+#     for profpay in all_profpays:
+#         profpays_serialized.append(profpay.serialize())
+#         print(profpays_serialized)
+#     return jsonify({"profpays": profpays_serialized}), 200
+
 @app.route('/api/professorspayment', methods=['GET'])
 def get_all_profpay():
-    all_profpays = ProfessorPayment.query.all()
-    profpays_serialized = []
-    for profpay in all_profpays:
-        profpays_serialized.append(profpay.serialize())
-        print(profpays_serialized)
-    return jsonify({"profpays": profpays_serialized}), 200
+    all_profpays = db.session.query(
+        ProfessorPayment, Professor
+    ).join(
+        Professor, ProfessorPayment.professor_id == Professor.id
+    ).all()
+
+    all_profpays_serialized = []
+    for professor_payment, professor in all_profpays:
+        all_profpays_serialized.append({
+            'professor_payment_id': professor_payment.id,
+            'payment_method': professor_payment.payment_method,
+            'phone_number': professor_payment.phone_number,
+            'iban_account': professor_payment.iban_account,
+            'professor_id':{
+                'id': professor.id,
+                'name': professor.name,
+                'last_name': professor.last_name
+            }
+        })
+
+    return jsonify({"profpays": all_profpays_serialized}), 200
 
 # MÉTODO GET --> TRAER TODA LA INFORMACIÓN DE PRÓXIMO PAGO DE ESTUDIANTES
 @app.route('/api/studentspayment', methods=['GET'])
