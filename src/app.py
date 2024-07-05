@@ -341,20 +341,48 @@ def get_single_profpay():
         return jsonify({"msg": "No existe información de pago para el profesor indicado"}), 400
     return jsonify({"professor_payment": single_profpay.serialize()}), 200
 
+# @app.route('/api/student/registeredcourses', methods=['GET'])
+# @jwt_required()
+# def get_student_courses():
+#     identity = get_jwt_identity()
+#     student = Student.query.filter_by(email = identity['email']).first()
+#     student_courses = NewCourse.query.filter_by(student_id = student.id)
+#     if student is None:
+#         return jsonify({"msg": "No existe estudiante con la información indicada"}), 401
+#     if identity['user_type'] != "student":
+#         return jsonify({"msg": "No tienes autorización para ingresar"}), 402
+#     student_courses_serialized = []
+#     for course in student_courses:
+#         student_courses_serialized.append(course.serialize())
+#         print(student_courses_serialized)
+#     return jsonify({"student_courses": student_courses_serialized}), 200
+
 @app.route('/api/student/registeredcourses', methods=['GET'])
 @jwt_required()
 def get_student_courses():
     identity = get_jwt_identity()
     student = Student.query.filter_by(email = identity['email']).first()
-    student_courses = NewCourse.query.filter_by(student_id = student.id)
     if student is None:
-        return jsonify({"msg": "No existe estudiante con la información indicada"}), 401
+        return jsonify({"msg": "No existe estudiante con la información indicada"})
     if identity['user_type'] != "student":
         return jsonify({"msg": "No tienes autorización para ingresar"}), 402
+    student_courses = db.session.query(
+        NewCourse, Course, Professor
+        ).join(
+           Course, NewCourse.course_id == Course.id
+        ).join(
+            Professor, NewCourse.professor_id == Professor.id
+        ).filter(NewCourse.student_id == student.id).all()
+    
     student_courses_serialized = []
-    for course in student_courses:
-        student_courses_serialized.append(course.serialize())
-        print(student_courses_serialized)
+    for new_course, course, professor in student_courses:
+        student_courses_serialized.append({
+            'new_course_id': new_course.id,
+            'course_name': course.name,
+            'professor_name': professor.name,
+            'professor_last_name': professor.last_name
+        })
+    
     return jsonify({"student_courses": student_courses_serialized}), 200
 
 @app.route('/api/studentpayment/', methods=['GET'])

@@ -15,7 +15,7 @@ export const HomeStudent = () => {
 		actions.getSingleStudPay()
 	}, [])
 
-	console.log(store.studentCourses?.student_courses)
+	console.log(store.studentCourses)
 	console.log(store.singleStudPay)
 
 	return (
@@ -31,7 +31,7 @@ export const HomeStudent = () => {
 					<>
 						{store.studentCourses?.student_courses && store.studentCourses?.student_courses.map(studentCourse => {
 							return (
-								<CardStudentCourses course={studentCourse.course_id} professor={studentCourse.professor_id} key={studentCourse.course_id} id={studentCourse.course_id} />
+								<CardStudentCourses course={studentCourse.course_name} professor={`${studentCourse.professor_name}` + ' ' + `${studentCourse.professor_last_name}`} key={studentCourse.new_course_id} id={studentCourse.new_course_id} />
 							)
 						})}
 					</>
@@ -54,7 +54,7 @@ export const HomeStudent = () => {
 						</div>
 					</div> */}
 				</div>
-				<div className="d-flex align-content-center justify-content-center mb-3 mt-3 py-4 jumbo rounded-3">
+				{/* <div className="d-flex align-content-center justify-content-center mb-3 mt-3 py-4 jumbo rounded-3">
 					<div className="container-fluid align-content-center">
 						<h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Mis Profesores</h4>
 					</div>
@@ -74,7 +74,7 @@ export const HomeStudent = () => {
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> */}
 				<div className="d-flex align-content-center justify-content-center mb-3 mt-3 py-4 jumbo rounded-3">
 					<div className="container-fluid align-content-center">
 						<h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Mi próximo pago</h4>
