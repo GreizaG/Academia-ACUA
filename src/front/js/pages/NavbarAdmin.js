@@ -50,7 +50,7 @@ export const NavbarAdmin = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/professorpayment" className="nav-link">
+                                <Link to="/professorspaymentregister" className="nav-link">
                                     <span className="me-4">Pago profesores</span>
                                 </Link>
                             </li>

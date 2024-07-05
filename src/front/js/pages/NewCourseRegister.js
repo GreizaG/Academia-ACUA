@@ -43,7 +43,7 @@ export const NewCourseRegister = () => {
         console.log(isCreated)
         if (isCreated) {
             showNotification("Nuevo curso registrado con éxito")
-            navigate("/homeadmin")
+            navigate("/registeredcourses")
         } else {
             showNotification("Ocurrió un error al tratar de registrar un nuevo curso", "error")
         }
