@@ -36,7 +36,6 @@ from sqlalchemy.sql.functions import ReturnTypeFromArgs
 # from models import Person
 
 class unaccent(ReturnTypeFromArgs):
-    __tablename__ = 'unaccent'
     __inherit_cache__ = True
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -1093,7 +1092,7 @@ def handle_search_students():
     term = body.get('term', None)
     print(term, "TERMINO")
     if term is not None:
-        students = Student.query.filter((unaccent(Student.name).ilike("%"+term+"%"))).all()
+        students = Student.query.filter((Student.name).ilike("%"+term+"%")).all()
         response = [student.serialize() for student in students]
 
         if students:
@@ -1109,7 +1108,7 @@ def handle_search_professors():
     term = body.get('term', None)
     print(term, "TERMINO")
     if term is not None:
-        professors = Professor.query.filter((unaccent(Professor.name).ilike("%"+term+"%"))).all()
+        professors = Professor.query.filter((Professor.name).ilike("%"+term+"%")).all()
         response = [professor.serialize() for professor in professors]
 
         if professors:
@@ -1125,7 +1124,7 @@ def handle_search_courses():
     term = body.get('term', None)
     print(term, "TERMINO")
     if term is not None:
-        courses = Course.query.filter((unaccent(Course.name).ilike("%"+term+"%"))).all()
+        courses = Course.query.filter((Course.name).ilike("%"+term+"%")).all()
         response = [course.serialize() for course in courses]
 
         if courses:
@@ -1133,6 +1132,54 @@ def handle_search_courses():
         
         return jsonify({"msg": "No se encuentran cursos"}), 404
     return jsonify({"msg": "Es necesario el término de búsqueda"}), 400
+
+# @app.route('/api/search/students',methods=['POST'])
+# def handle_search_students():
+#     body = request.get_json(silent=True)
+#     print(body, "BODY")
+#     term = body.get('term', None)
+#     print(term, "TERMINO")
+#     if term is not None:
+#         students = Student.query.filter((unaccent(Student.name).ilike("%"+term+"%"))).all()
+#         response = [student.serialize() for student in students]
+
+#         if students:
+#             return jsonify({"result": response}), 200
+        
+#         return jsonify({"msg": "No se encuentran estudiantes"}), 404
+#     return jsonify({"msg": "Es necesario el término de búsqueda"}), 400
+
+# @app.route('/api/search/professors',methods=['POST'])
+# def handle_search_professors():
+#     body = request.get_json(silent=True)
+#     print(body, "BODY")
+#     term = body.get('term', None)
+#     print(term, "TERMINO")
+#     if term is not None:
+#         professors = Professor.query.filter((unaccent(Professor.name).ilike("%"+term+"%"))).all()
+#         response = [professor.serialize() for professor in professors]
+
+#         if professors:
+#             return jsonify({"result": response}), 200
+        
+#         return jsonify({"msg": "No se encuentran profesores"}), 404
+#     return jsonify({"msg": "Es necesario el término de búsqueda"}), 400
+
+# @app.route('/api/search/courses',methods=['POST'])
+# def handle_search_courses():
+#     body = request.get_json(silent=True)
+#     print(body, "BODY")
+#     term = body.get('term', None)
+#     print(term, "TERMINO")
+#     if term is not None:
+#         courses = Course.query.filter((unaccent(Course.name).ilike("%"+term+"%"))).all()
+#         response = [course.serialize() for course in courses]
+
+#         if courses:
+#             return jsonify({"result": response}), 200
+        
+#         return jsonify({"msg": "No se encuentran cursos"}), 404
+#     return jsonify({"msg": "Es necesario el término de búsqueda"}), 400
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
