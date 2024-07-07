@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { MultiButton } from "../component/MultiButton";
 import { MultiButtonNew } from "../component/MultibuttonNew";
 import { showNotification } from "../utils/ShowNotification";
+import { NavbarAdmin } from "./NavbarAdmin";
 
 export const NewCourse = () => {
 
@@ -48,6 +49,7 @@ export const NewCourse = () => {
 
     return (
         <React.Fragment>
+            <NavbarAdmin />
             <div className="d-flex flex-column justify-content-start align-items-center min-vh-100"
                 style={{ backgroundColor: '#f8f9fa' }}>
                 <div style={{ position: 'relative', width: '100%' }}>
@@ -60,14 +62,14 @@ export const NewCourse = () => {
                         position: 'absolute', top: '50%', left: '35%', transform: 'translate(-45%, -50%)',
                         color: 'black'
                     }}>
-                        <h1>Registrar nuevo curso</h1>
+                        <h3>Registrar nuevo curso</h3>
                     </div>
                 </div>
-                <form className="mt-5 p-5 rounded shadow mb-5" style={{ backgroundColor: '#e9ecef' }}>
+                <form className="mt-5 p-5 mb-5 bg-white registerForm d-flex flex-column justify-content-center" style={{ backgroundColor: '#e9ecef' }}>
                     <div className="d-flex mb-3">
                         <div className="me-2 flex-fill">
-                            <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>Introduzca nombre del nuevo curso</label>
-                            <input className="form-control mb-3" placeholder="Nombre nuevo curso" name="name" value={formData.name} onChange={handleInputChange} />
+                            <label className="form-label mediumWeight portraitSecundaryColor fs-6" style={{ color: '#5751e1' }}>Introduzca nombre del nuevo curso</label>
+                            <input className="form-control mb-3" style={{ borderRadius: '15px' }} placeholder="Nombre nuevo curso" name="name" value={formData.name} onChange={handleInputChange} />
                         </div>
                     </div>
                     <div className="d-flex justify-content-between">

@@ -35,12 +35,10 @@ export const HomeAdmin = () => {
 						<h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Profesores</h4>
 					</div>
 				</div>
-				<div className="container-fluid d-flex ms-5 ps-5">
-
+				<div className="container d-flex ms-5 ps-5 gap-4 flex-wrap mb-4">
 					{/* <CarouselAdminProfessor /> */}
 
 					{/* <CarouselAdmin array={store.professors} /> */}
-
 					<>
 						{store.professors && store.professors.map((professor) => {
 							return (
@@ -48,9 +46,8 @@ export const HomeAdmin = () => {
 							)
 						})}
 					</>
-
 				</div>
-				<div className="container-fluid d-flex justify-content-center my-3">
+				<div className="container-fluid d-flex justify-content-center my-3 ms-5">
 					<Link to="/adminprofreg" className="text-decoration-none">
 						<MultiButton color='purple' text='Agregar nuevo profesor' width='200' />
 					</Link>
@@ -95,7 +92,7 @@ export const HomeAdmin = () => {
 					<>
 						{store.students && store.students.map((student) => {
 							return (
-								<CardAdminStudent name={student.name} last_name={student.last_name} key={student.number_carID} id={student.id} />
+								<CardAdminProfessor name={student.name} last_name={student.last_name} key={student.number_carID} id={student.id} />
 							)
 						})}
 					</>
