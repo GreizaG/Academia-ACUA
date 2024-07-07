@@ -385,20 +385,23 @@ def get_student_courses():
     if identity['user_type'] != "student":
         return jsonify({"msg": "No tienes autorización para ingresar"}), 402
     student_courses = db.session.query(
-        NewCourse, Course, Professor
+        NewCourse, Course, Professor, Modality
         ).join(
            Course, NewCourse.course_id == Course.id
         ).join(
             Professor, NewCourse.professor_id == Professor.id
+        ).join(
+            Modality, NewCourse.modality_id == Modality.id
         ).filter(NewCourse.student_id == student.id).all()
     
     student_courses_serialized = []
-    for new_course, course, professor in student_courses:
+    for new_course, course, professor, modality in student_courses:
         student_courses_serialized.append({
             'new_course_id': new_course.id,
             'course_name': course.name,
             'professor_name': professor.name,
-            'professor_last_name': professor.last_name
+            'professor_last_name': professor.last_name,
+            'modality_name': modality.name
         })
     
     return jsonify({"student_courses": student_courses_serialized}), 200

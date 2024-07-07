@@ -31,7 +31,7 @@ export const HomeStudent = () => {
 					<>
 						{store.studentCourses?.student_courses && store.studentCourses?.student_courses.map(studentCourse => {
 							return (
-								<CardStudentCourses course={studentCourse.course_name} professor={`${studentCourse.professor_name}` + ' ' + `${studentCourse.professor_last_name}`} key={studentCourse.new_course_id} id={studentCourse.new_course_id} />
+								<CardStudentCourses modality={studentCourse.modality_name} course={studentCourse.course_name} professor={`${studentCourse.professor_name}` + ' ' + `${studentCourse.professor_last_name}`} key={studentCourse.new_course_id} id={studentCourse.new_course_id} />
 							)
 						})}
 					</>
