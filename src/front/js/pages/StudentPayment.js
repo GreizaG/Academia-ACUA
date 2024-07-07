@@ -82,8 +82,7 @@ export const StudentPayment = () => {
 
     return (
         <React.Fragment>
-            <div className="d-flex flex-column justify-content-center align-items-center"
-                style={{ backgroundColor: '#f8f9fa' }}>
+            <div className="d-flex flex-column justify-content-center align-items-center bg-white">
                 <div style={{ position: 'relative', width: '100%' }}>
                     <img src="https://i.postimg.cc/XJ784zpy/Whats-App-Image-2024-06-17-at-19-29-08.jpg"
                         alt="Jumbotron" className="img-fluid mb-3" style={{
@@ -97,15 +96,15 @@ export const StudentPayment = () => {
                         <h1>Información próximo pago estudiante</h1>
                     </div>
                 </div>
-                <form className="mt-5 p-5 rounded shadow mb-5" style={{ backgroundColor: '#e9ecef' }}>
+                <form className="mt-5 p-5 shadow mb-5 bg-white" style={{ borderRadius: '15px' }}>
                     <div className="d-flex mb-3 row">
                         <div className="me-2 flex-fill">
-                            <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>Fecha de próximo pago</label>
-                            <input className="form-control mb-3" placeholder="Fecha Mes Año" name="date" value={formData.date} onChange={handleInputChange} />
+                            <label className="form-label fs-5 mb-3 mediumWeight portraitSecundaryColor">Fecha de próximo pago</label>
+                            <input className="form-control mb-3" placeholder="Fecha Mes Año" name="date" value={formData.date} onChange={handleInputChange} style={{ borderRadius: '15px' }} />
                         </div>
                         <div className="me-2 flex-fill">
-                            <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>Monto</label>
-                            <input className="form-control mb-3" placeholder="Monto en colones" name="mount" value={formData.mount} onChange={handleInputChange} />
+                            <label className="form-label fs-5 mb-3 mt-3 mediumWeight portraitSecundaryColor">Monto</label>
+                            <input className="form-control mb-3" placeholder="Monto en colones" name="mount" value={formData.mount} onChange={handleInputChange} style={{ borderRadius: '15px' }} />
                         </div>
                         {/* <div className="me-2 flex-fill">
                             <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>Fecha vencimiento</label>
@@ -113,7 +112,7 @@ export const StudentPayment = () => {
                         </div> */}
                         <div className="me-2 flex-fill">
                             <>
-                                <label htmlFor="searcInput" className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>
+                                <label htmlFor="searcInput" className="form-label fs-5 mb-3 mt-3 mediumWeight portraitSecundaryColor">
                                     Buscar estudiante
                                 </label>
                                 <input
@@ -123,11 +122,11 @@ export const StudentPayment = () => {
                                     placeholder="Buscar estudiante"
                                     value={searchTerm}
                                     onChange={(e) => { setSearchTerm(e.target.value) }}
-                                />
-                                <select id="selectInput" className="form-control" value={selectedOption ? selectedOption.id : ""} onChange={handleSelectChange}>
+                                    style={{ borderRadius: '15px' }} />
+                                <select id="selectInput" className="form-control" value={selectedOption ? selectedOption.id : ""} onChange={handleSelectChange} style={{ borderRadius: '15px' }}>
                                     <option value="">Seleccionar estudiante</option>
                                     {options.map((option) => {
-                                        return <option key={option.id} value={option.id}>{option.name} {option.last_name}</option>
+                                        return <option key={option.id} value={option.id} >{option.name} {option.last_name}</option>
                                     })}
                                 </select>
                             </>
@@ -135,7 +134,7 @@ export const StudentPayment = () => {
                             <input className="form-control mb-3" placeholder="ID estudiante" name="student_id" value={formData.student_id} onChange={handleInputChange} /> */}
                         </div>
                     </div>
-                    <div className="d-flex justify-content-between">
+                    <div className="d-flex justify-content-between pt-4">
                         <Link to='/registeredcourses'>
                             <MultiButtonNew color="purple" text="Atras" width="100" Btype='button' />
                         </Link>

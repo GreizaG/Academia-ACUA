@@ -31,7 +31,7 @@ export const ProfPayReg = () => {
                 </div>
                 <div className="container d-flex flex-column justify-content-center bg-white registerForm" style={{ width: 'fit-content' }}>
                     <div className="d-flex flex-row container justify-content-center">
-                        <table className="table table-hover" style={{ width: '700px' }}>
+                        <table className="table table-hover" style={{ width: '55vw' }}>
                             <thead>
                                 <tr>
                                     <th className="text-center" scope="col">N°</th>
@@ -48,7 +48,7 @@ export const ProfPayReg = () => {
                             </tbody>
                         </table>
                     </div>
-                    <div className="container-fluid d-flex my-3 justify-content-between pt-4">
+                    <div className="container-fluid d-flex my-3 justify-content-between">
                         <Link to="/homeadmin" className="text-decoration-none me-5">
                             <MultiButton color='purple' text='Atrás' width='120' />
                         </Link>
