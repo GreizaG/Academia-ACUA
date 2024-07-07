@@ -42,9 +42,26 @@ const AdminStudReg = () => {
         } else {
             showNotification("Ocurrió un error al tratar de agregar un estudiante", "error")
         }
+    }
 
+    const handleAll = () => {
+        const strName = formData.name
+        const strLastName = formData.last_name
+        const id = formData.number_cardID
+        const phone = formData.phone_number
+        const strEmail = formData.email
+        const strPass = formData.password
 
-        // setInterval(navigate("/homeadmin"), 2000)
+        if (strName.trim().length &&
+            strLastName.trim().length &&
+            id.length &&
+            phone.length &&
+            strEmail.trim().length &&
+            strPass.trim().length > 0) {
+            handleSubmit()
+        } else {
+            showNotification("Debes agregar toda la información solicitada", "error")
+        }
     }
 
     return (
@@ -112,7 +129,7 @@ const AdminStudReg = () => {
                         <Link to='/homeadmin'>
                             <MultiButtonNew color="purple" text="Atras" width="130" Btype='button' />
                         </Link>
-                        <button type="button" class="btn btn-warning" id="multiButton" onClick={handleSubmit} style={{
+                        <button type="button" class="btn btn-warning" id="multiButton" onClick={handleAll} style={{
                             backgroundColor: '#ffc224',
                             boxShadow: '4px 6px 0px #3d3d3d',
                             border: '1px solid #000000',

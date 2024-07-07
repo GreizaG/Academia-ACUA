@@ -42,9 +42,8 @@ export const NewCourse = () => {
         if (str.trim().length > 0) {
             handleSubmit()
         } else {
-
+            showNotification("Debes agregar el nombre del curso", "error")
         }
-
     }
 
     return (
