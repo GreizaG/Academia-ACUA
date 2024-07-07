@@ -22,7 +22,7 @@ const FormStudent = () => {
         phone_number: store.singleStudent.student?.phone_number,
         province: "",
         canton: "",
-        distric: ""
+        district: ""
     })
 
     useEffect(() => {
@@ -128,7 +128,7 @@ const FormStudent = () => {
                     </div>
                     <div className="me-2 flex-fill">
                         <label className="form-label">Distrito</label>
-                        <input className="form-control" placeholder="Distrito" name="distric" value={formData.distric} onChange={handleInputChange} />
+                        <input className="form-control" placeholder="Distrito" name="district" value={formData.district} onChange={handleInputChange} />
                     </div>
                 </div>
                 {/* <hr />

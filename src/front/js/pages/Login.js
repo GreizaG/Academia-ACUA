@@ -47,8 +47,7 @@ const Login = () => {
                 <div style={{ position: "relative", width: "100%" }}>
                     <img src="https://i.postimg.cc/XJ784zpy/Whats-App-Image-2024-06-17-at-19-29-08.jpg" alt="Jumbotron" className="img-fluid mb-3" style={{ width: "100%", maxHeight: "150px", objectFit: "cover" }} />
                     <div style={{ position: "absolute", top: "50%", left: "20%", transform: "translate(-20%, -50%)", color: "black" }}>
-                        <h1>¡Bienvenido estudiante!</h1>
-                        <p>Sé parte de la familia ACUA</p>
+                        <h1>¡Bienvenid@!</h1>
                     </div>
                 </div>
                 <div className="d-flex flex-column justify-content-center align-items-center" style={{ flexGrow: 1 }}>

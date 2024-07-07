@@ -28,6 +28,10 @@ export const NewCourseRegister = () => {
     const [courseOptions, setCourseOptions] = useState([])
     const [selectedCourseOption, setSelectedCourseOption] = useState(null)
 
+    const [searchModalityTerm, setSearchModalityTerm] = useState("")
+    const [modalityOptions, setModalityOptions] = useState([])
+    const [selectedModalityOption, setSelectedModalityOption] = useState(null)
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevFormData) => ({
@@ -84,6 +88,19 @@ export const NewCourseRegister = () => {
         setFormData({
             ...formData,
             course_id: selectedCourseObj?.id
+            // professor_id: selectedObj?.id,
+            // student_id: selectedStudentObj?.id
+        })
+    }
+
+    const handleSelectModalityChange = (e) => {
+        const selectedModalityId = e.target.value
+        const selectedModalityObj = modalityOptions.find(modalityOption => modalityOption.id === parseInt(selectedModalityId))
+        console.log(selectedModalityObj)
+        setSelectedModalityOption(selectedModalityObj)
+        setFormData({
+            ...formData,
+            modality_id: selectedModalityObj?.id
             // professor_id: selectedObj?.id,
             // student_id: selectedStudentObj?.id
         })
@@ -164,6 +181,31 @@ export const NewCourseRegister = () => {
         }
     }, [searchCourseTerm])
 
+    useEffect(() => {
+        if (searchModalityTerm.length > 0) {
+            const searchModality = async () => {
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/search/modalities`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 'term': searchModalityTerm })
+                    });
+                    if (response.ok) {
+                        const data = await response.json()
+                        setModalityOptions(data.result)
+                    } else {
+                        console.log("Error obteniendo data")
+                    }
+                } catch (error) {
+                    console.log("Error obteniendo data", error)
+                }
+            };
+            searchModality()
+        } else {
+            setModalityOptions([])
+        }
+    }, [searchModalityTerm])
+
     return (
         <React.Fragment>
             <div className="d-flex flex-column justify-content-center align-items-center"
@@ -209,7 +251,7 @@ export const NewCourseRegister = () => {
                         <div className="me-2 flex-fill">
                             <>
                                 <label htmlFor="searchProfessorInput" className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>
-                                    Buscar profesor
+                                    Seleccionar profesor
                                 </label>
                                 <input
                                     className="form-control mb-3"
@@ -230,7 +272,7 @@ export const NewCourseRegister = () => {
                         <div className="me-2 flex-fill">
                             <>
                                 <label htmlFor="searchCourseInput" className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>
-                                    Buscar curso
+                                    Seleccionar curso
                                 </label>
                                 <input
                                     className="form-control mb-3"
@@ -244,6 +286,27 @@ export const NewCourseRegister = () => {
                                     <option value="">Seleccionar curso</option>
                                     {courseOptions.map((courseOption) => {
                                         return <option key={courseOption.id} value={courseOption.id}>{courseOption.name} {courseOption.last_name}</option>
+                                    })}
+                                </select>
+                            </>
+                        </div>
+                        <div className="me-2 flex-fill">
+                            <>
+                                <label htmlFor="searchModalityInput" className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>
+                                    Seleccionar modalidad
+                                </label>
+                                <input
+                                    className="form-control mb-3"
+                                    type="text"
+                                    id="searchModalityInput"
+                                    placeholder="Buscar modalidad"
+                                    value={searchModalityTerm}
+                                    onChange={(e) => { setSearchModalityTerm(e.target.value) }}
+                                />
+                                <select id="selectModalityInput" className="form-control" value={selectedModalityOption ? selectedModalityOption.id : ""} onChange={handleSelectModalityChange}>
+                                    <option value="">Seleccionar modalidad</option>
+                                    {modalityOptions.map((modalityOption) => {
+                                        return <option key={modalityOption.id} value={modalityOption.id}>{modalityOption.name}</option>
                                     })}
                                 </select>
                             </>

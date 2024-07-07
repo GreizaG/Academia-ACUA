@@ -31,7 +31,7 @@ const FormProfessor = () => {
         phone_number: store.singleProfessor.professor?.phone_number,
         province: "",
         canton: "",
-        distric: ""
+        district: ""
     })
 
     useEffect(() => {
@@ -52,7 +52,7 @@ const FormProfessor = () => {
         console.log(isCreated)
         if (isCreated) {
             showNotification("Datos modificados con éxito")
-            navigate("/homeadmin")
+            navigate("/homeprofessor")
         } else {
             showNotification("Ocurrió un error al tratar de modificar tu información", "error")
         }
@@ -123,15 +123,15 @@ const FormProfessor = () => {
                 <div className="d-flex mb-3">
                     <div className="me-2 flex-fill">
                         <label className="form-label">Provincia</label>
-                        <input className="form-control" placeholder="Provincia" name="province" onChange={handleInputChange} />
+                        <input className="form-control" placeholder="Provincia" name="province" value={formData.province} onChange={handleInputChange} />
                     </div>
                     <div className="me-2 flex-fill">
                         <label className="form-label">Cantón</label>
-                        <input className="form-control" placeholder="Cantón" name="canton" onChange={handleInputChange} />
+                        <input className="form-control" placeholder="Cantón" name="canton" value={formData.canton} onChange={handleInputChange} />
                     </div>
                     <div className="me-2 flex-fill">
                         <label className="form-label">Distrito</label>
-                        <input className="form-control" placeholder="Distrito" name="distric" onChange={handleInputChange} />
+                        <input className="form-control" placeholder="Distrito" name="district" value={formData.district} onChange={handleInputChange} />
                     </div>
                 </div>
                 {/* <hr />
