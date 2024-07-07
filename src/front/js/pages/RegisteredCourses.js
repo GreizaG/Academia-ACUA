@@ -38,11 +38,12 @@ export const RegisteredCourses = () => {
                                     <th className="text-center" >Nombre del curso</th>
                                     <th className="text-center" >Nombre del estudiante</th>
                                     <th className="text-center" >Nombre del profesor</th>
+                                    <th className="text-center" >Modalidad</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {store.registeredCourses && store.registeredCourses.map(registeredCourse =>
-                                    (<ListRegisteredCourses course={registeredCourse.course_id.name} professor={`${registeredCourse.professor_id.name}` + ' ' + `${registeredCourse.professor_id.last_name}`} student={`${registeredCourse.student_id.name}` + ' ' + `${registeredCourse.student_id.last_name}`} key={registeredCourse.new_course_id} id={registeredCourse.new_course_id} />)
+                                    (<ListRegisteredCourses course={registeredCourse.course_id.name} modality={registeredCourse.modality_id.name} professor={`${registeredCourse.professor_id.name}` + ' ' + `${registeredCourse.professor_id.last_name}`} student={`${registeredCourse.student_id.name}` + ' ' + `${registeredCourse.student_id.last_name}`} key={registeredCourse.new_course_id} id={registeredCourse.new_course_id} />)
                                 )}
                             </tbody>
                         </table>

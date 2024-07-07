@@ -59,7 +59,7 @@ const AdminStudReg = () => {
                     position: 'absolute', top: '50%', left: '35%', transform: 'translate(-45%, -50%)',
                     color: 'black'
                 }}>
-                    <h1>Registro de nuevo profesor</h1>
+                    <h1>Registro de nuevo estudiante</h1>
                 </div>
             </div>
             <form className="mt-4 p-4 rounded shadow mb-4" style={{ backgroundColor: '#e9ecef' }}>

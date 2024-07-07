@@ -18,8 +18,10 @@ from api.models import StudentPayment
 from api.models import ElectronicInvoice
 from api.models import Course
 from api.models import ContactForm
-# from api.models import Modality
+from api.models import Modality
 from api.models import NewCourse
+from api.models import ProfessorNextPayment
+from api.models import ProfessorDescription
 from flask_cors import CORS
 
 from flask_jwt_extended import create_access_token
@@ -162,16 +164,6 @@ def get_all_student():
         print(studs_serialized)
     return jsonify({"students": studs_serialized}), 200
 
-# MÉTODO GET --> TRAER TODA LA INFORMACIÓN DE PAGO DE LOS PROFESORES
-# @app.route('/api/professorspayment', methods=['GET'])
-# def get_all_profpay():
-#     all_profpays = ProfessorPayment.query.all()
-#     profpays_serialized = []
-#     for profpay in all_profpays:
-#         profpays_serialized.append(profpay.serialize())
-#         print(profpays_serialized)
-#     return jsonify({"profpays": profpays_serialized}), 200
-
 @app.route('/api/professorspayment', methods=['GET'])
 def get_all_profpay():
     all_profpays = db.session.query(
@@ -224,38 +216,65 @@ def get_all_course():
         print(courses_serialized)
     return jsonify({"courses": courses_serialized}), 200
 
-# @app.route('/api/modalities', methods=['GET'])
-# def get_all_modality():
-#     all_modalities = Modality.query.all()
-#     modalities_serialized = []
-#     for modality in all_modalities:
-#         modalities_serialized.append(modality.serialize())
-#         print(modalities_serialized)
-#     return jsonify({"modalities": modalities_serialized}), 200
+@app.route('/api/modalities', methods=['GET'])
+def get_all_modality():
+    all_modalities = Modality.query.all()
+    modalities_serialized = []
+    for modality in all_modalities:
+        modalities_serialized.append(modality.serialize())
+        print(modalities_serialized)
+    return jsonify({"modalities": modalities_serialized}), 200
 
 # @app.route('/api/allregisteredcourses', methods=['GET'])
 # def get_all_registered_courses():
-#     all_registered_courses = NewCourse.query.all()
+#     all_registered_courses = db.session.query(
+#         NewCourse, Professor, Student, Course
+#         ).join(
+#             Professor, NewCourse.professor_id == Professor.id
+#         ).join(
+#             Student, NewCourse.student_id == Student.id
+#         ).join(
+#             Course, NewCourse.course_id == Course.id
+#         ).all()
+    
 #     all_registered_courses_serialized = []
-#     for registered_course in all_registered_courses:
-#         all_registered_courses_serialized.append(registered_course.serialize())
-#         print(all_registered_courses_serialized)
+#     for new_course, professor, student, course in all_registered_courses:
+#         all_registered_courses_serialized.append({
+#             'new_course_id': new_course.id,
+#             'professor_id': {
+#                 'id': professor.id,
+#                 'name': professor.name,
+#                 'last_name': professor.last_name
+#             },
+#             'student_id': {
+#                 'id': student.id,
+#                 'name': student.name,
+#                 'last_name': student.last_name
+#             },
+#             'course_id': {
+#                 'id': course.id,
+#                 'name': course.name
+#             }
+#         })
+    
 #     return jsonify({"all_registered_courses": all_registered_courses_serialized}), 200
 
 @app.route('/api/allregisteredcourses', methods=['GET'])
 def get_all_registered_courses():
     all_registered_courses = db.session.query(
-        NewCourse, Professor, Student, Course
+        NewCourse, Professor, Student, Course, Modality
         ).join(
             Professor, NewCourse.professor_id == Professor.id
         ).join(
             Student, NewCourse.student_id == Student.id
         ).join(
             Course, NewCourse.course_id == Course.id
+        ).join(
+            Modality, NewCourse.modality_id == Modality.id
         ).all()
     
     all_registered_courses_serialized = []
-    for new_course, professor, student, course in all_registered_courses:
+    for new_course, professor, student, course, modality in all_registered_courses:
         all_registered_courses_serialized.append({
             'new_course_id': new_course.id,
             'professor_id': {
@@ -271,6 +290,10 @@ def get_all_registered_courses():
             'course_id': {
                 'id': course.id,
                 'name': course.name
+            },
+            'modality_id': {
+                'id': modality.id,
+                'name': modality.name
             }
         })
     
@@ -314,23 +337,6 @@ def get_single_profe():
         return jsonify({"msg": "No tienes autorización para ingresar"}), 402
     return jsonify({"professor": single_profe.serialize()}), 200
 
-
-# @app.route('/api/professor/registeredcourses', methods=['GET'])
-# @jwt_required()
-# def get_professor_courses():
-#     identity = get_jwt_identity()
-#     professor = Professor.query.filter_by(email = identity['email']).first()
-#     professor_courses = NewCourse.query.filter_by(professor_id = professor.id)
-#     if professor is None:
-#         return jsonify({"msg": "No existe profesor con la información indicada"}), 401
-#     if identity['user_type'] != "professor":
-#         return jsonify({"msg": "No tienes autorización para ingresar"}), 402
-#     professor_courses_serialized = []
-#     for course in professor_courses:
-#         professor_courses_serialized.append(course.serialize())
-#         print(professor_courses_serialized)
-#     return jsonify({"professor_courses": professor_courses_serialized}), 200
-
 @app.route('/api/professor/registeredcourses', methods=['GET'])
 @jwt_required()
 def get_professor_courses():
@@ -368,22 +374,6 @@ def get_single_profpay():
     if single_profpay is None:
         return jsonify({"msg": "No existe información de pago para el profesor indicado"}), 400
     return jsonify({"professor_payment": single_profpay.serialize()}), 200
-
-# @app.route('/api/student/registeredcourses', methods=['GET'])
-# @jwt_required()
-# def get_student_courses():
-#     identity = get_jwt_identity()
-#     student = Student.query.filter_by(email = identity['email']).first()
-#     student_courses = NewCourse.query.filter_by(student_id = student.id)
-#     if student is None:
-#         return jsonify({"msg": "No existe estudiante con la información indicada"}), 401
-#     if identity['user_type'] != "student":
-#         return jsonify({"msg": "No tienes autorización para ingresar"}), 402
-#     student_courses_serialized = []
-#     for course in student_courses:
-#         student_courses_serialized.append(course.serialize())
-#         print(student_courses_serialized)
-#     return jsonify({"student_courses": student_courses_serialized}), 200
 
 @app.route('/api/student/registeredcourses', methods=['GET'])
 @jwt_required()
@@ -436,23 +426,12 @@ def get_single_course(name):
         return jsonify({"msg": "No existe un curso con el nombre: {}".format(name)}), 400
     return jsonify({"course": single_course.serialize()}), 200
 
-# @app.route('/api/modality/<modality>', methods=['GET'])
-# def get_single_modality(modality):
-#     single_modality = Modality.query.get(modality = modality).first()
-#     if setup_commands is None:
-#         return jsonify({"msg": "La modalidad con el ID: {} no existe".format(modality)}), 400
-#     return jsonify({"modality": single_modality.serialize()}), 200
-
-# @app.route('/api/professorregisteredcourses/<int:professor_id>', methods=['GET'])
-# def get_professor_registered_courses(professor_id):
-#     professor_registered_courses = db.session.query(NewCourse, Professor).join(Professor).filter(NewCourse.professor_id == professor_id).all()
-#     professor_registered_courses_serialized = []
-#     for professor_registered_course, professor in professor_registered_courses:
-#         professor_registered_courses.append({'professor_registered_courses': professor_registered_courses.id, "planet": planet.serialize(), "user_id": id})
-# professor_registered_courses = NewCourse.query.filter_by(professor_id = professor_id).all()
-# if professor_registered_courses is None:
-#     return jsonify({"msg": "El profesor con con el ID: {} no tiene cursos asignados".format(professor_id)}), 401
-# return jsonify({"professor_registered_courses": professor_registered_courses.serialize()}), 200
+@app.route('/api/modality/<name>', methods=['GET'])
+def get_single_modality(name):
+    single_modality = Modality.query.get(modality = name).first()
+    if single_modality is None:
+        return jsonify({"msg": "La modalidad: {} no existe".format(name)}), 400
+    return jsonify({"modality": single_modality.serialize()}), 200
 
 #------------------------------------------#
 #App Route para los metodos POST
@@ -511,7 +490,7 @@ def new_admin():
     #     return jsonify({"msg": "Debes escribir una provincia"}), 400
     # if "canton" not in body:
     #     return jsonify({"msg": "Debes escribir un canton"}), 400
-    # if "distric" not in body:
+    # if "district" not in body:
     #     return jsonify({"msg": "Debes escribir un distrito"}), 400
     if "password" not in body:
         return jsonify({"msg": "Debes escribir una contraseña"}), 400
@@ -527,7 +506,7 @@ def new_admin():
     new_admin.phone_number = body["phone_number"]
     # new_admin.province = body["province"]
     # new_admin.canton = body["canton"]
-    # new_admin.distric = body["distric"]
+    # new_admin.district = body["district"]
     new_admin.password = body["password"]
     new_admin.user_type = "admin"
 
@@ -566,7 +545,7 @@ def new_profe():
     #     return jsonify({"msg": "Debes escribir una provincia"}), 400
     # if "canton" not in body:
     #     return jsonify({"msg": "Debes escribir un canton"}), 400
-    # if "distric" not in body:
+    # if "district" not in body:
     #     return jsonify({"msg": "Debes escribir un distrito"}), 400
     if "password" not in body:
         return jsonify({"msg": "Debes escribir una contraseña"}), 400
@@ -582,7 +561,7 @@ def new_profe():
     new_profe.phone_number = body["phone_number"]
     # new_profe.province = body["province"]
     # new_profe.canton = body["canton"]
-    # new_profe.distric = body["distric"]
+    # new_profe.district = body["district"]
     new_profe.password = body["password"]
     new_profe.user_type = "professor"
     
@@ -726,7 +705,7 @@ def new_electinv():
         return jsonify({"msg": "Debes escribir una provincia"}), 400
     if "canton" not in body:
         return jsonify({"msg": "Debes escribir un canton"}), 400
-    if "distric" not in body:
+    if "district" not in body:
         return jsonify({"msg": "Debes escribir un distrito"}), 400
     if "student_id" not in body:
         return jsonify({"msg": "Debes seleccionar un estudiante"}), 400
@@ -739,7 +718,7 @@ def new_electinv():
     new_electinv.phone_number = body["phone_number"]
     new_electinv.province = body["province"]
     new_electinv.canton = body["canton"]
-    new_electinv.distric = body["distric"]
+    new_electinv.district = body["district"]
     new_electinv.student_id = student.id
 
     try:
@@ -784,34 +763,26 @@ def add_course():
     return jsonify({"new_course_added": add_course.serialize()}), 201
 
 
-# @app.route('/api/addmodality', methods=['POST'])
-# def new_modality():
-#     body = request.get_json(silent=True)
-#     if body is None:
-#         return jsonify({"msg": "Debes escribir un tipo de modalida"}), 400
-#     if "name" not in body:
-#         return jsonify({"msg": "Debes escribir un tipo de modalidad"}), 400
+@app.route('/api/addmodality', methods=['POST'])
+def add_modality():
+    body = request.get_json(silent=True)
+    if body is None:
+        return jsonify({"msg": "Debes escribir un tipo de modalidad"}), 400
+    if "name" not in body:
+        return jsonify({"msg": "Debes escribir un tipo de modalidad"}), 400
     
-#     new_modality = Modality()
-#     new_modality.name = body["name"]
+    add_modality = Modality()
+    add_modality.name = body["name"]
 
-#     try:
-#         db.session.add(new_modality)
-#         db.session.commit()
-#     except Exception as error:
-#         db.session.rollback()
-#         print(error)
-#         return jsonify({"msg": "Ocurrió un error al crear una nueva modalidad"}), 500
+    try:
+        db.session.add(add_modality)
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        print(error)
+        return jsonify({"msg": "Ocurrió un error al crear una nueva modalidad"}), 500
 
-#     return jsonify({"new_modality_added": new_modality.serialize()}), 201
-
-    # try:
-    #     db.session.add(new_modality)
-    #     db.session.commit()
-    # except Exception as error:
-    #     return jsonify({"msg": error.args[0]}), 500
-
-    # return jsonify({"msg": "OK"}), 200
+    return jsonify({"new_modality_added": add_modality.serialize()}), 201
 
 @app.route('/api/newcourseregistration', methods=['POST'])
 def new_course_registration():
@@ -822,15 +793,15 @@ def new_course_registration():
         return jsonify({"msg": "Debes seleccionar un profesor"}), 400
     if "student_id" not in body:
         return jsonify({"msg": "Debes seleccionar un estudiante"}), 400
-    # if "modality_id" not in body:
-    #     return jsonify({"msg": "Debes seleccionar una modalidad del curso"}), 400
+    if "modality_id" not in body:
+        return jsonify({"msg": "Debes seleccionar una modalidad del curso"}), 400
     if "course_id" not in body:
         return jsonify({"msg": "Debes seleccionar un curso"}), 400
     
     new_course_registration = NewCourse()
     new_course_registration.professor_id = body["professor_id"]
     new_course_registration.student_id = body["student_id"]
-    # new_course_registration.modality_id = body["modality_id"]
+    new_course_registration.modality_id = body["modality_id"]
     new_course_registration.course_id = body["course_id"]
 
     try:
@@ -842,6 +813,73 @@ def new_course_registration():
         return jsonify({"msg": "Ocurrió un error al registrar un nuevo curso"}), 500
 
     return jsonify({"new_course_registered": new_course_registration.serialize()}), 201
+
+@app.route('/api/createprofessornextpayment', methods=['POST'])
+def prof_next_pay():
+    body = request.get_json(silent=True)
+    if body is None:
+        return jsonify({"msg": "Debes completar toda la informacion para continuar"}), 400
+    if "date" not in body:
+        return jsonify({"msg": "Debes registrar una fecha de pago"}), 400
+    if "mount_per_hour" not in body:
+        return jsonify({"msg": "Debes registrar el monto a pagar por hora"}), 400
+    if "registered_hours" not in body:
+        return jsonify({"msg": "Debes ingresar las horas registradas"}), 400
+    if "total_payment" not in body:
+        return jsonify({"msg": "Debes registrar el monto total a pagar"}), 400
+    if "professor_id" not in body:
+        return jsonify({"msg": "Debes seleccionar un profesor"}), 400
+    
+    prof_next_pay = ProfessorNextPayment()
+    prof_next_pay.date = body["date"]
+    prof_next_pay.mount_per_hour = body["mount_per_hour"]
+    prof_next_pay.registered_hours = body["registered_hours"]
+    prof_next_pay.total_payment = body["total_payment"]
+    prof_next_pay.professor_id = body["professor_id"]
+
+    try:
+        db.session.add(prof_next_pay)
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        print(error)
+        return jsonify({"msg": "Ocurrió un error al crear un nuevo pago profesor"}), 500
+
+    return jsonify({"prof_next_pay": prof_next_pay.serialize()}), 201
+
+@app.route('/api/professor/adddescription', methods=['POST'])
+@jwt_required()
+def professor_description():
+    identity = get_jwt_identity()
+    print(identity, "PROF DESCR")
+    professor = Professor.query.filter_by(id = identity['id']).first()
+    body = request.get_json(silent=True)
+    if body is None:
+        return jsonify({"msg": "Debes completar toda la informacion para continuar"}), 400
+    if "years_of_experience" not in body:
+        return jsonify({"msg": "Debes agregar los años de experiencia"}), 400
+    if "specialist_in" not in body:
+        return jsonify({"msg": "Debes agregar información sobre tu especialidad"}), 400
+    if "studies" not in body:
+        return jsonify({"msg": "Debes ingresar tus estudios realizados"}), 400
+    if "professor_id" not in body:
+        return jsonify({"msg": "Debes seleccionar un profesor"}), 400
+    
+    professor_description = ProfessorDescription()
+    professor_description.years_of_experience = body["years_of_experience"]
+    professor_description.specialist_in = body["specialist_in"]
+    professor_description.studies = body["studies"]
+    professor_description.professor_id = professor.id
+
+    try:
+        db.session.add(professor_description)
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        print(error)
+        return jsonify({"msg": "Ocurrió un error al crear un nuevo pago profesor"}), 500
+
+    return jsonify({"professor_description": professor_description.serialize()}), 201
     
 
 if __name__ == "__main__":
@@ -1053,16 +1091,15 @@ def update_modality(id):
     if "name" in body:
         modality_to_update.name = body["name"]
 
+    try:
+        db.session.add(modality_to_update)
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        print(error)
+        return jsonify({"msg": "Ocurrió un error al tratar de actualizar la información"}), 500
 
-#     try:
-#         db.session.add(modality_to_update)
-#         db.session.commit()
-#     except Exception as error:
-#         db.session.rollback()
-#         print(error)
-#         return jsonify({"msg": "Ocurrió un error al tratar de actualizar la información"}), 500
-
-#     return jsonify({"updated_modality": modality_to_update.serialize()}), 201
+    return jsonify({"updated_modality": modality_to_update.serialize()}), 201
 
 @app.route('/api/editregisteredcourse/<int:id>', methods=['PUT'])
 def update_registered_course(id):
@@ -1132,6 +1169,39 @@ def handle_search_courses():
         
         return jsonify({"msg": "No se encuentran cursos"}), 404
     return jsonify({"msg": "Es necesario el término de búsqueda"}), 400
+
+@app.route('/api/search/modalities',methods=['POST'])
+def handle_search_modalities():
+    body = request.get_json(silent=True)
+    print(body, "BODY")
+    term = body.get('term', None)
+    print(term, "TERMINO")
+    if term is not None:
+        modalities = Modality.query.filter((Modality.name).ilike("%"+term+"%")).all()
+        response = [modality.serialize() for modality in modalities]
+
+        if modalities:
+            return jsonify({"result": response}), 200
+        
+        return jsonify({"msg": "No se encuentran modalidades"}), 404
+    return jsonify({"msg": "Es necesario el término de búsqueda"}), 400
+
+@app.route('/api/professornextpayment/', methods=['GET'])
+@jwt_required()
+def get_prof_next_pay():
+    identity = get_jwt_identity()
+    print(identity, "TOKEN")
+    prof_next_pay = ProfessorNextPayment.query.filter_by(professor_id = identity['id']).first()
+    if prof_next_pay is None:
+        return jsonify({"msg": "No existe información de próximo pago para el professor indicado"}), 400
+    return jsonify({"prof_next_payment": prof_next_pay.serialize()}), 200
+
+@app.route('/api/professordescription/<int:id>', methods=['GET'])
+def get_professor_description(id):
+    profe_description = ProfessorDescription.query.filter_by(professor_id = id)
+    if profe_description is None:
+        return jsonify({"msg": "No existe profesor con la información indicada"}), 401
+    return jsonify({"professor_description": profe_description.serialize()}), 200
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

@@ -44,6 +44,8 @@ import Private from "./component/frontAuth/Private";
 import { NewCourseRegister } from "./pages/NewCourseRegister";
 import { RegisteredCourses } from "./pages/RegisteredCourses";
 import { ProfPayReg } from "./pages/ProfPayReg";
+import { ProfNextPay } from "./pages/ProfNextPay";
+import ProfessorDescription from "./pages/ProfessorDescription";
 
 
 
@@ -100,6 +102,8 @@ const Layout = () => {
                         <Route path="/newcourseregister" element={< NewCourseRegister />} />
                         <Route path="/registeredcourses" element={< RegisteredCourses />} />
                         <Route path="/professorspaymentregister" element={< ProfPayReg />} />
+                        <Route path="/professornextpayment" element={< ProfNextPay />} />
+                        <Route path="/professor/description" element={< ProfessorDescription />} />
                         <Route path="/undefined" element={<Undefined />} />
                         <Route path="*" element={<Undefined />} />
                     </Routes>

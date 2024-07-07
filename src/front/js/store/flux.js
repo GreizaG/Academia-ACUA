@@ -31,7 +31,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			singleProfPay: {},
 
-			singleStudPay: {}
+			singleStudPay: {},
+
+			profNextPay: {},
+
+			profDescr: {}
 
 			// isAdministratorCreated: false,
 			// isProfessorCreated: false,
@@ -738,6 +742,103 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log(data)
 						// setStore({ isProfessorCreated: true })
 						actions.getRegisteredCourses()
+						return true
+					})
+					.catch(error => {
+						console.log(error)
+						return false
+					})
+			},
+
+			getProfNextPay: () => {
+				const token = localStorage.getItem('access_token')
+				fetch(process.env.BACKEND_URL + "/api/professornextpayment", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						'Authorization': 'Bearer ' + token
+					}
+				})
+					.then((response) => {
+						return response.json()
+					})
+					.then((data) => {
+						console.log(data)
+						setStore({ profNextPay: data })
+						return data
+					})
+					.catch((error) => {
+						console.log(error)
+					})
+			},
+
+			newProfNextPay: (data) => {
+				const actions = getActions()
+				return fetch(process.env.BACKEND_URL + "/api/createprofessornextpayment", {
+					method: "POST",
+					body: JSON.stringify(data),
+					headers: { "Content-Type": "application/json" }
+				})
+					.then(response => {
+						console.log(response)
+						if (response.ok) {
+							return response.json()
+						}
+						throw new Error("Ocurrió un error creando nuevo próximo pago profesor")
+					})
+					.then(data => {
+						console.log(data)
+						// setStore({ isProfessorCreated: true })
+						actions.getProfNextPay()
+						return true
+					})
+					.catch(error => {
+						console.log(error)
+						return false
+					})
+			},
+
+			getProfessorDescription: () => {
+				fetch(process.env.BACKEND_URL + "/api/professordescription/<int:id>", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then((response) => {
+						return response.json()
+					})
+					.then((data) => {
+						console.log(data)
+						setStore({ profDescr: data })
+						return data
+					})
+					.catch((error) => {
+						console.log(error)
+					})
+			},
+
+			newProfessorDescription: (data) => {
+				const token = localStorage.getItem('access_token')
+				const actions = getActions()
+				return fetch(process.env.BACKEND_URL + "/api/professor/adddescription", {
+					method: "POST",
+					body: JSON.stringify(data),
+					headers: {
+						"Content-Type": "application/json",
+						'Authorization': 'Bearer ' + token
+					}
+				})
+					.then(response => {
+						console.log(response)
+						if (response.ok) {
+							return response.json()
+						}
+						throw new Error("Ocurrió un error al registar descripción del profesor")
+					})
+					.then(data => {
+						console.log(data)
+						actions.getProfessorDescription()
 						return true
 					})
 					.catch(error => {

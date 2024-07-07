@@ -3,7 +3,7 @@ import { MultiButton } from '../MultiButton'
 import { Link } from 'react-router-dom'
 import { Context } from '../../store/appContext'
 
-export const ListRegisteredCourses = ({ course, id, student, professor }) => {
+export const ListRegisteredCourses = ({ course, id, student, professor, modality }) => {
     const { store, actions } = useContext(Context);
 
     return (
@@ -12,6 +12,7 @@ export const ListRegisteredCourses = ({ course, id, student, professor }) => {
             <td className="text-center">{course}</td>
             <td className="text-center">{student}</td>
             <td className="text-center">{professor}</td>
+            <td className="text-center">{modality}</td>
         </tr>
     )
 }

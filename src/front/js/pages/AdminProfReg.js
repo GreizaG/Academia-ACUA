@@ -78,7 +78,7 @@ const AdminProfReg = () => {
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Email</label>
-                    <input className="form-control" placeholder="Email" name="email" value={formData.email} onChange={handleInputChange}
+                    <input type="email" className="form-control" placeholder="Email" name="email" value={formData.email} onChange={handleInputChange}
                         required />
                 </div>
                 <div className="mb-3">
