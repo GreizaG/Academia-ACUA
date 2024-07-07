@@ -21,8 +21,8 @@ export const NavbarAdmin = () => {
 
     return (
         <nav className="navbar navbar-expand-lg bg-white">
-            <div className="container-fluid d-flex justify-content-between align-items-baseline">
-                <div className="container">
+            <div className="container-fluid d-flex justify-content-around align-items-baseline">
+                <div className="imagebox">
                     <>
                         <img className="logo" src="https://i.imgur.com/fkBV2BP.png" />
                     </>
@@ -65,7 +65,9 @@ export const NavbarAdmin = () => {
                                 </Link>
                             </li>
                         </ul>
-                        <LogButton text="Salir" action={logout} />
+                        <div className="ms-4">
+                            <LogButton text="Salir" action={logout} />
+                        </div>
                     </div>
                 </div>
             </div>
