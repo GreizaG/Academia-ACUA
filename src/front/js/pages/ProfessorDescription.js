@@ -47,6 +47,20 @@ const ProfessorDescription = () => {
         }
     }
 
+    const handleAll = () => {
+        const strYears = formData.years_of_experience
+        const strSpecialist = formData.specialist_in
+        const strStudies = formData.studies
+
+        if (strYears.trim().length &&
+            strSpecialist.trim().length &&
+            strStudies.trim().length > 0) {
+            handleSubmit()
+        } else {
+            showNotification("Debes agregar toda la información solicitada", "error")
+        }
+    }
+
     console.log(formData)
 
     return (
@@ -67,7 +81,7 @@ const ProfessorDescription = () => {
                     <h4 className="fw-lighter fst-italic">{store.singleProfessor.professor?.name} {store.singleProfessor.professor?.last_name}</h4>
                 </div>
             </div>
-            <form className="mt-4 p-4 rounded shadow mb-4" style={{ backgroundColor: '#e9ecef' }} onSubmit={handleSubmit}>
+            <form className="mt-4 p-4 rounded shadow mb-4" style={{ backgroundColor: '#e9ecef' }} onSubmit={handleAll}>
                 <div className="d-flex mb-3">
                     <div className="me-2 flex-fill">
                         <label className="form-label">Años de experiencia</label>
