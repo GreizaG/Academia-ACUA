@@ -119,10 +119,10 @@ export const ElectronicInvoice = () => {
             <input className="form-control" placeholder="Distrito" name="distric" value={formData.distric} onChange={handleInputChange} />
           </div>
         </div>
-        <div className="me-2 flex-fill">
+        {/* <div className="me-2 flex-fill">
           <label className="form-label">ID estudiante</label>
           <input className="form-control" placeholder="ID estudiante" name="student_id" value={store.singleStudent.student?.id} onChange={handleInputChange} />
-        </div>
+        </div> */}
         <div className="container-fluid justify-content-between mt-3">
           <button type="button" className="btn btn-warning btn-sm mt-2" style={{ borderRadius: '20px', boxShadow: '0px 4px 8px' }} onClick={handleSubmit}> Guardar</button>
           <Link to="/homestudent">
