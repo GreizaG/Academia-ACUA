@@ -60,7 +60,7 @@ export const NavbarAdmin = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/studentpayment" className="nav-link">
+                                <Link to="/electronicinvoiceregister" className="nav-link">
                                     <span className="me-2">Pago estudiantes</span>
                                 </Link>
                             </li>

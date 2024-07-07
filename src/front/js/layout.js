@@ -46,6 +46,7 @@ import { RegisteredCourses } from "./pages/RegisteredCourses";
 import { ProfPayReg } from "./pages/ProfPayReg";
 import { ProfNextPay } from "./pages/ProfNextPay";
 import ProfessorDescription from "./pages/ProfessorDescription";
+import { ElectInvRegReg } from "./pages/ElectronicInvoiceReg";
 
 
 
@@ -104,6 +105,7 @@ const Layout = () => {
                         <Route path="/professorspaymentregister" element={< ProfPayReg />} />
                         <Route path="/professornextpayment" element={< ProfNextPay />} />
                         <Route path="/professor/description" element={< ProfessorDescription />} />
+                        <Route path="/electronicinvoiceregister" element={< ElectInvRegReg />} />
                         <Route path="/undefined" element={<Undefined />} />
                         <Route path="*" element={<Undefined />} />
                     </Routes>

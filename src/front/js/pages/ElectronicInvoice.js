@@ -15,7 +15,7 @@ export const ElectronicInvoice = () => {
     phone_number: 0,
     province: "",
     canton: "",
-    distric: "",
+    district: "",
     student_id: store.singleStudent.student?.id
   })
 
@@ -116,7 +116,7 @@ export const ElectronicInvoice = () => {
           </div>
           <div className="me-2 flex-fill">
             <label className="form-label">Distrito</label>
-            <input className="form-control" placeholder="Distrito" name="distric" value={formData.distric} onChange={handleInputChange} />
+            <input className="form-control" placeholder="Distrito" name="district" value={formData.district} onChange={handleInputChange} />
           </div>
         </div>
         {/* <div className="me-2 flex-fill">

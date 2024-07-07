@@ -15,7 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			studentspayment: [],
 
-			electronicinvoices: [],
+			electronicinvoices: {},
 
 			registeredCourses: [],
 
@@ -448,8 +448,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.then((data) => {
 						console.log("Data:", data)
-						console.log(data.electinvs)
-						setStore({ electronicinvoices: data.electinvs })
+						console.log(data)
+						setStore({ electronicinvoices: data })
 					})
 					.catch((error) => {
 						console.log(error)

@@ -198,14 +198,43 @@ def get_all_studpay():
         print(studpays_serialized)
     return jsonify({"studpays": studpays_serialized}), 200
 
-@app.route('/api/electronicinvoice', methods=['GET'])
+# @app.route('/api/electronicinvoice', methods=['GET'])
+# def get_all_electinv():
+#     all_electinvs = ElectronicInvoice.query.all()
+#     electinvs_serialized = []
+#     for electinv in all_electinvs:
+#         electinvs_serialized.append(electinv.serialize())
+#         print(electinvs_serialized)
+#     return jsonify({"electinvs": electinvs_serialized}), 200
+
+@app.route('/api/electronicinvoices', methods=['GET'])
 def get_all_electinv():
-    all_electinvs = ElectronicInvoice.query.all()
-    electinvs_serialized = []
-    for electinv in all_electinvs:
-        electinvs_serialized.append(electinv.serialize())
-        print(electinvs_serialized)
-    return jsonify({"electinvs": electinvs_serialized}), 200
+    all_electinvs = db.session.query(
+        ElectronicInvoice, Student
+    ).join(
+        Student, ElectronicInvoice.student_id == Student.id
+    ).all()
+
+    all_electinvs_serialized = []
+    for electronic_invoice, student in all_electinvs:
+        all_electinvs_serialized.append({
+            'electronic_invoice_id': electronic_invoice.id,
+            'name': electronic_invoice.name,
+            'cardID_type': electronic_invoice.cardID_type,
+            'number_cardID': electronic_invoice.number_cardID,
+            'phone_number': electronic_invoice.phone_number,
+            'email': electronic_invoice.email,
+            'province': electronic_invoice.province,
+            'canton': electronic_invoice.canton,
+            'district': electronic_invoice.district,
+            'student_id':{
+                'id': student.id,
+                'name': student.name,
+                'last_name': student.last_name
+            }
+        })
+
+    return jsonify({"electinvs": all_electinvs_serialized}), 200
 
 @app.route('/api/courses', methods=['GET'])
 def get_all_course():
