@@ -103,43 +103,47 @@ export const ProfessorPayment = () => {
                 </div>
                 <form className="mt-5 p-5 mb-5 bg-white registerForm d-flex flex-column justify-content-center">
                     <div className="d-flex mb-3 row">
-                        <div className="me-2 flex-fill">
+                        <div className="col-lg-5 col-sm-12">
                             <label className="form-label mediumWeight portraitSecundaryColor fs-6">Método de pago</label>
-                            <input className="form-control mb-3" placeholder="Método de pago" name="payment_method" value={formData.payment_method} onChange={handleInputChange} />
+                            <input className="form-control mb-3" placeholder="Método de pago" name="payment_method" value={formData.payment_method} onChange={handleInputChange} style={{ borderRadius: '15px' }} />
                         </div>
-                        <div className="me-2 flex-fill">
-                            <label className="form-label mb-3 mediumWeight portraitSecundaryColor fs-6" >Número de teléfono</label>
-                            <input className="form-control mb-3" placeholder="Número de teléfono" name="phone_number" value={formData.phone_number} onChange={handleInputChange} />
-                        </div>
-                        <div className="me-2 flex-fill">
-                            <label className="form-label mb-3 mediumWeight portraitSecundaryColor fs-6" >N° cuenta IBAN</label>
-                            <input className="form-control mb-3" placeholder="N° cuenta IBAN" name="iban_account" value={formData.iban_account} onChange={handleInputChange} />
-                        </div>
-                        <div className="me-2 flex-fill">
-                            <>
-                                <label htmlFor="searcInput" className="form-label mb-3 mediumWeight portraitSecundaryColor fs-6" >
-                                    Seleccione profesor
-                                </label>
-                                <input
-                                    className="form-control mb-3"
-                                    type="text"
-                                    id="searchInput"
-                                    placeholder="Buscar profesor"
-                                    value={searchTerm}
-                                    onChange={(e) => { setSearchTerm(e.target.value) }}
-                                />
-                                <select id="selectInput" className="form-control" value={selectedOption ? selectedOption.id : ""} onChange={handleSelectChange}>
-                                    <option value="">Seleccionar profesor</option>
-                                    {options.map((option) => {
-                                        return <option key={option.id} value={option.id}>{option.name} {option.last_name}</option>
-                                    })}
-                                </select>
-                            </>
-                            {/* <label className="form-label fs-4 mb-3" >ID professor</label>
-                            <input className="form-control mb-3" placeholder="ID professor" name="professor_id" value={formData.professor_id} onChange={handleInputChange} /> */}
+                        <div className="col-lg-7 col-sm-12">
+                            <label className="form-label mediumWeight portraitSecundaryColor fs-6" >Número de teléfono</label>
+                            <input className="form-control mb-3" placeholder="Número de teléfono" name="phone_number" value={formData.phone_number} onChange={handleInputChange} style={{ borderRadius: '15px' }} />
                         </div>
                     </div>
-                    <div className="d-flex justify-content-between">
+                    <div className="me-2 flex-fill">
+                        <label className="form-label mb-3 mediumWeight portraitSecundaryColor fs-6" >N° cuenta IBAN</label>
+                        <input className="form-control mb-3" placeholder="N° cuenta IBAN" name="iban_account" value={formData.iban_account} onChange={handleInputChange} style={{ borderRadius: '15px' }} />
+                    </div>
+                    <div className="d-flex mb-3 row">
+                        <div className="col-lg-12 col-sm-12">
+                            <label htmlFor="searcInput" className="form-label mb-3 mediumWeight portraitSecundaryColor fs-6" >
+                                Seleccione profesor
+                            </label>
+                        </div>
+                        <div className="col-lg-5 col-sm-12">
+                            <input
+                                className="form-control mb-3"
+                                type="text"
+                                id="searchInput"
+                                placeholder="Buscar profesor"
+                                value={searchTerm}
+                                onChange={(e) => { setSearchTerm(e.target.value) }}
+                                style={{ borderRadius: '15px' }} />
+                        </div>
+                        <div className="col-lg-7 col-sm-12">
+                            <select id="selectInput" className="form-control" value={selectedOption ? selectedOption.id : ""} onChange={handleSelectChange} style={{ borderRadius: '15px' }}>
+                                <option value="">Seleccionar profesor</option>
+                                {options.map((option) => {
+                                    return <option key={option.id} value={option.id}>{option.name} {option.last_name}</option>
+                                })}
+                            </select>
+                        </div>
+                        {/* <label className="form-label fs-4 mb-3" >ID professor</label>
+                            <input className="form-control mb-3" placeholder="ID professor" name="professor_id" value={formData.professor_id} onChange={handleInputChange} /> */}
+                    </div>
+                    <div className="d-flex justify-content-between mt-2">
                         <Link to='/registeredcourses'>
                             <MultiButtonNew color="purple" text="Atras" width="100" Btype='button' />
                         </Link>
