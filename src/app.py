@@ -1092,7 +1092,7 @@ def handle_search_students():
     term = body.get('term', None)
     print(term, "TERMINO")
     if term is not None:
-        students = Student.query.filter((unaccent(Student.name).ilike("%"+term+"%"))).all()
+        students = Student.query.filter((Student.name).ilike("%"+term+"%")).all()
         response = [student.serialize() for student in students]
 
         if students:
@@ -1108,7 +1108,7 @@ def handle_search_professors():
     term = body.get('term', None)
     print(term, "TERMINO")
     if term is not None:
-        professors = Professor.query.filter((unaccent(Professor.name).ilike("%"+term+"%"))).all()
+        professors = Professor.query.filter((Professor.name).ilike("%"+term+"%")).all()
         response = [professor.serialize() for professor in professors]
 
         if professors:
@@ -1124,7 +1124,7 @@ def handle_search_courses():
     term = body.get('term', None)
     print(term, "TERMINO")
     if term is not None:
-        courses = Course.query.filter((unaccent(Course.name).ilike("%"+term+"%"))).all()
+        courses = Course.query.filter((Course.name).ilike("%"+term+"%")).all()
         response = [course.serialize() for course in courses]
 
         if courses:
