@@ -20,6 +20,7 @@ export const MultiButtonNew = ({ color, text, width, link, BType }) => {
         fontWeight: '600',
         cursor: 'pointer',
         width: width + 'px',
+        paddingBottom: '28px',
     }
 
     let orange = {

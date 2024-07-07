@@ -29,9 +29,9 @@ export const RegisteredCourses = () => {
                         <h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Cursos registrados</h4>
                     </div>
                 </div>
-                <div className="continer-fluid d-flex ps-5 ms-5">
-                    <div className="cardProfessor justify-content-center" style={{ width: '18rem' }}>
-                        <table className="table table-hover" style={{ width: '600px' }}>
+                <div className="container d-flex flex-column justify-content-center bg-white registerForm" style={{ width: 'fit-content' }}>
+                    <div className="d-flex flex-row container justify-content-center">
+                        <table className="table table-hover" style={{ width: '55vw' }}>
                             <thead>
                                 <tr>
                                     <th className="text-center" scope="col">N°</th>
@@ -48,14 +48,14 @@ export const RegisteredCourses = () => {
                             </tbody>
                         </table>
                     </div>
-                </div>
-                <div className="container-fluid d-flex my-3 justify-content-between">
-                    <Link to="/newcourseregister" className="text-decoration-none ms-5">
-                        <MultiButton color='purple' text='Registrar nuevo curso' width='220' />
-                    </Link>
-                    <Link to="/homeadmin" className="text-decoration-none me-5">
-                        <MultiButton color='purple' text='Atrás' width='220' />
-                    </Link>
+                    <div className="container-fluid d-flex my-3 justify-content-between">
+                        <Link to="/homeadmin" className="text-decoration-none me-5">
+                            <MultiButton color='purple' text='Atrás' width='120' />
+                        </Link>
+                        <Link to="/newcourseregister" className="text-decoration-none ms-5">
+                            <MultiButton color='purple' text='Nuevo curso' width='140' />
+                        </Link>
+                    </div>
                 </div>
             </div>
         </React.Fragment>
