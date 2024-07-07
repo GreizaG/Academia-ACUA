@@ -8,18 +8,18 @@ class Administrator(db.Model):
     __tablename__ = 'administrator'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
+    name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50))
-    # photo = db.Column(db.String(150))
-    cardID_type = db.Column(db.String(50))
-    number_cardID = db.Column(db.String(20), unique=True)
-    birthday = db.Column(db.Date)
-    email = db.Column(db.String(50), unique=True)
+    # photo = db.Column(db.String(200))
+    cardID_type = db.Column(db.String(50), nullable=False)
+    number_cardID = db.Column(db.String(20), unique=True, nullable=False)
+    birthday = db.Column(db.String(20))
+    email = db.Column(db.String(50), unique=True, nullable=False)
     phone_number = db.Column(db.BigInteger)
     province = db.Column(db.String(50))
     canton = db.Column(db.String(50))
-    distric = db.Column(db.String(50))
-    password = db.Column(db.String(80))
+    district = db.Column(db.String(50))
+    password = db.Column(db.String(80), nullable=False)
     is_active = db.Column(db.Boolean())
     user_type = db.Column(db.String(20), nullable=False, default='admin')
 
@@ -39,31 +39,32 @@ class Administrator(db.Model):
             "phone_number": self.phone_number,
             "province": self.province,
             "canton": self.canton,
-            "distric": self.distric,
-            "user_type": self.user_type 
-            # do not serialize the password, its a security breach
+            "district": self.district,
+            "user_type": self.user_type
         }
 
 class Professor(db.Model):
     __tablename__ = 'professor'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
+    name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50))
     # photo = db.Column(db.String(150))
-    cardID_type = db.Column(db.String(50))
-    number_cardID = db.Column(db.String(20), unique=True)
-    birthday = db.Column(db.Date)
-    email = db.Column(db.String(50), unique=True)
+    cardID_type = db.Column(db.String(50), nullable=False)
+    number_cardID = db.Column(db.String(20), unique=True, nullable=False)
+    birthday = db.Column(db.String(20))
+    email = db.Column(db.String(50), unique=True, nullable=False)
     phone_number = db.Column(db.BigInteger)
     province = db.Column(db.String(50))
     canton = db.Column(db.String(50))
-    distric = db.Column(db.String(50))
-    password = db.Column(db.String(80))
+    district = db.Column(db.String(50))
+    password = db.Column(db.String(80), nullable=False)
     is_active = db.Column(db.Boolean())
     user_type = db.Column(db.String(20), nullable=False, default='professor')
     professor_payment = db.relationship("ProfessorPayment", back_populates="professor_id_relationship")
     new_course_professor = db.relationship("NewCourse", back_populates="professor_id_relationship")
+    professor_next_payment = db.relationship("ProfessorNextPayment", back_populates="professor_id_relationship")
+    professor_description = db.relationship("ProfessorDescription", back_populates="professor_id_relationship")
 
     def __repr__(self):
         return 'Profesor: {}'.format(self.name)
@@ -81,27 +82,26 @@ class Professor(db.Model):
             "phone_number": self.phone_number,
             "province": self.province,
             "canton": self.canton,
-            "distric":self.distric,
+            "district":self.district,
             "user_type": self.user_type 
-            # do not serialize the password, its a security breach
         }
     
 class Student(db.Model):
     __tablename__ = 'student'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
+    name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50))
     # photo = db.Column(db.String(150))
-    cardID_type = db.Column(db.String(50))
-    number_cardID = db.Column(db.String(20), unique=True)
-    birthday = db.Column(db.Date)
-    email = db.Column(db.String(50), unique=True)
+    cardID_type = db.Column(db.String(50), nullable=False)
+    number_cardID = db.Column(db.String(20), unique=True, nullable=False)
+    birthday = db.Column(db.String(20))
+    email = db.Column(db.String(50), unique=True, nullable=False)
     phone_number = db.Column(db.BigInteger)
     province = db.Column(db.String(50))
     canton = db.Column(db.String(50))
-    distric = db.Column(db.String(50))
-    password = db.Column(db.String(80))
+    district = db.Column(db.String(50))
+    password = db.Column(db.String(80), nullable=False)
     is_active = db.Column(db.Boolean())
     user_type = db.Column(db.String(20), nullable=False, default='student')
     student_payment = db.relationship("StudentPayment", back_populates="student_id_relationship")
@@ -124,9 +124,8 @@ class Student(db.Model):
             "phone_number": self.phone_number,
             "province": self.province,
             "canton": self.canton,
-            "distric":self.distric,
+            "district":self.district,
             "user_type": self.user_type 
-            # do not serialize the password, its a security breach
         }
     
 class ProfessorPayment(db.Model):
@@ -152,7 +151,7 @@ class StudentPayment(db.Model):
     __tablename__ = 'student_payment'
 
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date)
+    date = db.Column(db.String(20))
     mount = db.Column(db.Integer)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
     student_id_relationship = db.relationship("Student", back_populates="student_payment")
@@ -170,14 +169,14 @@ class ElectronicInvoice(db.Model):
     __tablename__ = 'electronic_invoice'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=False)
-    cardID_type = db.Column(db.String(50), unique=False)
-    number_cardID = db.Column(db.BigInteger, unique=True)
-    email = db.Column(db.String(50), unique=True)
+    name = db.Column(db.String(50), unique=False, nullable=False)
+    cardID_type = db.Column(db.String(50), unique=False, nullable=False)
+    number_cardID = db.Column(db.BigInteger, unique=True, nullable=False)
+    email = db.Column(db.String(50), unique=True, nullable=False)
     phone_number = db.Column(db.BigInteger)
     province = db.Column(db.String(50))
     canton = db.Column(db.String(50))
-    distric = db.Column(db.String(50))
+    district = db.Column(db.String(50))
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
     student_id_relationship = db.relationship("Student", back_populates="electronic_invoice")
 
@@ -191,7 +190,7 @@ class ElectronicInvoice(db.Model):
             "phone_number": self.phone_number,
             "province": self.province,
             "canton": self.canton,
-            "distric":self.distric,
+            "district":self.district,
             "student_id": self.student_id
         }
 
@@ -199,7 +198,7 @@ class Course(db.Model):
     __tablename__ = 'course'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
+    name = db.Column(db.String(50), nullable=False)
     new_course = db.relationship("NewCourse", back_populates="course_id_relationship")
 
     def __repr__(self):
@@ -211,21 +210,21 @@ class Course(db.Model):
             "name": self.name
         }
 
-# class Modality(db.Model):
-#     __tablename__ = 'modality'
+class Modality(db.Model):
+    __tablename__ = 'modality'
 
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(50))
-#     new_course_modality = db.relationship("NewCourse", back_populates="modality_id_relationship")
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    new_course_modality = db.relationship("NewCourse", back_populates="modality_id_relationship")
 
-#     def __repr__(self):
-#         return 'Modalidad: {}'.format(self.name)
+    def __repr__(self):
+        return 'Modalidad: {}'.format(self.name)
 
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "name": self.name
-#         }
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name
+        }
     
 class NewCourse(db.Model):
     __tablename__ = 'new_course'
@@ -235,8 +234,8 @@ class NewCourse(db.Model):
     professor_id_relationship = db.relationship("Professor", back_populates="new_course_professor")
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
     student_id_relationship = db.relationship("Student", back_populates="new_course_student")
-    # modality_id = db.Column(db.Integer, db.ForeignKey('modality.id'))
-    # modality_id_relationship = db.relationship("Modality", back_populates="new_course_modality")
+    modality_id = db.Column(db.Integer, db.ForeignKey('modality.id'))
+    modality_id_relationship = db.relationship("Modality", back_populates="new_course_modality")
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
     course_id_relationship = db.relationship("Course", back_populates="new_course")
 
@@ -248,7 +247,7 @@ class NewCourse(db.Model):
             "id": self.id,
             "professor_id": self.professor_id,
             "student_id": self.student_id,
-            # "modality_id": self.modality_id,
+            "modality_id": self.modality_id,
             "course_id": self.course_id
         }
     
@@ -272,19 +271,42 @@ class ContactForm(db.Model):
             "user_requeriment" : self.body_requeriment
         }
     
-    # class ProfessorNextPayment(db.Model):
-    #     __tablename__ = 'professor_next_payment'
+class ProfessorNextPayment(db.Model):
+    __tablename__ = 'professor_next_payment'
 
-    #     id = db.Column(db.Integer, primary_key=True)
-    #     date = db.Column(db.String(300))
-    #     mount_per_hour = db.Column(db.String(30))
-    #     registered_hours = db.Column(db.String(30))
-    #     total_payment = db.Column(db.String(30))
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.String(20))
+    mount_per_hour = db.Column(db.String(30))
+    registered_hours = db.Column(db.String(30))
+    total_payment = db.Column(db.String(30))
+    professor_id = db.Column(db.Integer, db.ForeignKey('professor.id'))
+    professor_id_relationship = db.relationship("Professor", back_populates="professor_next_payment")
 
-    #     def serialize(self):
-    #         return{
-    #             "id":  self.id,
-    #             "date": self.date,
-    #             "mount_per_hour" : self.mount_per_hour,
-    #             "total_payment" : self.total_payment
-    #         }
+    def serialize(self):
+        return{
+            "id":  self.id,
+            "date": self.date,
+            "mount_per_hour" : self.mount_per_hour,
+            "registered_hours" : self.registered_hours,
+            "total_payment" : self.total_payment,
+            "professor_id": self.professor_id
+        }
+        
+class ProfessorDescription(db.Model):
+    __tablename__ = 'professor_description'
+
+    id = db.Column(db.Integer, primary_key=True)
+    years_of_experience = db.Column(db.String(10))
+    specialist_in = db.Column(db.String(80))
+    studies = db.Column(db.String(30))
+    professor_id = db.Column(db.Integer, db.ForeignKey('professor.id'))
+    professor_id_relationship = db.relationship("Professor", back_populates="professor_description")
+
+    def serialize(self):
+        return{
+            "id":  self.id,
+            "years_of_experience": self.years_of_experience,
+            "specialist_in" : self.specialist_in,
+            "studies" : self.studies,
+            "professor_id": self.professor_id
+        }

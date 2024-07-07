@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { NavbarProfessor } from "./NavbarProfessor";
 import "../../styles/home.css";
 import { ListProfRegCourses } from "../component/Card/ListProfREgCourses";
+import { ProfNextPay } from "./ProfNextPay";
 
 export const HomeProfessor = () => {
     const { store, actions } = useContext(Context)
@@ -14,6 +15,7 @@ export const HomeProfessor = () => {
     useEffect(() => {
         actions.getProfessorCourses()
         actions.getSingleProfPay()
+        actions.getProfNextPay()
     }, [])
 
     console.log(store.singleProfessor)
@@ -21,6 +23,7 @@ export const HomeProfessor = () => {
     console.log(store.singleProfPay)
     console.log(store.singleProfPay.professor_payment?.payment_method)
     console.log(store.professorCourses)
+    console.log(store.profNextPay.prof_next_pay?.date)
 
     return (
         <React.Fragment>
@@ -33,7 +36,7 @@ export const HomeProfessor = () => {
                 </div>
                 <div className="continer-fluid d-flex ps-5 ms-5">
                     <div className="cardProfessor" style={{ width: '18rem' }}>
-                        <table className="table table-hover">
+                        <table className="table table-hover" style={{ width: '600px' }}>
                             <thead>
                                 <tr>
                                     <th className="text-center" scope="col">N°</th>
@@ -71,19 +74,19 @@ export const HomeProfessor = () => {
                             <table className="table table-borderless text-end">
                                 <tr className="pb-4">
                                     <td className="text-secondary fs-4 fw-semibold">Fecha pago:</td>
-                                    <td className="fw-lighter fs-4">30 Junio 2024</td>
+                                    <td className="fw-lighter fs-4">{store.profNextPay.prof_next_payment?.date}</td>
                                 </tr>
                                 <tr className="pb-4">
                                     <td className="text-secondary fs-4 fw-semibold">Monto por hora:</td>
-                                    <td className="fw-lighter fs-4">₡ 40.000</td>
+                                    <td className="fw-lighter fs-4">{store.profNextPay.prof_next_payment?.mount_per_hour}</td>
                                 </tr>
                                 <tr>
                                     <td className="text-secondary fs-4 fw-semibold">Cantidad de horas registradas:</td>
-                                    <td className="fw-lighter fs-4">20</td>
+                                    <td className="fw-lighter fs-4">{store.profNextPay.prof_next_payment?.registered_hours}</td>
                                 </tr>
                                 <tr>
                                     <td className="text-secondary fs-4 fw-semibold">Total pago:</td>
-                                    <td className="fw-lighter fs-4">₡ 800.000</td>
+                                    <td className="fw-lighter fs-4">{store.profNextPay.prof_next_payment?.total_payment}</td>
                                 </tr>
                             </table>
                         </div>

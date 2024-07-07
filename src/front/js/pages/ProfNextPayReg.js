@@ -9,16 +9,16 @@ import { ListProfRegCourses } from "../component/Card/ListProfREgCourses";
 import { NavbarAdmin } from "./NavbarAdmin";
 import { ListRegisteredCourses } from "../component/Card/ListRegisteredCourses";
 import { MultiButton } from "../component/MultiButton";
+import { ListProfPayReg } from "../component/Card/ListProfPayReg";
 
-export const RegisteredCourses = () => {
+export const ProfNextPayReg = () => {
     const { store, actions } = useContext(Context)
 
     useEffect(() => {
-        actions.getRegisteredCourses()
+        actions.getProfNextPay()
     }, [])
 
-    console.log(store.registeredCourses)
-    console.log(store.registeredCourses)
+    console.log(store.getProfNextPay)
 
     return (
         <React.Fragment>
@@ -26,32 +26,32 @@ export const RegisteredCourses = () => {
             <div className="container-fluid pb-5">
                 <div className="d-flex align-content-center justify-content-center mb-3 mt-3 py-4 jumbo rounded-3">
                     <div className="container-fluid align-content-center">
-                        <h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Cursos registrados</h4>
+                        <h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Información bancaria profesores</h4>
                     </div>
                 </div>
-                <div className="continer-fluid d-flex ps-5 ms-5">
-                    <div className="cardProfessor justify-content-center" style={{ width: '18rem' }}>
+                <div className="continer-fluid d-flex justify-content-center">
+                    <div className="d-flex flex-row container justify-content-center">
                         <table className="table table-hover" style={{ width: '600px' }}>
                             <thead>
                                 <tr>
                                     <th className="text-center" scope="col">N°</th>
-                                    <th className="text-center" >Nombre del curso</th>
-                                    <th className="text-center" >Nombre del estudiante</th>
-                                    <th className="text-center" >Nombre del profesor</th>
-                                    <th className="text-center" >Modalidad</th>
+                                    <th className="text-center" >Nombre profesor</th>
+                                    <th className="text-center" >Método de pago</th>
+                                    <th className="text-center" >Número de teléfono</th>
+                                    <th className="text-center" >N° cuenta IBAN</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {store.registeredCourses && store.registeredCourses.map(registeredCourse =>
-                                    (<ListRegisteredCourses course={registeredCourse.course_id.name} modality={registeredCourse.modality_id.name} professor={`${registeredCourse.professor_id.name}` + ' ' + `${registeredCourse.professor_id.last_name}`} student={`${registeredCourse.student_id.name}` + ' ' + `${registeredCourse.student_id.last_name}`} key={registeredCourse.new_course_id} id={registeredCourse.new_course_id} />)
+                                {store.professorsPayment && store.professorsPayment.map(professorPayment =>
+                                    (<ListProfPayReg method={professorPayment.payment_method} professor={`${professorPayment.professor_id.name}` + ' ' + `${professorPayment.professor_id.last_name}`} phone={professorPayment.phone_number} iban={professorPayment.iban_account} key={professorPayment.new_course_id} id={professorPayment.professor_payment_id} />)
                                 )}
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div className="container-fluid d-flex my-3 justify-content-between">
-                    <Link to="/newcourseregister" className="text-decoration-none ms-5">
-                        <MultiButton color='purple' text='Registrar nuevo curso' width='220' />
+                    <Link to="/professorpayment" className="text-decoration-none ms-5">
+                        <MultiButton color='purple' text='Registrar' width='220' />
                     </Link>
                     <Link to="/homeadmin" className="text-decoration-none me-5">
                         <MultiButton color='purple' text='Atrás' width='220' />

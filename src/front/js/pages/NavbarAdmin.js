@@ -51,6 +51,11 @@ export const NavbarAdmin = () => {
                             </li>
                             <li>
                                 <Link to="/professorspaymentregister" className="nav-link">
+                                    <span className="me-4">IBAN profesores</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/professornextpayment" className="nav-link">
                                     <span className="me-4">Pago profesores</span>
                                 </Link>
                             </li>
