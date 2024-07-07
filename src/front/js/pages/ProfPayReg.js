@@ -29,9 +29,9 @@ export const ProfPayReg = () => {
                         <h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Información bancaria profesores</h4>
                     </div>
                 </div>
-                <div className="continer-fluid d-flex justify-content-center">
+                <div className="container d-flex flex-column justify-content-center bg-white registerForm" style={{ width: 'fit-content' }}>
                     <div className="d-flex flex-row container justify-content-center">
-                        <table className="table table-hover" style={{ width: '600px' }}>
+                        <table className="table table-hover" style={{ width: '700px' }}>
                             <thead>
                                 <tr>
                                     <th className="text-center" scope="col">N°</th>
@@ -48,16 +48,17 @@ export const ProfPayReg = () => {
                             </tbody>
                         </table>
                     </div>
+                    <div className="container-fluid d-flex my-3 justify-content-between pt-4">
+                        <Link to="/homeadmin" className="text-decoration-none me-5">
+                            <MultiButton color='purple' text='Atrás' width='120' />
+                        </Link>
+                        <Link to="/professorpayment" className="text-decoration-none ms-5">
+                            <MultiButton color='purple' text='Registrar' width='120' />
+                        </Link>
+                    </div>
                 </div>
-                <div className="container-fluid d-flex my-3 justify-content-between">
-                    <Link to="/professorpayment" className="text-decoration-none ms-5">
-                        <MultiButton color='purple' text='Registrar' width='220' />
-                    </Link>
-                    <Link to="/homeadmin" className="text-decoration-none me-5">
-                        <MultiButton color='purple' text='Atrás' width='220' />
-                    </Link>
-                </div>
+
             </div>
-        </React.Fragment>
+        </React.Fragment >
     )
 }

@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { MultiButton } from "../component/MultiButton";
+import { MultiButtonNew } from "../component/MultibuttonNew";
 import { showNotification } from "../utils/ShowNotification";
 
 export const ProfessorPayment = () => {
@@ -138,14 +138,19 @@ export const ProfessorPayment = () => {
                         </div>
                     </div>
                     <div className="d-flex justify-content-between">
-                        <button type="button" className="btn btn-primary" onClick={handleSubmit}>Guardar</button>
-                        {/* <Link to="/homeadmin" className="text-decoration-none">
-                            <MultiButton color='purple' text='Volver' width='100' onClick={handleSubmit} />
-                        </Link> */}
-                        {/* <MultiButton color='purple' text='Guardar' width='100' onClick={handleSubmit} /> */}
-                        <Link to="/professorspaymentregister" className="text-decoration-none">
-                            <button type="button" className="btn btn-warning">Cancelar</button>
+                        <Link to='/registeredcourses'>
+                            <MultiButtonNew color="purple" text="Atras" width="100" Btype='button' />
                         </Link>
+                        <button type="button" class="btn btn-warning" id="multiButton" onClick={handleSubmit} style={{
+                            backgroundColor: '#ffc224',
+                            boxShadow: '4px 6px 0px #3d3d3d',
+                            border: '1px solid #000000',
+                            color: '#161439',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            width: '100px',
+                            paddingBottom: '28px',
+                        }}>Guardar</button>
                     </div>
                 </form>
             </div>

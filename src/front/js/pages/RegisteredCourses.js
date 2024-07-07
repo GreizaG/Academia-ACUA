@@ -49,11 +49,11 @@ export const RegisteredCourses = () => {
                     </div>
                 </div>
                 <div className="container-fluid d-flex my-3 justify-content-between">
-                    <Link to="/newcourseregister" className="text-decoration-none ms-5">
-                        <MultiButton color='purple' text='Registrar nuevo curso' width='220' />
-                    </Link>
                     <Link to="/homeadmin" className="text-decoration-none me-5">
                         <MultiButton color='purple' text='Atrás' width='220' />
+                    </Link>
+                    <Link to="/newcourseregister" className="text-decoration-none ms-5">
+                        <MultiButton color='purple' text='Registrar nuevo curso' width='220' />
                     </Link>
                 </div>
             </div>
