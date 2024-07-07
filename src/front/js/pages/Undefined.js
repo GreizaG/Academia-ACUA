@@ -11,7 +11,7 @@ const Undefined = () => {
             />
              <div className="mb-4">
             <h1>¡Disculpa! Esta página no está disponible</h1></div>
-            <MultiButton color="purple" text="Vuelve al inicio →" width="400" link="/" />
+            {/* <MultiButton color="purple" text="Vuelve al inicio →" width="400" link="/" /> */}
 
         </div>
     );
