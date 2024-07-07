@@ -32,8 +32,17 @@ const AdminStudReg = () => {
         }))
     }
 
+    const validateEmail = (email) => {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailPattern.test(email);
+    };
+
     const handleSubmit = async () => {
         // event.preventDefault();
+        if (!validateEmail(formData.email)) {
+            showNotification("Por favor, introduce una dirección de correo electrónico válida.", "error");
+            return;
+        }
         const isCreated = await actions.newStudent(formData)
         console.log(isCreated)
         if (isCreated) {
