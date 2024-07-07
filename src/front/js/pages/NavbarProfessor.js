@@ -41,9 +41,9 @@ export const NavbarProfessor = () => {
                                     <span className="me-4">Información personal</span>
                                 </Link>
                             </li>
-                            <li className="nav-link">
+                            {/* <li className="nav-link">
                                 <span className="me-4">Estudios</span>
-                            </li>
+                            </li> */}
                         </ul>
                         <LogButton text="Salir" action={logout} />
                     </div>
