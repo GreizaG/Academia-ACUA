@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { MultiButtonNew } from "../component/MultibuttonNew";
 import { showNotification } from "../utils/ShowNotification";
+import { NavbarAdmin } from "./NavbarAdmin";
 
 export const NewCourseRegister = () => {
 
@@ -208,136 +209,135 @@ export const NewCourseRegister = () => {
 
     return (
         <React.Fragment>
+            <NavbarAdmin />
             <div className="d-flex flex-column justify-content-center align-items-center"
                 style={{ backgroundColor: '#f8f9fa' }}>
                 <div style={{ position: 'relative', width: '100%' }}>
                     <img src="https://i.postimg.cc/XJ784zpy/Whats-App-Image-2024-06-17-at-19-29-08.jpg"
                         alt="Jumbotron" className="img-fluid mb-3" style={{
-                            width: '100%', maxHeight: '150px',
+                            width: '100%', maxHeight: '130px',
                             objectFit: 'cover'
                         }} />
                     <div style={{
                         position: 'absolute', top: '50%', left: '35%', transform: 'translate(-45%, -50%)',
                         color: 'black'
                     }}>
-                        <h1>Registrar nuevo curso</h1>
+                        <h3>Registrar nuevo curso</h3>
                     </div>
                 </div>
                 <form className="mt-5 p-5 mb-5 bg-white registerForm d-flex flex-column justify-content-center">
-                    <div className="d-flex mb-3 row">
-                        <div className="me-2 row">
-                            <div className="col-lg-11">
-                                <label htmlFor="searchStudentInput" className="form-label fs-6 mb-2 mt-1 mediumWeight portraitSecundaryColor ps-2">
-                                    Buscar estudiante
-                                </label>
-                            </div>
+                    <div className="d-flex mb-2 row">
+                        <div className="col-12">
+                            <label htmlFor="searchStudentInput" className="form-label mediumWeight portraitSecundaryColor fs-6 mb-3" style={{ color: '#5751e1' }}>
+                                Seleccionar estudiante
+                            </label>
                         </div>
-                        <div className="row justify-content-center">
-                            <div className="col-lg-5 col-sm-12">
-                                <input
-                                    className="form-control mb-3"
-                                    type="text"
-                                    id="searchStudentInput"
-                                    placeholder="Buscar estudiante"
-                                    value={searchStudentTerm}
-                                    onChange={(e) => { setSearchStudentTerm(e.target.value) }}
-                                    style={{ borderRadius: '15px' }} />
-                            </div>
-                            <div className="col-lg-7 col-sm-12">
-                                <select id="selectStudentInput" className="form-control" value={selectedStudentOption ? selectedStudentOption.id : ""} onChange={handleSelectStudentChange} style={{ borderRadius: '15px' }}>
-                                    <option value="">Seleccionar estudiante</option>
-                                    {studentOptions.map((studentOption) => {
-                                        return <option key={studentOption.id} value={studentOption.id} >{studentOption.name} {studentOption.last_name}</option>
-                                    })}
-                                </select>
-                            </div>
+                    </div>
+                    <div className="row mb-2">
+                        <div className="col-lg-5 col-sm-12">
+                            <input
+                                style={{ borderRadius: '15px' }}
+                                className="form-control mb-3"
+                                type="text"
+                                id="searchStudentInput"
+                                placeholder="Buscar estudiante"
+                                value={searchStudentTerm}
+                                onChange={(e) => { setSearchStudentTerm(e.target.value) }}
+                            />
                         </div>
-                        <div className="me-2 flex-fill">
-                            <div className="me-2 row">
-                                <div className="col-lg-11">
-                                    <label htmlFor="searchProfessorInput" className="form-label fs-6 mb-2 mt-1 mediumWeight portraitSecundaryColor ps-2">
-                                        Buscar profesor
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="row justify-content-center">
-                                <div className="col-lg-5 col-sm-12">
-                                    <input
-                                        className="form-control mb-3"
-                                        type="text"
-                                        id="searchProfessorInput"
-                                        placeholder="Buscar profesor"
-                                        value={searchProfessorTerm}
-                                        onChange={(e) => { setSearchProfessorTerm(e.target.value) }}
-                                        style={{ borderRadius: '15px' }} />
-                                </div>
-                                <div className="col-lg-7 col-sm-12">
-                                    <select id="selectProfessorInput" className="form-control" value={selectedProfessorOption ? selectedProfessorOption.id : ""} onChange={handleSelectProfessorChange} style={{ borderRadius: '15px' }}>
-                                        <option value="">Seleccionar profesor</option>
-                                        {professorOptions.map((professorOption) => {
-                                            return <option key={professorOption.id} value={professorOption.id} >{professorOption.name} {professorOption.last_name}</option>
-                                        })}
-                                    </select>
-                                </div>
-                            </div>
+                        <div className="col-lg-7 col-sm-12">
+                            <select id="selectStudentInput" style={{ borderRadius: '15px' }} className="form-control" value={selectedStudentOption ? selectedStudentOption.id : ""} onChange={handleSelectStudentChange}>
+                                <option value="">Seleccionar estudiante</option>
+                                {studentOptions.map((studentOption) => {
+                                    return <option key={studentOption.id} value={studentOption.id}>{studentOption.name} {studentOption.last_name}</option>
+                                })}
+                            </select>
                         </div>
-                        <div className="me-2 flex-fill">
-                            <div className="me-2 row">
-                                <div className="col-lg-11">
-                                    <label htmlFor="searchCourseInput" className="form-label fs-6 mb-2 mt-1 mediumWeight portraitSecundaryColor ps-2">
-                                        Buscar curso
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="row justify-content-center">
-                                <div className="col-lg-5 col-sm-12">
-                                    <input
-                                        className="form-control mb-3"
-                                        type="text"
-                                        id="searchCourseInput"
-                                        placeholder="Buscar curso"
-                                        value={searchCourseTerm}
-                                        onChange={(e) => { setSearchCourseTerm(e.target.value) }}
-                                        style={{ borderRadius: '15px' }} />
-                                </div>
-                                <div className="col-lg-7 col-sm-12">
-                                    <select id="selectCourseInput" className="form-control" value={selectedCourseOption ? selectedCourseOption.id : ""} onChange={handleSelectCourseChange} style={{ borderRadius: '15px' }}>
-                                        <option value="">Seleccionar curso</option>
-                                        {courseOptions.map((courseOption) => {
-                                            return <option key={courseOption.id} value={courseOption.id} >{courseOption.name}</option>
-                                        })}
-                                    </select>
-                                </div>
-                            </div>
+                        {/* <label className="form-label mediumWeight portraitSecundaryColor fs-6 mb-3" style={{ color: '#5751e1' }}>ID estudiante</label>
+                            <input className="form-control mb-3" placeholder="ID estudiante" name="student_id" value={formData.student_id} onChange={handleInputChange} /> */}
+                    </div>
+                    <div className="row mb-2">
+                        <div className="col-12">
+                            <label htmlFor="searchProfessorInput" className="form-label mediumWeight portraitSecundaryColor fs-6 mb-3" style={{ color: '#5751e1' }}>
+                                Seleccionar profesor
+                            </label>
                         </div>
-                        <div className="me-2 flex-fill">
-                            <div className="me-2 row">
-                                <div className="col-lg-11">
-                                    <label htmlFor="searcnModalityInput" className="form-label fs-6 mb-2 mt-1 mediumWeight portraitSecundaryColor ps-2">
-                                        Buscar modalidad
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="row justify-content-center">
-                                <div className="col-lg-5 col-sm-12">
-                                    <input
-                                        className="form-control mb-3"
-                                        type="text"
-                                        id="searchModalityInput"
-                                        placeholder="Buscar modalidad"
-                                        value={searchModalityTerm}
-                                        onChange={(e) => { setSearchModalityTerm(e.target.value) }}
-                                        style={{ borderRadius: '15px' }} />
-                                </div>
-                                <div className="col-lg-7 col-sm-12">
-                                    <select id="selectModalityInput" className="form-control" value={selectedModalityOption ? selectedModalityOption.id : ""} onChange={handleSelectModalityChange} style={{ borderRadius: '15px' }}>
-                                        <option value="">Seleccionar modalidad</option>
-                                        {modalityOptions.map((modalityOption) => {
-                                            return <option key={modalityOption.id} value={modalityOption.id} >{modalityOption.name}</option>
-                                        })}
-                                    </select>
-                                </div>
-                            </div>
+                    </div>
+                    <div className="row mb-2">
+                        <div className="col-lg-5 col-sm-12">
+                            <input
+                                style={{ borderRadius: '15px' }}
+                                className="form-control mb-3"
+                                type="text"
+                                id="searchProfessorInput"
+                                placeholder="Buscar profesor"
+                                value={searchProfessorTerm}
+                                onChange={(e) => { setSearchProfessorTerm(e.target.value) }}
+                            />
+                        </div>
+                        <div className="col-lg-7 col-sm-12">
+                            <select id="selectProfessorInput" style={{ borderRadius: '15px' }} className="form-control" value={selectedProfessorOption ? selectedProfessorOption.id : ""} onChange={handleSelectProfessorChange}>
+                                <option value="">Seleccionar profesor</option>
+                                {professorOptions.map((professorOption) => {
+                                    return <option key={professorOption.id} value={professorOption.id}>{professorOption.name} {professorOption.last_name}</option>
+                                })}
+                            </select>
+                        </div>
+                    </div>
+                    <div className="row mb-2">
+                        <div className="col-12">
+                            <label htmlFor="searchCourseInput" className="form-label mediumWeight portraitSecundaryColor fs-6 mb-3" style={{ color: '#5751e1' }}>
+                                Seleccionar curso
+                            </label>
+                        </div>
+                    </div>
+                    <div className="row mb-2">
+                        <div className="col-lg-5 col-sm-12">
+                            <input
+                                style={{ borderRadius: '15px' }}
+                                className="form-control mb-3"
+                                type="text"
+                                id="searchCourseInput"
+                                placeholder="Buscar curso"
+                                value={searchCourseTerm}
+                                onChange={(e) => { setSearchCourseTerm(e.target.value) }}
+                            />
+                        </div>
+                        <div className="col-lg-7 col-sm-12">
+                            <select id="selectCourseInput" style={{ borderRadius: '15px' }} className="form-control" value={selectedCourseOption ? selectedCourseOption.id : ""} onChange={handleSelectCourseChange}>
+                                <option value="">Seleccionar curso</option>
+                                {courseOptions.map((courseOption) => {
+                                    return <option key={courseOption.id} value={courseOption.id}>{courseOption.name} {courseOption.last_name}</option>
+                                })}
+                            </select>
+                        </div>
+                    </div>
+                    <div className="row mb-2">
+                        <div className="col-12">
+                            <label htmlFor="searchModalityInput" className="form-label mediumWeight portraitSecundaryColor fs-6 mb-3" style={{ color: '#5751e1' }}>
+                                Seleccionar modalidad
+                            </label>
+                        </div>
+                    </div>
+                    <div className="row mb-2">
+                        <div className="col-lg-5 col-sm-12">
+                            <input
+                                style={{ borderRadius: '15px' }}
+                                className="form-control mb-3"
+                                type="text"
+                                id="searchModalityInput"
+                                placeholder="Buscar modalidad"
+                                value={searchModalityTerm}
+                                onChange={(e) => { setSearchModalityTerm(e.target.value) }}
+                            />
+                        </div>
+                        <div className="col-lg-7 col-sm-12">
+                            <select id="selectModalityInput" style={{ borderRadius: '15px' }} className="form-control" value={selectedModalityOption ? selectedModalityOption.id : ""} onChange={handleSelectModalityChange}>
+                                <option value="">Seleccionar modalidad</option>
+                                {modalityOptions.map((modalityOption) => {
+                                    return <option key={modalityOption.id} value={modalityOption.id}>{modalityOption.name}</option>
+                                })}
+                            </select>
                         </div>
                     </div>
                     <div className="d-flex justify-content-between">
@@ -360,7 +360,7 @@ export const NewCourseRegister = () => {
                         }}>Guardar</button>
                     </div>
                 </form>
-            </div>
-        </React.Fragment>
+            </div >
+        </React.Fragment >
     );
 };
