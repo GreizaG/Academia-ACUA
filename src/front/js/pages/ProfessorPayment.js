@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { MultiButtonNew } from "../component/MultibuttonNew";
 import { showNotification } from "../utils/ShowNotification";
+import { NavbarAdmin } from "./NavbarAdmin";
 
 export const ProfessorPayment = () => {
 
@@ -84,6 +85,7 @@ export const ProfessorPayment = () => {
 
     return (
         <React.Fragment>
+            <NavbarAdmin />
             <div className="d-flex flex-column justify-content-center align-items-center"
                 style={{ backgroundColor: '#f8f9fa' }}>
                 <div style={{ position: 'relative', width: '100%' }}>
@@ -96,26 +98,26 @@ export const ProfessorPayment = () => {
                         position: 'absolute', top: '50%', left: '35%', transform: 'translate(-45%, -50%)',
                         color: 'black'
                     }}>
-                        <h1>Información pago profesor</h1>
+                        <h3>Información pago profesor</h3>
                     </div>
                 </div>
-                <form className="mt-5 p-5 rounded shadow mb-5" style={{ backgroundColor: '#e9ecef' }}>
+                <form className="mt-5 p-5 mb-5 bg-white registerForm d-flex flex-column justify-content-center">
                     <div className="d-flex mb-3 row">
                         <div className="me-2 flex-fill">
-                            <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>Método de pago</label>
+                            <label className="form-label mediumWeight portraitSecundaryColor fs-6">Método de pago</label>
                             <input className="form-control mb-3" placeholder="Método de pago" name="payment_method" value={formData.payment_method} onChange={handleInputChange} />
                         </div>
                         <div className="me-2 flex-fill">
-                            <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>Número de teléfono</label>
+                            <label className="form-label mb-3 mediumWeight portraitSecundaryColor fs-6" >Número de teléfono</label>
                             <input className="form-control mb-3" placeholder="Número de teléfono" name="phone_number" value={formData.phone_number} onChange={handleInputChange} />
                         </div>
                         <div className="me-2 flex-fill">
-                            <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>N° cuenta IBAN</label>
+                            <label className="form-label mb-3 mediumWeight portraitSecundaryColor fs-6" >N° cuenta IBAN</label>
                             <input className="form-control mb-3" placeholder="N° cuenta IBAN" name="iban_account" value={formData.iban_account} onChange={handleInputChange} />
                         </div>
                         <div className="me-2 flex-fill">
                             <>
-                                <label htmlFor="searcInput" className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>
+                                <label htmlFor="searcInput" className="form-label mb-3 mediumWeight portraitSecundaryColor fs-6" >
                                     Seleccione profesor
                                 </label>
                                 <input
@@ -133,7 +135,7 @@ export const ProfessorPayment = () => {
                                     })}
                                 </select>
                             </>
-                            {/* <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>ID professor</label>
+                            {/* <label className="form-label fs-4 mb-3" >ID professor</label>
                             <input className="form-control mb-3" placeholder="ID professor" name="professor_id" value={formData.professor_id} onChange={handleInputChange} /> */}
                         </div>
                     </div>

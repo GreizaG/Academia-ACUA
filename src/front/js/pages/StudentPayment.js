@@ -109,7 +109,6 @@ export const StudentPayment = () => {
                             <input className="form-control mb-3" placeholder="Monto en colones" name="mount" value={formData.mount} onChange={handleInputChange} style={{ borderRadius: '15px' }} />
                         </div>
                     </div>
-
                     {/* <div className="me-2 flex-fill">
                             <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>Fecha vencimiento</label>
                             <input className="form-control mb-3" placeholder="Fecha Mes Año" name="student_id" value={formData.student_id} onChange={handleInputChange} />
