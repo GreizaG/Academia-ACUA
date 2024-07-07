@@ -41,8 +41,10 @@ export const NewCourse = () => {
         const str = formData.name
         if (str.trim().length > 0) {
             handleSubmit()
+        } else {
+
         }
-        showNotification("El campo no puede estar vacio", "error")
+
     }
 
     return (
