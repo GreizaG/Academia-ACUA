@@ -28,6 +28,7 @@ const ProfessorDescription = () => {
         setFormData((prevFormData) => ({
             ...prevFormData,
             [name]: value,
+            professor_id: store.singleProfessor.professor?.id
         }))
     }
 
@@ -38,12 +39,15 @@ const ProfessorDescription = () => {
         if (isCreated) {
             showNotification("Datos agregados con éxito")
             navigate("/homeprofessor")
+            console.log(formData)
         } else {
             showNotification("Ocurrió un error al tratar agregar tu información", "error")
+            console.log(formData)
+            console.log(store.singleProfessor.professor?.id)
         }
     }
 
-    console.log(store.singleProfessor)
+    console.log(formData)
 
     return (
         <div className="d-flex flex-column justify-content-center align-items-center"
@@ -79,10 +83,10 @@ const ProfessorDescription = () => {
                         <textarea className="form-control" id="exampleFormControlTextarea1" value={formData.studies} rows="4" style={{ height: '200px', borderRadius: '15px' }} onChange={handleInputChange} name='studies'></textarea>
                     </div>
                 </div>
-                <div className="me-2 mb-3 flex-fill">
+                {/* <div className="me-2 mb-3 flex-fill">
                     <label className="form-label">ID profesor</label>
-                    <input className="form-control" placeholder="ID professor" name="professor_id" value={store.singleProfessor.professor?.id} onChange={handleInputChange} />
-                </div>
+                    <input className="form-control" disabled placeholder="ID professor" name="professor_id" value={formData.professor_id} onChange={handleInputChange} />
+                </div> */}
                 <div className="container-fluid justify-content-between">
                     <button type="submit" className="btn btn-primary btn-sm">Guardar</button>
                     <Link to="/homeprofessor">

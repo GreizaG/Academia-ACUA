@@ -36,32 +36,32 @@ export const NavbarAdmin = () => {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarScroll">
                         <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll fs-6">
-                            {/* <li>
-                                <Link to="/" className="text-decoration-none nav-link">
-                                    <span className="me-4">Inicio</span>
+                            <li>
+                                <Link to="/homeadmin" className="text-decoration-none nav-link">
+                                    <span className="me-2">Home</span>
                                 </Link>
-                            </li> */}
+                            </li>
                             {/* <li className="nav-link">
                                 <span className="me-4">Información personal</span>
                             </li> */}
                             <li>
                                 <Link to="/registeredcourses" className="nav-link">
-                                    <span className="me-4">Cursos registrados</span>
+                                    <span className="me-2">Cursos registrados</span>
                                 </Link>
                             </li>
                             <li>
                                 <Link to="/professorspaymentregister" className="nav-link">
-                                    <span className="me-4">IBAN profesores</span>
+                                    <span className="me-2">IBAN profesores</span>
                                 </Link>
                             </li>
                             <li>
                                 <Link to="/professornextpayment" className="nav-link">
-                                    <span className="me-4">Pago profesores</span>
+                                    <span className="me-2">Pago profesores</span>
                                 </Link>
                             </li>
                             <li>
                                 <Link to="/studentpayment" className="nav-link">
-                                    <span className="me-4">Pago estudiantes</span>
+                                    <span className="me-2">Pago estudiantes</span>
                                 </Link>
                             </li>
                         </ul>

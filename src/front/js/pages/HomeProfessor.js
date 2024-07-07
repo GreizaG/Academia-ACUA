@@ -16,6 +16,7 @@ export const HomeProfessor = () => {
         actions.getProfessorCourses()
         actions.getSingleProfPay()
         actions.getProfNextPay()
+
     }, [])
 
     console.log(store.singleProfessor)
