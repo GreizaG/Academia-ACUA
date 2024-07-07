@@ -96,45 +96,54 @@ export const StudentPayment = () => {
                         <h1>Información próximo pago estudiante</h1>
                     </div>
                 </div>
-                <form className="mt-5 p-5 shadow mb-5 bg-white" style={{ borderRadius: '15px' }}>
+                <form className="mt-5 p-5 mb-5 bg-white registerForm d-flex flex-column justify-content-center">
                     <div className="d-flex mb-3 row">
-                        <div className="me-2 flex-fill">
-                            <label className="form-label fs-5 mb-3 mediumWeight portraitSecundaryColor">Fecha de próximo pago</label>
+                        <div className="col-lg-12">
+                            <label className="form-label fs-6 mb-2 mediumWeight portraitSecundaryColor ps-2">Fecha de próximo pago</label>
                             <input className="form-control mb-3" placeholder="Fecha Mes Año" name="date" value={formData.date} onChange={handleInputChange} style={{ borderRadius: '15px' }} />
                         </div>
-                        <div className="me-2 flex-fill">
-                            <label className="form-label fs-5 mb-3 mt-3 mediumWeight portraitSecundaryColor">Monto</label>
+                    </div>
+                    <div className="row d-flex mb-3">
+                        <div className="col-lg-12">
+                            <label className="form-label fs-6 mb-2 mediumWeight portraitSecundaryColor ps-2">Monto</label>
                             <input className="form-control mb-3" placeholder="Monto en colones" name="mount" value={formData.mount} onChange={handleInputChange} style={{ borderRadius: '15px' }} />
                         </div>
-                        {/* <div className="me-2 flex-fill">
+                    </div>
+
+                    {/* <div className="me-2 flex-fill">
                             <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>Fecha vencimiento</label>
                             <input className="form-control mb-3" placeholder="Fecha Mes Año" name="student_id" value={formData.student_id} onChange={handleInputChange} />
                         </div> */}
-                        <div className="me-2 flex-fill">
-                            <>
-                                <label htmlFor="searcInput" className="form-label fs-5 mb-3 mt-3 mediumWeight portraitSecundaryColor">
-                                    Buscar estudiante
-                                </label>
-                                <input
-                                    className="form-control mb-3"
-                                    type="text"
-                                    id="searchInput"
-                                    placeholder="Buscar estudiante"
-                                    value={searchTerm}
-                                    onChange={(e) => { setSearchTerm(e.target.value) }}
-                                    style={{ borderRadius: '15px' }} />
-                                <select id="selectInput" className="form-control" value={selectedOption ? selectedOption.id : ""} onChange={handleSelectChange} style={{ borderRadius: '15px' }}>
-                                    <option value="">Seleccionar estudiante</option>
-                                    {options.map((option) => {
-                                        return <option key={option.id} value={option.id} >{option.name} {option.last_name}</option>
-                                    })}
-                                </select>
-                            </>
-                            {/* <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>ID estudiante</label>
-                            <input className="form-control mb-3" placeholder="ID estudiante" name="student_id" value={formData.student_id} onChange={handleInputChange} /> */}
+                    <div className="me-2 row">
+                        <div className="col-lg-11">
+                            <label htmlFor="searcInput" className="form-label fs-6 mb-2 mt-1 mediumWeight portraitSecundaryColor ps-2">
+                                Buscar estudiante
+                            </label>
                         </div>
                     </div>
-                    <div className="d-flex justify-content-between pt-4">
+                    <div className="row justify-content-center">
+                        <div className="col-lg-5 col-sm-12">
+                            <input
+                                className="form-control mb-3"
+                                type="text"
+                                id="searchInput"
+                                placeholder="Buscar estudiante"
+                                value={searchTerm}
+                                onChange={(e) => { setSearchTerm(e.target.value) }}
+                                style={{ borderRadius: '15px' }} />
+                        </div>
+                        <div className="col-lg-7 col-sm-12">
+                            <select id="selectInput" className="form-control" value={selectedOption ? selectedOption.id : ""} onChange={handleSelectChange} style={{ borderRadius: '15px' }}>
+                                <option value="">Seleccionar estudiante</option>
+                                {options.map((option) => {
+                                    return <option key={option.id} value={option.id} >{option.name} {option.last_name}</option>
+                                })}
+                            </select>
+                        </div>
+                    </div>
+                    {/* <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>ID estudiante</label>
+                            <input className="form-control mb-3" placeholder="ID estudiante" name="student_id" value={formData.student_id} onChange={handleInputChange} /> */}
+                    <div className="d-flex justify-content-around mt-4">
                         <Link to='/registeredcourses'>
                             <MultiButtonNew color="purple" text="Atras" width="100" Btype='button' />
                         </Link>
@@ -150,7 +159,7 @@ export const StudentPayment = () => {
                         }}>Guardar</button>
                     </div>
                 </form>
-            </div>
-        </React.Fragment>
+            </div >
+        </React.Fragment >
     );
 };
