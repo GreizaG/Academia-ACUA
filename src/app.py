@@ -36,6 +36,7 @@ from sqlalchemy.sql.functions import ReturnTypeFromArgs
 # from models import Person
 
 class unaccent(ReturnTypeFromArgs):
+    __tablename__ = 'unaccent'
     __inherit_cache__ = True
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
