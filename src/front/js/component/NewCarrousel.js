@@ -56,11 +56,11 @@ export const NewCarrousel = ({ array }) => {
                             <SwiperSlide>
                                 <CardProfessorHome
                                     number={randomNumber()}
-                                    key={professor.id}
-                                    name={professor.name}
-                                    lastName={professor.last_name}
-                                    disctrict={professor.disctrict}
-                                    province={professor.province}
+                                    key={professor.professor_description_id}
+                                    name={professor.professor_id.name}
+                                    lastName={professor.professor_id.last_name}
+                                    years_of_experience={professor.years_of_experience}
+                                    specialist_in={professor.specialist_in}
                                 /></SwiperSlide>
                         )
                     })}

@@ -1228,12 +1228,36 @@ def get_prof_next_pay():
         return jsonify({"msg": "No existe información de próximo pago para el professor indicado"}), 400
     return jsonify({"prof_next_payment": prof_next_pay.serialize()}), 200
 
-@app.route('/api/professordescription/<int:id>', methods=['GET'])
-def get_professor_description(id):
-    profe_description = ProfessorDescription.query.filter_by(professor_id = id)
-    if profe_description is None:
-        return jsonify({"msg": "No existe profesor con la información indicada"}), 401
-    return jsonify({"professor_description": profe_description.serialize()}), 200
+# @app.route('/api/professordescription/<int:id>', methods=['GET'])
+# def get_professor_description(id):
+#     profe_description = ProfessorDescription.query.filter_by(professor_id = id)
+#     if profe_description is None:
+#         return jsonify({"msg": "No existe profesor con la información indicada"}), 401
+#     return jsonify({"professor_description": profe_description.serialize()}), 200
+
+@app.route('/api/professordescription', methods=['GET'])
+def get_professor_description():
+    all_professor_description = db.session.query(
+        ProfessorDescription, Professor
+    ).join(
+        Professor, ProfessorDescription.professor_id == Professor.id
+    ).all()
+
+    all_professor_description_serialized = []
+    for professor_description, professor in all_professor_description:
+        all_professor_description_serialized.append({
+            'professor_description_id': professor_description.id,
+            'years_of_experience': professor_description.years_of_experience,
+            'specialist_in': professor_description.specialist_in,
+            'studies': professor_description.studies,
+            'professor_id':{
+                'id': professor.id,
+                'name': professor.name,
+                'last_name': professor.last_name
+            }
+        })
+
+    return jsonify({"professor_description": all_professor_description_serialized}), 200
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
