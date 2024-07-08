@@ -44,81 +44,89 @@ export const SignUp = () => {
         <div style={{ position: 'relative', width: '100%' }}>
           <img src="https://i.postimg.cc/XJ784zpy/Whats-App-Image-2024-06-17-at-19-29-08.jpg"
             alt="Jumbotron" className="img-fluid mb-3" style={{ width: '100%', maxHeight: '150px', objectFit: 'cover' }} />
-          <div style={{ position: 'absolute', top: '50%', left: '35%', transform: 'translate(-45%, -50%)', color: 'black' }}>
-            <h1>¡Bienvenido estudiante!</h1>
-            <p>Sé parte de la familia ACUA</p>
+          <div style={{ position: 'absolute', top: '55%', left: '45%', transform: 'translate(-45%, -50%)', color: 'black' }}>
+            <h1 className="mediumWeight portraitSecundaryColor">¡Bienvenido estudiante!</h1>
+            <p className="portraitSecundaryColor">Sé parte de la familia ACUA</p>
           </div>
         </div>
-        <form className="mt-4 p-4 rounded shadow mb-4" style={{ backgroundColor: '#e9ecef', maxWidth: '600px', width: '100%' }}>
-          <h3 className="mb-3">Crea tu usuario</h3>
-          <div className="d-flex mb-3">
+        <form className="mt-4 p-4 mb-4 bg-white registerForm d-flex flex-column justify-content-center" style={{ backgroundColor: '#e9ecef', maxWidth: '600px', width: '100%' }}>
+          <h3 className="mb-4 pt-3 portraitSecundaryColor text-center">Registro de usuario</h3>
+          <div className="d-flex mb-3 mt-3">
             <div className="me-2 flex-fill">
-              <label className="form-label">Nombre</label>
+              <label className="form-label mediumWeight portraitSecundaryColor fs-6">Nombre</label>
               <input
                 className="form-control"
                 placeholder="Nombre"
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
+                style={{ borderRadius: '15px', }}
                 required
               />
             </div>
             <div className="ms-2 flex-fill">
-              <label className="form-label">Apellido</label>
+              <label className="form-label mediumWeight portraitSecundaryColor fs-6">Apellido</label>
               <input
                 className="form-control"
                 placeholder="Apellido"
                 name="last_name"
                 value={formData.last_name}
                 onChange={handleInputChange}
+                style={{ borderRadius: '15px', }}
                 required
               />
             </div>
           </div>
-          <div className="mb-3">
-            <label className="form-label">Fecha de Nacimiento</label>
-            <input
-              type="date"
-              className="form-control"
-              name="birthday"
-              value={formData.birthday}
-              onChange={handleInputChange}
-              required
-            />
+          <div className="mb-3 row mt-3">
+            <div className="col-lg-6 col-sm-12">
+              <label className="form-label mediumWeight portraitSecundaryColor">Fecha de Nacimiento</label>
+              <input
+                type="date"
+                className="form-control"
+                name="birthday"
+                value={formData.birthday}
+                onChange={handleInputChange}
+                style={{ borderRadius: '15px', }}
+                required
+              />
+            </div>
+            <div className="col-lg-6 col-sm-12">
+              <label className="form-label mediumWeight portraitSecundaryColor">Email</label>
+              <input
+                className="form-control"
+                placeholder="Email"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                style={{ borderRadius: '15px', }}
+                required
+              />
+            </div>
           </div>
-          <div className="mb-3">
-            <label className="form-label">Email</label>
-            <input
-              className="form-control"
-              placeholder="Email"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Teléfono</label>
+          <div className="mb-3 mt-3">
+            <label className="form-label mediumWeight portraitSecundaryColor">Teléfono</label>
             <input
               className="form-control"
               placeholder="Teléfono"
               name="phone_number"
               value={formData.phone_number}
               onChange={handleInputChange}
+              style={{ borderRadius: '15px', }}
               required
             />
           </div>
-          <div className="d-flex mb-3">
-            <div className="me-2 flex-fill">
-              <label className="form-label">Tipo de Identificación</label><br></br>
-              <select name="select">
+          <div className="mb-3 row mt-3">
+            <div className=" col-lg-5 col-sm-12">
+              <label className="form-label mediumWeight portraitSecundaryColor mb-3">Tipo de Identificación</label><br></br>
+              <select style={{ borderRadius: '12px' }} className="ms-3" name="cardID_type" onChange={handleInputChange}>
                 <option value="value1" selected>-----------</option>
                 <option value="value2">Cedula Nacional</option>
                 <option value="value3">DIMEX</option>
                 <option value="value3">Pasaporte</option>
               </select>
-              {/* <input
+            </div>
+            {/* <input
                 className="form-control"
                 placeholder="Tipo de Identificación"
                 name="cardID_type"
@@ -126,40 +134,45 @@ export const SignUp = () => {
                 onChange={handleInputChange}
                 required
               /> */}
-            </div>
-            <div className="ms-2 flex-fill">
-              <label className="form-label">Número de Identificación</label>
+            <div className=" col-lg-7 col-sm-12">
+              <label className="form-label mediumWeight portraitSecundaryColor">Número de Identificación</label>
               <input
                 className="form-control"
                 placeholder="Número de Identificación"
                 name="number_cardID"
                 value={formData.number_cardID}
                 onChange={handleInputChange}
+                style={{ borderRadius: '15px' }}
                 required
               />
             </div>
           </div>
-          <div className="mb-3">
-            <label className="form-label">Contraseña</label>
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Contraseña"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              required
-            />
+          <div className="mb-3 row mt-3">
+            <div className="col-lg-6 col-sm-12">
+              <label className="form-label mediumWeight portraitSecundaryColor">Contraseña</label>
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Contraseña"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                style={{ borderRadius: '15px' }}
+                required
+              />
+            </div>
+            <div className="col-lg-6 col-sm-12">
+              <label className="form-label mediumWeight portraitSecundaryColor">Confirmar Contraseña</label>
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Confirmar Contraseña"
+                style={{ borderRadius: '15px' }}
+                required
+              />
+            </div>
           </div>
-          <div className="mb-4">
-            <label className="form-label">Confirmar Contraseña</label>
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Confirmar Contraseña"
-              required
-            />
-          </div>
+
           <div className="d-flex flex-row justify-content-center gap-4 mb-3 mt-3">
             <Link to='/'>
               <MultiButtonNew color="purple" text="Atras" width="100" Btype='button' />
@@ -168,7 +181,7 @@ export const SignUp = () => {
               <MultiButtonNew color="orange" text="Enviar" width="100" Btype='button' />
             </div>
           </div>
-          <Link to={`/login`} className="mt-3">
+          <Link to={`/login`} className="mt-3 text-center">
             ¿Ya tienes un usuario? Inicia sesión aquí
           </Link>
         </form>

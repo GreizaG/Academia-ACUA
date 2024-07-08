@@ -10,24 +10,12 @@ export const NavbarAdmin = () => {
     const { store, actions } = useContext(Context)
     const { logout } = useAuth()
 
-    const [adminData, setAdminData] = useState({})
-
-    useEffect(() => {
-        actions.getSingleAdmin()
-    }, [])
-
-    console.log(store.singleAdministrator)
-    console.log(store.singleAdministrator.administrator?.name)
-
     return (
         <nav className="navbar navbar-expand-lg bg-white">
             <div className="container-fluid d-flex justify-content-around align-items-baseline">
                 <div className="imagebox">
                     <>
                         <img className="logo" src="https://i.imgur.com/fkBV2BP.png" />
-                    </>
-                    <>
-                        <span className="ms-2 fs-6">{store.singleAdministrator.administrator?.name} {store.singleAdministrator.administrator?.last_name}</span>
                     </>
                 </div>
                 <div>
