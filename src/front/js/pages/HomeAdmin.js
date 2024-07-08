@@ -16,20 +16,27 @@ import { CarouselAdminStudents } from "../component/CarouselAdminStudents";
 export const HomeAdmin = () => {
 
 	const { store, actions } = useContext(Context);
-
-
 	// useEffect(() => {
 	// 	console.log("Se ejecuta getProfessors");
 	// 	actions.getProfessors()
 	// }, [])
+
+
 	useEffect(() => {
 		console.log("Se ejecuta por la dependencia")
+		actions.getSingleAdmin()
+		console.log(store.singleAdministrator)
 	}, [store.professors])
+
+
 
 	return (
 		<React.Fragment>
 			<NavbarAdmin />
 			<div className="container-fluid pb-5">
+				<div className="welcome mt-3 mb-3 ms-5">
+					<h3 className="mediumWeight fs-6 portraitSecundaryColor">Bienvenido administrador {store.singleAdministrator.administrator?.name} {store.singleAdministrator.administrator?.last_name} </h3>
+				</div>
 				<div className="d-flex align-content-center justify-content-center mb-3 mt-3 py-4 jumbo rounded-3">
 					<div className="container-fluid align-content-center">
 						<h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Profesores</h4>

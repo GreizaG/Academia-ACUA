@@ -24,7 +24,7 @@ const HomeACUA = () => {
         <div className="portraitBox">
           <div className="acuaPortraitText portraitPrimaryColor" style={{ zIndex: '3' }}>
             <div className="boxPoints">
-              <img className='pointsUpper' src="https://i.imgur.com/hJ1Q7yE.png" alt="" />
+              <img className='pointsUpper' src="https://i.imgur.com/hJ1Q7yE.png" alt="" style={{ zIndex: '2' }} />
             </div>
             <h1 className='acuaTitle' id='bannerTitle'>ACUA</h1>
             <p className='acuaShortResume mb-4'>Promovemos la formación y el disfrute de la música mediante capacitaciones, conciertos y talleres dirigidos todos los costarricenses. Nuestros valores incluyen la inclusión, profesionalismo y solidaridad. ¡Se parte de nuestra familia!</p>
