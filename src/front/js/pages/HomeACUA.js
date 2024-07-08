@@ -50,11 +50,11 @@ const HomeACUA = () => {
           <div className="cardFollowers p-2" id='secondCard'>
             <div className="firstUser d-flex flex-row align-items-center justify-content-around pe-2">
               <CircleIcon imageURL="https://i.imgur.com/z1ePcdj.png" height='45' padding='2' />
-              <p className='mediumWeight pt-1'>Queen Latifah</p>
+              <p className='mediumWeight pt-1'>Yoel Sánchez</p>
             </div>
             <div className="secondUser d-flex flex-row align-items-center justify-content-around pe-2">
               <CircleIcon imageURL="https://i.imgur.com/yAnz4w2.png" height='45' padding='2' />
-              <p className='mediumWeight pt-1'>Michel Jones</p>
+              <p className='mediumWeight pt-1'>Angela Fortt</p>
             </div>
           </div>
           <img className='arrowPng' src="https://i.imgur.com/DBQCFkR.png" alt="" />
