@@ -42,8 +42,8 @@ export const ProfNextPayReg = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {store.professorsPayment && store.professorsPayment.map(professorPayment =>
-                                    (<ListProfPayReg method={professorPayment.payment_method} professor={`${professorPayment.professor_id.name}` + ' ' + `${professorPayment.professor_id.last_name}`} phone={professorPayment.phone_number} iban={professorPayment.iban_account} key={professorPayment.new_course_id} id={professorPayment.professor_payment_id} />)
+                                {store.professorsPayment && store.professorsPayment.map((professorPayment, index) =>
+                                    (<ListProfPayReg method={professorPayment.payment_method} professor={`${professorPayment.professor_id.name}` + ' ' + `${professorPayment.professor_id.last_name}`} phone={professorPayment.phone_number} iban={professorPayment.iban_account} key={professorPayment.new_course_id} id={index + 1} />)
                                 )}
                             </tbody>
                         </table>

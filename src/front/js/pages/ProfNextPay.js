@@ -99,7 +99,7 @@ export const ProfNextPay = () => {
                         position: 'absolute', top: '50%', left: '35%', transform: 'translate(-45%, -50%)',
                         color: 'black'
                     }}>
-                        <h1>Información próximo pago</h1>
+                        <h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Información próximo pago</h4>
                     </div>
                 </div>
                 <form className="mt-5 p-5 mb-5 bg-white registerForm d-flex flex-column justify-content-center">
