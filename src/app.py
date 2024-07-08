@@ -198,14 +198,43 @@ def get_all_studpay():
         print(studpays_serialized)
     return jsonify({"studpays": studpays_serialized}), 200
 
-@app.route('/api/electronicinvoice', methods=['GET'])
+# @app.route('/api/electronicinvoice', methods=['GET'])
+# def get_all_electinv():
+#     all_electinvs = ElectronicInvoice.query.all()
+#     electinvs_serialized = []
+#     for electinv in all_electinvs:
+#         electinvs_serialized.append(electinv.serialize())
+#         print(electinvs_serialized)
+#     return jsonify({"electinvs": electinvs_serialized}), 200
+
+@app.route('/api/electronicinvoices', methods=['GET'])
 def get_all_electinv():
-    all_electinvs = ElectronicInvoice.query.all()
-    electinvs_serialized = []
-    for electinv in all_electinvs:
-        electinvs_serialized.append(electinv.serialize())
-        print(electinvs_serialized)
-    return jsonify({"electinvs": electinvs_serialized}), 200
+    all_electinvs = db.session.query(
+        ElectronicInvoice, Student
+    ).join(
+        Student, ElectronicInvoice.student_id == Student.id
+    ).all()
+
+    all_electinvs_serialized = []
+    for electronic_invoice, student in all_electinvs:
+        all_electinvs_serialized.append({
+            'electronic_invoice_id': electronic_invoice.id,
+            'name': electronic_invoice.name,
+            'cardID_type': electronic_invoice.cardID_type,
+            'number_cardID': electronic_invoice.number_cardID,
+            'phone_number': electronic_invoice.phone_number,
+            'email': electronic_invoice.email,
+            'province': electronic_invoice.province,
+            'canton': electronic_invoice.canton,
+            'district': electronic_invoice.district,
+            'student_id':{
+                'id': student.id,
+                'name': student.name,
+                'last_name': student.last_name
+            }
+        })
+
+    return jsonify({"electinvs": all_electinvs_serialized}), 200
 
 @app.route('/api/courses', methods=['GET'])
 def get_all_course():
@@ -385,20 +414,23 @@ def get_student_courses():
     if identity['user_type'] != "student":
         return jsonify({"msg": "No tienes autorización para ingresar"}), 402
     student_courses = db.session.query(
-        NewCourse, Course, Professor
+        NewCourse, Course, Professor, Modality
         ).join(
            Course, NewCourse.course_id == Course.id
         ).join(
             Professor, NewCourse.professor_id == Professor.id
+        ).join(
+            Modality, NewCourse.modality_id == Modality.id
         ).filter(NewCourse.student_id == student.id).all()
     
     student_courses_serialized = []
-    for new_course, course, professor in student_courses:
+    for new_course, course, professor, modality in student_courses:
         student_courses_serialized.append({
             'new_course_id': new_course.id,
             'course_name': course.name,
             'professor_name': professor.name,
-            'professor_last_name': professor.last_name
+            'professor_last_name': professor.last_name,
+            'modality_name': modality.name
         })
     
     return jsonify({"student_courses": student_courses_serialized}), 200
@@ -1196,12 +1228,36 @@ def get_prof_next_pay():
         return jsonify({"msg": "No existe información de próximo pago para el professor indicado"}), 400
     return jsonify({"prof_next_payment": prof_next_pay.serialize()}), 200
 
-@app.route('/api/professordescription/<int:id>', methods=['GET'])
-def get_professor_description(id):
-    profe_description = ProfessorDescription.query.filter_by(professor_id = id)
-    if profe_description is None:
-        return jsonify({"msg": "No existe profesor con la información indicada"}), 401
-    return jsonify({"professor_description": profe_description.serialize()}), 200
+# @app.route('/api/professordescription/<int:id>', methods=['GET'])
+# def get_professor_description(id):
+#     profe_description = ProfessorDescription.query.filter_by(professor_id = id)
+#     if profe_description is None:
+#         return jsonify({"msg": "No existe profesor con la información indicada"}), 401
+#     return jsonify({"professor_description": profe_description.serialize()}), 200
+
+@app.route('/api/professordescription', methods=['GET'])
+def get_professor_description():
+    all_professor_description = db.session.query(
+        ProfessorDescription, Professor
+    ).join(
+        Professor, ProfessorDescription.professor_id == Professor.id
+    ).all()
+
+    all_professor_description_serialized = []
+    for professor_description, professor in all_professor_description:
+        all_professor_description_serialized.append({
+            'professor_description_id': professor_description.id,
+            'years_of_experience': professor_description.years_of_experience,
+            'specialist_in': professor_description.specialist_in,
+            'studies': professor_description.studies,
+            'professor_id':{
+                'id': professor.id,
+                'name': professor.name,
+                'last_name': professor.last_name
+            }
+        })
+
+    return jsonify({"professor_description": all_professor_description_serialized}), 200
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

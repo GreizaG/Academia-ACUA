@@ -37,7 +37,7 @@ export const StudentPayment = () => {
         console.log(isCreated)
         if (isCreated) {
             showNotification("Fecha de pago creada con éxito")
-            navigate("/homeadmin")
+            navigate("/electronicinvoiceregister")
         } else {
             showNotification("Ocurrió un error al tratar de agregar una nueva fecha de pago", "error")
         }
@@ -143,7 +143,7 @@ export const StudentPayment = () => {
                     {/* <label className="form-label fs-4 mb-3" style={{ color: '#5751e1' }}>ID estudiante</label>
                             <input className="form-control mb-3" placeholder="ID estudiante" name="student_id" value={formData.student_id} onChange={handleInputChange} /> */}
                     <div className="d-flex justify-content-around mt-4">
-                        <Link to='/registeredcourses'>
+                        <Link to='/electronicinvoiceregister'>
                             <MultiButtonNew color="purple" text="Atras" width="100" Btype='button' />
                         </Link>
                         <button type="button" class="btn btn-warning" id="multiButton" onClick={handleSubmit} style={{

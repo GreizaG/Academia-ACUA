@@ -46,8 +46,8 @@ export const HomeProfessor = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {store.professorCourses?.professor_courses && store.professorCourses?.professor_courses.map(professorCourse =>
-                                    (<ListProfRegCourses course={professorCourse.course_name} student={`${professorCourse.student_name}` + ' ' + `${professorCourse.student_last_name}`} key={professorCourse.new_course_id} id={professorCourse.new_course_id} />)
+                                {store.professorCourses?.professor_courses && store.professorCourses?.professor_courses.map((professorCourse, index) =>
+                                    (<ListProfRegCourses course={professorCourse.course_name} student={`${professorCourse.student_name}` + ' ' + `${professorCourse.student_last_name}`} key={professorCourse.new_course_id} id={index + 1} />)
                                 )}
                             </tbody>
                         </table>
@@ -70,7 +70,7 @@ export const HomeProfessor = () => {
                     </div>
                 </div>
                 <div className="continer-fluid d-flex ps-5 ms-5 my-5">
-                    <div className="cardProfessor" style={{ width: '36rem' }}>
+                    <div className="cardProfessor" style={{ width: '40rem' }}>
                         <div className="container d-flex card-body card cardProff" style={{ borderRadius: '20px' }}>
                             <table className="table table-borderless text-end">
                                 <tr className="pb-4">
@@ -99,7 +99,7 @@ export const HomeProfessor = () => {
                     </div>
                 </div>
                 <div className="continer-fluid d-flex ps-5 ms-5 my-5">
-                    <div className="cardProfessor" style={{ width: '36rem' }}>
+                    <div className="cardProfessor" style={{ width: '40rem' }}>
                         <div className="container d-flex card-body card cardProff" style={{ borderRadius: '20px' }}>
                             <table className="table table-borderless text-end">
                                 <tr className="pb-4">

@@ -15,7 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			studentspayment: [],
 
-			electronicinvoices: [],
+			electronicinvoices: {},
 
 			registeredCourses: [],
 
@@ -448,8 +448,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.then((data) => {
 						console.log("Data:", data)
-						console.log(data.electinvs)
-						setStore({ electronicinvoices: data.electinvs })
+						console.log(data)
+						setStore({ electronicinvoices: data })
 					})
 					.catch((error) => {
 						console.log(error)
@@ -799,7 +799,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			getProfessorDescription: () => {
-				fetch(process.env.BACKEND_URL + "/api/professordescription/<int:id>", {
+				fetch(process.env.BACKEND_URL + "/api/professordescription/", {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json"
@@ -843,6 +843,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.catch(error => {
 						console.log(error)
+						console.log(profDescr)
 						return false
 					})
 			},

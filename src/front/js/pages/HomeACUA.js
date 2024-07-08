@@ -16,7 +16,11 @@ import { MultiButtonNew } from '../component/MultibuttonNew'
 const HomeACUA = () => {
   const { actions, store } = useContext(Context);
 
+  useEffect(() => {actions.getProfessorDescription()}, [])
+
   console.log(store.professors);
+  console.log(store.profDescr.professor_description);
+
   return (
     <React.Fragment>
       <NavbarACUA />
@@ -50,11 +54,11 @@ const HomeACUA = () => {
           <div className="cardFollowers p-2" id='secondCard'>
             <div className="firstUser d-flex flex-row align-items-center justify-content-around pe-2">
               <CircleIcon imageURL="https://i.imgur.com/z1ePcdj.png" height='45' padding='2' />
-              <p className='mediumWeight pt-1'>Queen Latifah</p>
+              <p className='mediumWeight pt-1'>Yoel Sánchez</p>
             </div>
             <div className="secondUser d-flex flex-row align-items-center justify-content-around pe-2">
               <CircleIcon imageURL="https://i.imgur.com/yAnz4w2.png" height='45' padding='2' />
-              <p className='mediumWeight pt-1'>Michel Jones</p>
+              <p className='mediumWeight pt-1'>Angela Fortt</p>
             </div>
           </div>
           <img className='arrowPng' src="https://i.imgur.com/DBQCFkR.png" alt="" />
@@ -72,7 +76,7 @@ const HomeACUA = () => {
           <p className='text-secondary mt-0'>¡Conoce quien esta detras de nuestra formacion!</p>
         </div>
         <div className="carousel container pb-3 mt-3 mb-3 d-flex flew-row justify-content-center">
-          <NewCarrousel array={store.professors} />
+          <NewCarrousel array={store.profDescr.professor_description} />
         </div>
       </section>
       <section className="reachGoalsSection" style={{ marginTop: '100px', marginBottom: '100px' }}>

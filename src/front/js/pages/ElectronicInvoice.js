@@ -15,7 +15,7 @@ export const ElectronicInvoice = () => {
     phone_number: 0,
     province: "",
     canton: "",
-    distric: "",
+    district: "",
     student_id: store.singleStudent.student?.id
   })
 
@@ -51,6 +51,30 @@ export const ElectronicInvoice = () => {
       ...formState,
       selectedOption: value
     })
+  }
+
+  const handleAll = () => {
+    const strName = formData.name
+    // const strCardIdType = formData.cardID_type
+    const id = formData.number_cardID
+    const phone = formData.phone_number
+    const strEmail = formData.email
+    const strProvince = formData.province
+    const strCanton = formData.canton
+    const strDistrict = formData.district
+
+    if (strName.trim().length &&
+      // strCardIdType.trim().length &&
+      id.length &&
+      phone.length &&
+      strEmail.trim().length &&
+      strProvince.trim().length &&
+      strCanton.trim().length &&
+      strDistrict.trim().length > 0) {
+      handleSubmit()
+    } else {
+      showNotification("Debes agregar toda la información solicitada", "error")
+    }
   }
 
   return (
@@ -116,7 +140,7 @@ export const ElectronicInvoice = () => {
           </div>
           <div className="me-2 flex-fill">
             <label className="form-label">Distrito</label>
-            <input className="form-control" placeholder="Distrito" name="distric" value={formData.distric} onChange={handleInputChange} />
+            <input className="form-control" placeholder="Distrito" name="district" value={formData.district} onChange={handleInputChange} />
           </div>
         </div>
         {/* <div className="me-2 flex-fill">
@@ -124,7 +148,7 @@ export const ElectronicInvoice = () => {
           <input className="form-control" placeholder="ID estudiante" name="student_id" value={store.singleStudent.student?.id} onChange={handleInputChange} />
         </div> */}
         <div className="container-fluid justify-content-between mt-3">
-          <button type="button" className="btn btn-warning btn-sm mt-2" style={{ borderRadius: '20px', boxShadow: '0px 4px 8px' }} onClick={handleSubmit}> Guardar</button>
+          <button type="button" className="btn btn-warning btn-sm mt-2" style={{ borderRadius: '20px', boxShadow: '0px 4px 8px' }} onClick={handleAll}> Guardar</button>
           <Link to="/homestudent">
             <button type="button" className="btn btn-warning btn-sm ms-5 mt-2" style={{ borderRadius: '20px', boxShadow: '0px 4px 8px' }}>
               Cancelar</button>
