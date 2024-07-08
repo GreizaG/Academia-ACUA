@@ -402,3 +402,18 @@ body{
     padding-right: 30px;
     padding-bottom: 10px;
 }
+
+.editOption{
+    border-radius: 19px;
+    border: 1px solid #5751e1;
+    width: 90px;
+    color: #5751e1;
+}
+
+.editOption:hover{
+    cursor: pointer;
+    border: 1px solid #e1cbee;
+    background-color: #e1cbee;
+    transition: ease-out 0.2s;
+    color: white
+}

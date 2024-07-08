@@ -119,7 +119,7 @@ export const SignUp = () => {
           <div className="mb-3 row mt-3">
             <div className=" col-lg-5 col-sm-12">
               <label className="form-label mediumWeight portraitSecundaryColor mb-3">Tipo de Identificación</label><br></br>
-              <select name="select" style={{ borderRadius: '12px' }} className="ms-3">
+              <select style={{ borderRadius: '12px' }} className="ms-3" name="cardID_type" onChange={handleInputChange}>
                 <option value="value1" selected>-----------</option>
                 <option value="value2">Cedula Nacional</option>
                 <option value="value3">DIMEX</option>

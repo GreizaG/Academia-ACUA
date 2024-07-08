@@ -35,7 +35,7 @@ export const HomeAdmin = () => {
 			<NavbarAdmin />
 			<div className="container-fluid pb-5">
 				<div className="welcome mt-3 mb-3 ms-5">
-					<h3 className="mediumWeight fs-6 portraitSecundaryColor">Bienvenido administrador {store.singleAdministrator.administrator?.name} {store.singleAdministrator.administrator?.last_name} </h3>
+					<h3 className="mediumWeight fs-6 portraitSecundaryColor">Bienvenido {store.singleAdministrator.administrator?.name} {store.singleAdministrator.administrator?.last_name} </h3>
 				</div>
 				<div className="d-flex align-content-center justify-content-center mb-3 mt-3 py-4 jumbo rounded-3">
 					<div className="container-fluid align-content-center">
