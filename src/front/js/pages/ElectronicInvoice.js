@@ -85,7 +85,7 @@ export const ElectronicInvoice = () => {
           <div className="me-2 flex-fill">
             <label className="form-label">Tipo de identificación</label><br></br>
             <select name="select" onChange={handleSelectChange} value={formState.selectedOption}>
-              <option value="value1" selected>Seleccione</option>
+            <option value="" disabled selected>Selecciona una opción</option>
               <option value="Cédula Nacional">Cedula Nacional</option>
               <option value="Cédula Juridica">Cedula Juridica</option>
               <option value="DIMEX">DIMEX</option>

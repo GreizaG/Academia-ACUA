@@ -50,8 +50,8 @@ app.url_map.strict_slashes = False
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT-KEY") #super secret
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=2)
 jwt = JWTManager(app)
-
 bcrypt = Bcrypt(app)
+
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
@@ -113,19 +113,19 @@ def login():
     
     # Verificar estudiante
     student = Student.query.filter_by(email=body["email"]).first()
-    if student and student.password == body['password']:
+    if student and bcrypt.check_password_hash(student.password, body['password']):
         access_token = create_access_token(identity={"email": student.email, "user_type": "student", "id": student.id})
         return jsonify({"msg": "ok", "access_token": access_token, "user_type": "student", "email": student.email, "id": student.id}), 200
     
     # Verificar profesor
     professor = Professor.query.filter_by(email=body["email"]).first()
-    if professor and professor.password == body['password']:
+    if professor and bcrypt.check_password_hash(professor.password, body['password']):
         access_token = create_access_token(identity={"email": professor.email, "user_type": "professor", "id": professor.id})
         return jsonify({"msg": "ok", "access_token": access_token, "user_type": "professor", "email": professor.email, "id": professor.id}), 200
     
     # Verificar admin
     administrator = Administrator.query.filter_by(email=body["email"]).first()
-    if administrator and administrator.password == body['password']:
+    if administrator and bcrypt.check_password_hash(administrator.password, body['password']):
         access_token = create_access_token(identity={"email": administrator.email, "user_type": "admin", "id": administrator.id})
         return jsonify({"msg": "ok", "access_token": access_token, "user_type": "admin", "email": administrator.email, "id": administrator.id}), 200
 
@@ -539,7 +539,8 @@ def new_admin():
     # new_admin.province = body["province"]
     # new_admin.canton = body["canton"]
     # new_admin.district = body["district"]
-    new_admin.password = body["password"]
+    pw_hash = bcrypt.generate_password_hash(body['password']).decode('utf-8')
+    new_admin.password = pw_hash
     new_admin.user_type = "admin"
 
     try:
@@ -594,7 +595,8 @@ def new_profe():
     # new_profe.province = body["province"]
     # new_profe.canton = body["canton"]
     # new_profe.district = body["district"]
-    new_profe.password = body["password"]
+    pw_hash = bcrypt.generate_password_hash(body['password']).decode('utf-8')
+    new_profe.password = pw_hash
     new_profe.user_type = "professor"
     
     try:
@@ -635,7 +637,8 @@ def new_stud():
     new_stud.number_cardID = body["number_cardID"]
     new_stud.email = body["email"]
     new_stud.phone_number = body["phone_number"]
-    new_stud.password = body["password"]
+    pw_hash = bcrypt.generate_password_hash(body['password']).decode('utf-8')
+    new_stud.password = pw_hash
     new_stud.user_type = "student"
    
     try:

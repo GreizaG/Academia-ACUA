@@ -106,13 +106,13 @@ const FormProfessor = () => {
                 </div>
                 <div className="d-flex mb-3">
                     <div className="me-2 flex-fill">
-                        <label className="form-label">Tipo de identificación</label><br></br>
-                        <select name="select">
-                            <option value="value1" selected>-----------</option>
-                            <option value="value2">Cedula Nacional</option>
-                            <option value="value3">DIMEX</option>
-                            <option value="value3">Pasaporte</option>
-                        </select>
+                    <label htmlFor="selectIdType" className="form-label">Tipo de Identificación</label>
+    <select id="selectIdType" className="form-select" name="select">
+        <option value="" disabled selected>Selecciona una opción</option>
+        <option value="cedula">Cédula Nacional</option>
+        <option value="dimex">DIMEX</option>
+        <option value="pasaporte">Pasaporte</option>
+              </select>
                         {/* <input className="form-control" placeholder="Tipo de identificación" onClick={handleInputChange}/> */}
                     </div>
                     <div className="ms-2 flex-fill">
