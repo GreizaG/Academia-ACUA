@@ -33,6 +33,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			singleStudPay: {},
 
+			singleProfDescr: [],
+
 			profNextPay: {},
 
 			profDescr: {}
@@ -845,6 +847,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log(error)
 						console.log(profDescr)
 						return false
+					})
+			},
+
+			getSingleProfessorDescription: (id) => {
+				fetch(process.env.BACKEND_URL + `/api/professordescription/${id}`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then((response) => {
+						return response.json()
+					})
+					.then((data) => {
+						console.log(data.single_professor_description)
+						setStore({ singleProfDescr: data.single_professor_description })
+						return data
+					})
+					.catch((error) => {
+						console.log(error)
 					})
 			},
 
