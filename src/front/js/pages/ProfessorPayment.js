@@ -98,7 +98,7 @@ export const ProfessorPayment = () => {
                         position: 'absolute', top: '50%', left: '35%', transform: 'translate(-45%, -50%)',
                         color: 'black'
                     }}>
-                        <h3>Información pago profesor</h3>
+                        <h3 className="mediumWeight">Información pago profesor</h3>
                     </div>
                 </div>
                 <form className="mt-5 p-5 mb-5 bg-white registerForm d-flex flex-column justify-content-center">

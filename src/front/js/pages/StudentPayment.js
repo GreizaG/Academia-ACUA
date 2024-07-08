@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { MultiButtonNew } from "../component/MultibuttonNew";
 import { showNotification } from "../utils/ShowNotification";
+import { NavbarAdmin } from "../pages/NavbarAdmin"
 
 export const StudentPayment = () => {
 
@@ -82,6 +83,7 @@ export const StudentPayment = () => {
 
     return (
         <React.Fragment>
+            <NavbarAdmin />
             <div className="d-flex flex-column justify-content-center align-items-center bg-white">
                 <div style={{ position: 'relative', width: '100%' }}>
                     <img src="https://i.postimg.cc/XJ784zpy/Whats-App-Image-2024-06-17-at-19-29-08.jpg"
@@ -93,7 +95,7 @@ export const StudentPayment = () => {
                         position: 'absolute', top: '50%', left: '35%', transform: 'translate(-45%, -50%)',
                         color: 'black'
                     }}>
-                        <h1>Información próximo pago estudiante</h1>
+                        <h3 className="mediumWeight">Información próximo pago estudiante</h3>
                     </div>
                 </div>
                 <form className="mt-5 p-5 mb-5 bg-white registerForm d-flex flex-column justify-content-center">
