@@ -799,7 +799,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			getProfessorDescription: () => {
-				fetch(process.env.BACKEND_URL + "/api/professordescription/<int:id>", {
+				fetch(process.env.BACKEND_URL + "/api/professordescription/", {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json"

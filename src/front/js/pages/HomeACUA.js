@@ -16,7 +16,11 @@ import { MultiButtonNew } from '../component/MultibuttonNew'
 const HomeACUA = () => {
   const { actions, store } = useContext(Context);
 
+  useEffect(() => {actions.getProfessorDescription()}, [])
+
   console.log(store.professors);
+  console.log(store.profDescr.professor_description);
+
   return (
     <React.Fragment>
       <NavbarACUA />
@@ -72,7 +76,7 @@ const HomeACUA = () => {
           <p className='text-secondary mt-0'>¡Conoce quien esta detras de nuestra formacion!</p>
         </div>
         <div className="carousel container pb-3 mt-3 mb-3 d-flex flew-row justify-content-center">
-          <NewCarrousel array={store.professors} />
+          <NewCarrousel array={store.profDescr.professor_description} />
         </div>
       </section>
       <section className="reachGoalsSection" style={{ marginTop: '100px', marginBottom: '100px' }}>
