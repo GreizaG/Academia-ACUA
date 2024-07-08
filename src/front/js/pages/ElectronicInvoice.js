@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { showNotification } from "../utils/ShowNotification";
+import { MultiButtonNew } from "../component/MultibuttonNew";
 
 export const ElectronicInvoice = () => {
 
@@ -93,22 +94,22 @@ export const ElectronicInvoice = () => {
           <div className="container justify-content-center">
             <h1>¡ Bienvenid@ !</h1>
             <hr />
-            <h4 className="fw-lighter fst-italic ms-5">{store.singleStudent.student?.name} {store.singleStudent.student?.last_name}</h4>
+            <h4 className="portraitSecundaryColor fst-italic ms-5">{store.singleStudent.student?.name} {store.singleStudent.student?.last_name}</h4>
           </div>
         </div>
       </div>
-      <form className="mt-4 p-4 rounded shadow mb-4" style={{ backgroundColor: '#e9ecef' }}>
-        <h4 className="mb-4 fw-lighter fst-italic">Agrega información para tu factura electrónica</h4>
+      <form className="mt-4 p-4 bg-white registerForm d-flex flex-column justify-content-center mb-4" style={{ backgroundColor: '#e9ecef' }}>
+        <h4 className="mb-4 mediumWeight portraitSecundaryColor">Agrega información para tu factura electrónica</h4>
         <div className="d-flex mb-3">
           <div className="me-2 flex-fill">
-            <label className="form-label">Nombre</label>
-            <input className="form-control" placeholder="Nombre" name="name" value={formData.name} onChange={handleInputChange} />
+            <label className="form-label mediumWeight portraitSecundaryColor">Nombre</label>
+            <input className="form-control" style={{ borderRadius: '15px', }} placeholder="Nombre" name="name" value={formData.name} onChange={handleInputChange} />
           </div>
         </div>
-        <div className="d-flex mb-3">
-          <div className="me-2 flex-fill">
-            <label className="form-label">Tipo de identificación</label><br></br>
-            <select name="select" onChange={handleSelectChange} value={formState.selectedOption}>
+        <div className="row mb-3">
+          <div className="col-lg-6 col-sm-12">
+            <label className="form-label mediumWeight portraitSecundaryColor">Tipo de identificación</label><br></br>
+            <select name="select" style={{ borderRadius: '15px', }} className="p-2" onChange={handleSelectChange} value={formState.selectedOption}>
               <option value="value1" selected>Seleccione</option>
               <option value="Cédula Nacional">Cedula Nacional</option>
               <option value="Cédula Juridica">Cedula Juridica</option>
@@ -116,43 +117,53 @@ export const ElectronicInvoice = () => {
             </select>
             {/* <input className="form-control" placeholder="Tipo de identificación" onChange={handleInputChange} /> */}
           </div>
-          <div className="ms-2 flex-fill">
-            <label className="form-label">Número de identificación</label>
-            <input className="form-control" placeholder="Número de identificación" name="number_cardID" value={formData.number_cardID} onChange={handleInputChange} />
+          <div className="col-lg-6 col-sm-12">
+            <label className="form-label mediumWeight portraitSecundaryColor">Número de identificación</label>
+            <input className="form-control" style={{ borderRadius: '15px', }} placeholder="Número de identificación" name="number_cardID" value={formData.number_cardID} onChange={handleInputChange} />
           </div>
         </div>
-        <div className="mb-3">
-          <label className="form-label">Email</label>
-          <input className="form-control" placeholder="Email" name="email" value={formData.email} onChange={handleInputChange} />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Número telefónico</label>
-          <input className="form-control" placeholder="Número telefónico" name="phone_number" value={formData.phone_number} onChange={handleInputChange} />
+        <div className="row mb-3">
+          <div className="col-lg-6 col-sm-12">
+            <label className="form-label mediumWeight portraitSecundaryColor">Email</label>
+            <input className="form-control" style={{ borderRadius: '15px', }} placeholder="Email" name="email" value={formData.email} onChange={handleInputChange} />
+          </div>
+          <div className="col-lg-6 col-sm-12">
+            <label className="form-label mediumWeight portraitSecundaryColor">Número telefónico</label>
+            <input className="form-control" style={{ borderRadius: '15px', }} placeholder="Número telefónico" name="phone_number" value={formData.phone_number} onChange={handleInputChange} />
+          </div>
         </div>
         <div className="d-flex mb-3">
           <div className="me-2 flex-fill">
-            <label className="form-label">Provincia</label>
-            <input className="form-control" placeholder="Provincia" name="province" value={formData.province} onChange={handleInputChange} />
+            <label className="form-label mediumWeight portraitSecundaryColor">Provincia</label>
+            <input className="form-control" style={{ borderRadius: '15px', }} placeholder="Provincia" name="province" value={formData.province} onChange={handleInputChange} />
           </div>
           <div className="me-2 flex-fill">
-            <label className="form-label">Cantón</label>
-            <input className="form-control" placeholder="Cantón" name="canton" value={formData.canton} onChange={handleInputChange} />
+            <label className="form-label mediumWeight portraitSecundaryColor">Cantón</label>
+            <input className="form-control" style={{ borderRadius: '15px', }} placeholder="Cantón" name="canton" value={formData.canton} onChange={handleInputChange} />
           </div>
           <div className="me-2 flex-fill">
-            <label className="form-label">Distrito</label>
-            <input className="form-control" placeholder="Distrito" name="district" value={formData.district} onChange={handleInputChange} />
+            <label className="form-label mediumWeight portraitSecundaryColor">Distrito</label>
+            <input className="form-control" style={{ borderRadius: '15px', }} placeholder="Distrito" name="district" value={formData.district} onChange={handleInputChange} />
           </div>
         </div>
         {/* <div className="me-2 flex-fill">
           <label className="form-label">ID estudiante</label>
           <input className="form-control" placeholder="ID estudiante" name="student_id" value={store.singleStudent.student?.id} onChange={handleInputChange} />
         </div> */}
-        <div className="container-fluid justify-content-between mt-3">
-          <button type="button" className="btn btn-warning btn-sm mt-2" style={{ borderRadius: '20px', boxShadow: '0px 4px 8px' }} onClick={handleAll}> Guardar</button>
+        <div className="d-flex flex-row justify-content-center gap-4 mt-3">
           <Link to="/homestudent">
-            <button type="button" className="btn btn-warning btn-sm ms-5 mt-2" style={{ borderRadius: '20px', boxShadow: '0px 4px 8px' }}>
-              Cancelar</button>
+            <MultiButtonNew color="purple" text="Atras" width="100" Btype='button' />
           </Link>
+          <button type="button" class="btn btn-warning" onClick={handleAll} id="multiButton" style={{
+            backgroundColor: '#ffc224',
+            boxShadow: '4px 6px 0px #3d3d3d',
+            border: '1px solid #000000',
+            color: '#161439',
+            fontWeight: '600',
+            cursor: 'pointer',
+            width: '100px',
+            paddingBottom: '28px',
+          }}>Guardar</button>
         </div>
         {/* <div className="container-fluid justify-content-between">
           <button type="submit" className="btn btn-warning w-100" style={{ borderRadius: '20px', boxShadow: '0px 4px 8px' }} onClick={handleSubmit}>Guardar</button>
