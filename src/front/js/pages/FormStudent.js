@@ -126,7 +126,7 @@ const FormStudent = () => {
                 <div className="d-flex mb-3">
                     <div className="me-2 flex-fill">
                         <label className="form-label mediumWeight portraitSecundaryColor">Provincia</label>
-                        <input className="form-control" style={{ borderRadius: '15px', }} placeholder="Provincia" name="province" value={formData.province} onChange={handleInputChange} disabled={isDisabled} />
+                        <input className="form-control" style={{ borderRadius: '15px', }} placeholder="Provincia" name="province" value={store.singleStudent.student?.province ?? ""} onChange={handleInputChange} disabled={isDisabled} />
                     </div>
                     <div className="me-2 flex-fill">
                         <label className="form-label mediumWeight portraitSecundaryColor">Cantón</label>

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import rigoImage from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { NavbarAdmin } from "./NavbarAdmin";
 import { MultiButton } from "../component/MultiButton";
@@ -8,9 +7,6 @@ import { CardAdminProfessor } from "../component/Card/CardAdminProfessor";
 import { ListAdminCourse } from "../component/Card/ListAdminCourse";
 import { CardAdminStudent } from "../component/Card/CardAdminStudent";
 import { Context } from "../store/appContext";
-import { Carousel } from "../component/Carousel";
-import { CarouselAdmin } from "../component/CarouselAdmin";
-import { CarouselAdminStudents } from "../component/CarouselAdminStudents";
 
 
 export const HomeAdmin = () => {
@@ -43,9 +39,6 @@ export const HomeAdmin = () => {
 					</div>
 				</div>
 				<div className="container d-flex ms-5 ps-5 gap-4 flex-wrap mb-4">
-					{/* <CarouselAdminProfessor /> */}
-
-					{/* <CarouselAdmin array={store.professors} /> */}
 					<>
 						{store.professors && store.professors.map((professor) => {
 							return (
@@ -97,10 +90,11 @@ export const HomeAdmin = () => {
 					<>
 						{store.students && store.students.map((student) => {
 							return (
-								<CardAdminProfessor name={student.name} last_name={student.last_name} key={student.number_carID} id={student.id} />
+								<CardAdminProfessor name={student.name} last_name={student.last_name} key={student.number_cardID} id={student.id} />
 							)
 						})}
 					</>
+
 				</div>
 				<div className="container-fluid d-flex my-3 justify-content-center">
 					<Link to="/adminstudreg" className="text-decoration-none">

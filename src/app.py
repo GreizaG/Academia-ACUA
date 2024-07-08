@@ -1236,7 +1236,7 @@ def get_prof_next_pay():
 #     return jsonify({"professor_description": profe_description.serialize()}), 200
 
 @app.route('/api/professordescription', methods=['GET'])
-def get_professor_description():
+def get_all_professors_description():
     all_professor_description = db.session.query(
         ProfessorDescription, Professor
     ).join(
@@ -1258,6 +1258,30 @@ def get_professor_description():
         })
 
     return jsonify({"professor_description": all_professor_description_serialized}), 200
+
+@app.route('/api/professordescription/<int:id>', methods=['GET'])
+def get_single_professor_description(id):
+    single_professor_description = db.session.query(
+        ProfessorDescription, Professor
+    ).join(
+        Professor, ProfessorDescription.professor_id == Professor.id
+    ).filter(id == Professor.id)
+
+    single_professor_description_serialized = []
+    for professor_description, professor in single_professor_description:
+        single_professor_description_serialized.append({
+            'professor_description_id': professor_description.id,
+            'years_of_experience': professor_description.years_of_experience,
+            'specialist_in': professor_description.specialist_in,
+            'studies': professor_description.studies,
+            'professor_id':{
+                'id': professor.id,
+                'name': professor.name,
+                'last_name': professor.last_name
+            }
+        })
+
+    return jsonify({"single_professor_description": single_professor_description_serialized}), 200
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
