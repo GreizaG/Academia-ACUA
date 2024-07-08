@@ -36,7 +36,7 @@ export const CardAdminProfessor = ({ name, id, last_name, years_of_experience, s
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="exampleModalLabel">{store.singleProfDescr.single_professor_description?.name} {last_name}</h1>
+                            <h1 className="modal-title fs-5" id="exampleModalLabel">{name} {last_name}</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => {
                                 setIsModalOpen(!isModalOpen)
                             }}></button>
@@ -48,11 +48,11 @@ export const CardAdminProfessor = ({ name, id, last_name, years_of_experience, s
                             </div>
                             <div class="input-group mb-2">
                                 <span class="input-group-text">Especialista en:</span>
-                                <textarea class="form-control" aria-label="With textarea">{specialist_in}</textarea>
+                                <textarea class="form-control" aria-label="With textarea" value={store.singleProfDescr[0]?.specialist_in}></textarea>
                             </div>
                             <div class="input-group">
                                 <span class="input-group-text">Estudios realizados:</span>
-                                <textarea class="form-control" aria-label="With textarea">{studies}</textarea>
+                                <textarea class="form-control" aria-label="With textarea" value={store.singleProfDescr[0]?.studies}></textarea>
                             </div>
                         </div>
                         <div className="modal-footer">
