@@ -843,6 +843,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.catch(error => {
 						console.log(error)
+						console.log(profDescr)
 						return false
 					})
 			},

@@ -48,13 +48,13 @@ export const ElectInvRegReg = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {store.electronicinvoices?.electinvs && store.electronicinvoices?.electinvs.map(electronicInvoice =>
+                                {store.electronicinvoices?.electinvs && store.electronicinvoices?.electinvs.map((electronicInvoice, index) =>
                                 (<ListElectInvReg name={electronicInvoice.name}
                                     student={`${electronicInvoice.student_id.name}` + ' ' + `${electronicInvoice.student_id.last_name}`}
                                     cardID_type={electronicInvoice.cardID_type} number_cardID={electronicInvoice.number_cardID}
                                     email={electronicInvoice.email} phone_number={electronicInvoice.phone_number}
                                     province={electronicInvoice.province} canton={electronicInvoice.canton} district={electronicInvoice.district}
-                                    key={electronicInvoice.electronic_invoice_id} id={electronicInvoice.electronic_invoice_id} />)
+                                    key={electronicInvoice.electronic_invoice_id} id={index + 1} />)
                                 )}
                             </tbody>
                         </table>
