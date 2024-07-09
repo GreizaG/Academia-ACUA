@@ -32,33 +32,33 @@ export const CardAdminProfessor = ({ name, id, last_name, years_of_experience, s
             <div className="card-body">
                 <p className="card-title fs-6 mediumWeight text-center">{name} {last_name}</p>
             </div>
-            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style={{ borderRadius: '15px', border: '1px solid #5751e1' }}>
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="exampleModalLabel">{name} {last_name}</h1>
+                            <h1 className="modal-title fs-5 portraitSecundaryColor mediumWeight" id="exampleModalLabel">{name} {last_name}</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => {
                                 setIsModalOpen(!isModalOpen)
                             }}></button>
                         </div>
                         <div className="modal-body">
-                            <div class="input-group mb-2">
-                                <span class="input-group-text">Años de experiencia:</span>
-                                <textarea class="form-control" aria-label="With textarea" value={store.singleProfDescr[0]?.years_of_experience}></textarea>
+                            <div className="input-group mb-2">
+                                <span className="input-group-text mediumWeight portraitSecundaryColor" style={{ borderRadius: '15px 0px 0px 15px' }}>Años de experiencia:</span>
+                                <input type='text' className="form-control" aria-label="With input type='text'" style={{ borderRadius: '0px 15px 15px 0px' }} value={store.singleProfDescr[0]?.years_of_experience}></input>
                             </div>
-                            <div class="input-group mb-2">
-                                <span class="input-group-text">Especialista en:</span>
-                                <textarea class="form-control" aria-label="With textarea" value={store.singleProfDescr[0]?.specialist_in}></textarea>
+                            <div className="input-group mb-2">
+                                <span className="input-group-text mediumWeight portraitSecundaryColor" style={{ borderRadius: '15px 0px 0px 15px' }}>Especialista en:</span>
+                                <input type="text" className="form-control" aria-label="With textarea" style={{ borderRadius: '0px 15px 15px 0px' }} value={store.singleProfDescr[0]?.specialist_in}></input>
                             </div>
-                            <div class="input-group">
-                                <span class="input-group-text">Estudios realizados:</span>
-                                <textarea class="form-control" aria-label="With textarea" value={store.singleProfDescr[0]?.studies}></textarea>
+                            <div className="input-group">
+                                <span className="input-group-text mediumWeight portraitSecundaryColor" style={{ borderRadius: '15px 0px 0px 15px' }}>Estudios realizados:</span>
+                                <input type='text' className="form-control" aria-label="With input type='text'" style={{ borderRadius: '0px 15px 15px 0px' }} value={store.singleProfDescr[0]?.studies}></input>
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-outline-secondary" data-bs-dismiss="modal" onClick={() => {
-                                setIsModalOpen(!isModalOpen)
-                            }}>Close</button>
+                            <div className="button" onClick={() => { setIsModalOpen(!isModalOpen) }}>
+                                <MultiButtonNew color="purple" text="Cerrar" width="100" Btype='button' />
+                            </div>
                         </div>
                     </div>
                 </div>

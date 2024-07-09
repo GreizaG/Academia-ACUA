@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { showNotification } from "../utils/ShowNotification";
+import { MultiButtonNew } from "../component/MultibuttonNew";
 
 const ProfessorDescription = () => {
 
@@ -83,31 +84,40 @@ const ProfessorDescription = () => {
                     <h4 className="fw-lighter fst-italic">{store.singleProfessor.professor?.name} {store.singleProfessor.professor?.last_name}</h4>
                 </div>
             </div>
-            <form className="mt-4 p-4 rounded shadow mb-4" style={{ backgroundColor: '#e9ecef' }} onSubmit={handleSubmit}>
-                <div className="d-flex mb-3">
-                    <div className="me-2 flex-fill">
-                        <label className="form-label">Años de experiencia</label>
-                        <input className="form-control" value={formData.years_of_experience} placeholder="Años de experiencia" name="years_of_experience" onChange={handleInputChange} />
+            <form className="mt-4 p-4 bg-white registerForm d-flex flex-column justify-content-center mb-4" onSubmit={handleSubmit}>
+                <div className="row mb-3">
+                    <div className="col-lg-6 col-sm-12">
+                        <label className="form-label mediumWeight portraitSecundaryColor">Años de experiencia</label>
+                        <input className="form-control" style={{ borderRadius: '15px', }} value={formData.years_of_experience} placeholder="Años de experiencia" name="years_of_experience" onChange={handleInputChange} />
                     </div>
-                    <div className="ms-2 flex-fill">
-                        <label className="form-label">Especialista en</label>
-                        <input className="form-control" placeholder="Especialista en" value={formData.specialist_in} name="specialist_in" onChange={handleInputChange} />
+                    <div className="col-lg-6 col-sm-12">
+                        <label className="form-label mediumWeight portraitSecundaryColor">Especialista en</label>
+                        <input className="form-control" style={{ borderRadius: '15px', }} placeholder="Especialista en" value={formData.specialist_in} name="specialist_in" onChange={handleInputChange} />
                     </div>
                 </div>
                 <div className="row justify-content-center pb-3">
-                    <div className="col-xl-11">
-                        <textarea className="form-control" id="exampleFormControlTextarea1" value={formData.studies} rows="4" style={{ height: '200px', borderRadius: '15px' }} onChange={handleInputChange} name='studies'></textarea>
+                    <div className="col-lg-12">
+                        <textarea className="form-control" id="exampleFormControlTextarea1" placeholder="Comentanos un poco más sobre ti" value={formData.studies} rows="4" style={{ height: '200px', borderRadius: '15px' }} onChange={handleInputChange} name='studies'></textarea>
                     </div>
                 </div>
                 {/* <div className="me-2 mb-3 flex-fill">
-                    <label className="form-label">ID profesor</label>
+                    <label className="form-label mediumWeight portraitSecundaryColor">ID profesor</label>
                     <input className="form-control" disabled placeholder="ID professor" name="professor_id" value={formData.professor_id} onChange={handleInputChange} />
                 </div> */}
-                <div className="container-fluid justify-content-between">
-                    <button type="submit" className="btn btn-primary btn-sm">Guardar</button>
+                <div className="d-flex flex-row justify-content-around gap-4">
                     <Link to="/homeprofessor">
-                        <button type="button" className="btn btn-warning btn-sm ms-5">Cancelar</button>
+                        <MultiButtonNew color="purple" text="Cancelar" width="100" Btype='button' />
                     </Link>
+                    <button type="submit" class="btn btn-warning" id="multiButton" style={{
+                        backgroundColor: '#ffc224',
+                        boxShadow: '4px 6px 0px #3d3d3d',
+                        border: '1px solid #000000',
+                        color: '#161439',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        width: '100px',
+                        paddingBottom: '28px',
+                    }}>Guardar</button>
                 </div>
             </form>
         </div>

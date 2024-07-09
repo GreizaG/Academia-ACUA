@@ -35,19 +35,20 @@ export const HomeProfessor = () => {
                         <h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Cursos asignados</h4>
                     </div>
                 </div>
-                <div className="continer-fluid d-flex ps-5 ms-5">
-                    <div className="cardProfessor" style={{ width: '18rem' }}>
-                        <table className="table table-hover" style={{ width: '600px' }}>
+                <div className="container-fluid d-flex pb-4">
+                    <div className="d-flex flex-row container justify-content-center bg-white registerForm" style={{ width: '600px' }}>
+                        <table className="table table-hover">
                             <thead>
                                 <tr>
                                     <th className="text-center" scope="col">N°</th>
                                     <th className="text-center" scope="col">Nombre del curso</th>
                                     <th className="text-center" scope="col">Nombre del estudiante</th>
+                                    <th className="text-center" scope="col">Modalidad</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {store.professorCourses?.professor_courses && store.professorCourses?.professor_courses.map((professorCourse, index) =>
-                                    (<ListProfRegCourses course={professorCourse.course_name} student={`${professorCourse.student_name}` + ' ' + `${professorCourse.student_last_name}`} key={professorCourse.new_course_id} id={index + 1} />)
+                                    (<ListProfRegCourses course={professorCourse.course_name} student={`${professorCourse.student_name}` + ' ' + `${professorCourse.student_last_name}`} key={professorCourse.new_course_id} modality={professorCourse.modality_name} id={index + 1} />)
                                 )}
                             </tbody>
                         </table>

@@ -29,7 +29,7 @@ export const ProfNextPayReg = () => {
                         <h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Información bancaria profesores</h4>
                     </div>
                 </div>
-                <div className="continer-fluid d-flex justify-content-center">
+                <div className="container-fluid d-flex justify-content-center">
                     <div className="d-flex flex-row container justify-content-center">
                         <table className="table table-hover" style={{ width: '600px' }}>
                             <thead>
