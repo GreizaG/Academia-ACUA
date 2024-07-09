@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { NavbarACUA } from '../component/NavbarACUA';
 import { showNotification } from "../utils/ShowNotification";
@@ -6,6 +6,10 @@ import { Context } from "../store/appContext";
 import { MultiButtonNew } from "../component/MultibuttonNew";
 
 export const SignUp = () => {
+  const [secondPassword, setSecondPassword] = useState('');
+  const [colorBorder, setColorBorder] = useState('1px solid #ced4da')
+  const [errorMessage, setErrorMessage] = useState('');
+  const [errorFlag, setErrorFlag] = useState(false);
   const { actions } = useContext(Context);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -26,6 +30,29 @@ export const SignUp = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  const handlePasswords = (e) => {
+    setSecondPassword(e.target.value);
+  };
+
+  useEffect(() => {
+    const password = secondPassword;
+    if (formData.password == '' && password == '') {
+      setColorBorder('1px solid #ced4da')
+    }
+    else if (formData.password != password) {
+      setColorBorder('1px solid red');
+      setErrorMessage('Las contraseñas no coinciden')
+      setErrorFlag(true)
+    } else if (formData.password.trim().length < 6) {
+      setErrorMessage('Las contraseña debe tener mas de 6 caracteres')
+    }
+    else {
+      setColorBorder('1px solid green');
+      setErrorMessage('')
+      setErrorFlag(false)
+    }
+  }, [secondPassword, formData.password]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -157,27 +184,28 @@ export const SignUp = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                style={{ borderRadius: '15px' }}
+                style={{ borderRadius: '15px', border: `${colorBorder}` }}
                 required
               />
             </div>
             <div className="col-lg-6 col-sm-12">
               <label className="form-label mediumWeight portraitSecundaryColor">Confirmar Contraseña</label>
               <input
+                onChange={handlePasswords}
                 type="password"
                 className="form-control"
                 placeholder="Confirmar Contraseña"
-                style={{ borderRadius: '15px' }}
+                style={{ borderRadius: '15px', border: `${colorBorder}` }}
                 required
               />
             </div>
           </div>
-
+          <div className="mensajeError" style={{ color: 'red' }}>{errorMessage}</div>
           <div className="d-flex flex-row justify-content-center gap-4 mb-3 mt-3">
             <Link to='/'>
               <MultiButtonNew color="purple" text="Atras" width="100" Btype='button' />
             </Link>
-            <div onClick={handleSubmit}>
+            <div onClick={handleSubmit} disabled={errorFlag}>
               <MultiButtonNew color="orange" text="Enviar" width="100" Btype='button' />
             </div>
           </div>
