@@ -16,7 +16,7 @@ import { MultiButtonNew } from '../component/MultibuttonNew'
 const HomeACUA = () => {
   const { actions, store } = useContext(Context);
 
-  useEffect(() => {actions.getProfessorDescription()}, [])
+  useEffect(() => { actions.getProfessorDescription() }, [])
 
   console.log(store.professors);
   console.log(store.profDescr.professor_description);
@@ -24,7 +24,7 @@ const HomeACUA = () => {
   return (
     <React.Fragment>
       <NavbarACUA />
-      <div className='bannerAcua container-fluid d-flex justify-content-center align-items-end'>
+      <div className='bannerAcua container-fluid'>
         <div className="portraitBox">
           <div className="acuaPortraitText portraitPrimaryColor" style={{ zIndex: '3' }}>
             <div className="boxPoints">

@@ -63,6 +63,18 @@ body{
 }
 
 @media screen and (max-width: 1250px) {
+
+    .bannerAcua{
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+    
+    .acuaPortraitText{
+        position: relative;
+        top: 30px;
+    }
+
     .externalLoginButton{
         display: none;
     }
@@ -78,6 +90,7 @@ body{
     #bannerTitle{
         font-size: 100px;
         margin: auto;
+
     }
     .pointsUpper{
         position: absolute;
@@ -107,7 +120,20 @@ body{
     }
 }
 
-@media screen and (min-width: 1280px){
+@media screen and (min-width: 1250px){
+
+    .bannerAcua{
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    .acuaPortraitText{
+        position: relative;
+        top: 40px;
+        left: 50px
+    }
+
     .liLoginButton{
         display: none;
     }
@@ -117,12 +143,11 @@ body{
     
     .bannerImageSize{
         z-index: 1;
-        height: 370px;
+        height: 390px;
         object-fit: cover;
-        /*
-        bottom: 145px;
-        left: 37%;
-        */
+        position: relative;
+        bottom: 0px;
+        left: -10px;
     }
     #bannerTitle{
         font-size: 130px;
@@ -154,6 +179,19 @@ body{
 }
 
 @media screen and (min-width: 2048px){
+
+    .bannerAcua{
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    .acuaPortraitText{
+        position: relative;
+        top: 40px;
+        left: 40px;
+    }
+
     .liLoginButton{
         display: none;
     }
@@ -237,10 +275,6 @@ body{
     color: #5751e1;
 }
 
-.acuaPortraitText{
-    position: relative;
-}
-
 .imageBox{
     position: relative;
 }
@@ -258,7 +292,7 @@ body{
 }
 
 #secondCard{
-    top: 70px;
+    top: 40px;
     left: 50px;
     height: 105px;
     position: absolute;
@@ -273,7 +307,7 @@ body{
     position: absolute;
     height: 80px;
     left: 220px;
-    top: 100px;
+    top: 60px;
     transform: rotate(200deg);
 }
 
