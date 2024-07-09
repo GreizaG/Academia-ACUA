@@ -22,6 +22,23 @@ export const ContactForm = () => {
         console.log(formData)
     }
 
+    // const handleSubmit = async () => {
+    //     // event.preventDefault();
+    //     if (!validateEmail(formData.email)) {
+    //         showNotification("Por favor, introduce una dirección de correo electrónico válida.", "error");
+    //         return;
+    //     }
+    //     const isCreated = await actions.newContactForm(formData)
+    //     console.log(isCreated)
+    //     if (isCreated) {
+    //         actions.getProfessors()
+    //         showNotification("Profesor creado con éxito")
+    //         navigate("/homeadmin")
+    //     } else {
+    //         showNotification("Ocurrió un error al tratar de agregar un profesor", "error")
+    //     }
+    // }
+
     return (
         <React.Fragment>
             <div className="contactForm">
