@@ -55,11 +55,11 @@ export const CardAdminProfessor = ({ name, id, last_name, years_of_experience, s
                                 <input type='text' className="form-control" aria-label="With input type='text'" style={{ borderRadius: '0px 15px 15px 0px' }} value={store.singleProfDescr[0]?.studies}></input>
                             </div>
                         </div>
-                        <div className="modal-footer">
+                        {/* <div className="modal-footer">
                             <div className="button" onClick={() => { setIsModalOpen(!isModalOpen) }}>
                                 <MultiButtonNew color="purple" text="Cerrar" width="100" Btype='button' />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

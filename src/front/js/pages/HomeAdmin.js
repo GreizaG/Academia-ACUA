@@ -157,7 +157,7 @@ export const HomeAdmin = () => {
 							<>
 								{store.students && store.students.map((student) => {
 									return (
-										<CardAdminProfessor name={student.name} last_name={student.last_name} key={student.number_cardID} id={student.id} />
+										<CardAdminStudent name={student.name} last_name={student.last_name} key={student.number_cardID} id={student.id} />
 									)
 								})}
 							</>
