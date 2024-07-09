@@ -38,14 +38,36 @@ export const HomeAdmin = () => {
 						<h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Profesores</h4>
 					</div>
 				</div>
-				<div className="container d-flex ms-5 ps-5 gap-4 flex-wrap mb-4">
-					<>
-						{store.professors && store.professors.map((professor) => {
-							return (
-								<CardAdminProfessor name={professor.name} last_name={professor.last_name} key={professor.number_cardID} id={professor.id} />
-							)
-						})}
-					</>
+				{/*Menu tab nuevo */}
+				<nav>
+					<ul className="nav nav-tabs menuTabs mb-3 justify-content-center" id="myTab" role="tablist">
+						<li className="nav-item" role="presentation">
+							<button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
+								<i className="fa-solid fa-table-cells portraitSecundaryColor"></i>
+							</button>
+						</li>
+						<li className="nav-item" role="presentation">
+							<button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
+								<i className="fa-solid fa-list portraitSecundaryColor"></i>
+							</button>
+						</li>
+					</ul>
+				</nav>
+				{/*Contenido de los tabs*/}
+				<div class="tab-content" id="nav-tabContent">
+					<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+						<div className="container d-flex ms-5 ps-5 gap-4 flex-wrap mb-4">
+							<>
+								{store.professors && store.professors.map((professor) => {
+									return (
+										<CardAdminProfessor name={professor.name} last_name={professor.last_name} key={professor.number_cardID} id={professor.id} />
+									)
+								})}
+							</>
+						</div>
+					</div>
+					{/* Tab with professor list */}
+					<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">List</div>
 				</div>
 				<div className="container-fluid d-flex justify-content-center my-3">
 					<Link to="/adminprofreg" className="text-decoration-none">
@@ -84,18 +106,39 @@ export const HomeAdmin = () => {
 						<h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Estudiantes</h4>
 					</div>
 				</div>
-				<div className="container d-flex ms-5 ps-5 gap-4 flex-wrap mb-4">
-
-					{/* <CarouselAdminStudents array={store.students} /> */}
-					<>
-						{store.students && store.students.map((student) => {
-							return (
-								<CardAdminProfessor name={student.name} last_name={student.last_name} key={student.number_cardID} id={student.id} />
-							)
-						})}
-					</>
-
+				{/* Menu tab nuevo/> */}
+				<nav>
+					<ul className="nav nav-tabs menuTabs mb-3 justify-content-center" id="myTab" role="tablist">
+						<li className="nav-item" role="presentation">
+							<button class="nav-link active" id="studCard-tab" data-bs-toggle="tab" data-bs-target="#nav-studCard-tab" type="button" role="tab" aria-controls="nav-studCard" aria-selected="true">
+								<i className="fa-solid fa-table-cells portraitSecundaryColor"></i>
+							</button>
+						</li>
+						<li className="nav-item" role="presentation">
+							<button class="nav-link" id="nav-studList" data-bs-toggle="tab" data-bs-target="#nav-studList-tab" type="button" role="tab" aria-controls="nav-studList" aria-selected="false">
+								<i className="fa-solid fa-list portraitSecundaryColor"></i>
+							</button>
+						</li>
+					</ul>
+				</nav>
+				{/*Contenido de los tabs*/}
+				<div class="tab-content" id="nav-tabContent">
+					<div class="tab-pane fade show active" id="nav-studCard-tab" role="tabpanel" aria-labelledby="nav-studCard-tab" tabindex="0">
+						<div className="container d-flex ms-5 ps-5 gap-4 flex-wrap mb-4">
+							{/* <CarouselAdminStudents array={store.students} /> */}
+							<>
+								{store.students && store.students.map((student) => {
+									return (
+										<CardAdminProfessor name={student.name} last_name={student.last_name} key={student.number_cardID} id={student.id} />
+									)
+								})}
+							</>
+						</div>
+					</div>
+					{/* Tab with professor list */}
+					<div class="tab-pane fade" id="nav-studList-tab" role="tabpanel" aria-labelledby="nav-studList-tab" tabindex="0">List</div>
 				</div>
+
 				<div className="container-fluid d-flex my-3 justify-content-center">
 					<Link to="/adminstudreg" className="text-decoration-none">
 						<MultiButton color='purple' text='Agregar nuevo estudiante' width='230' />

@@ -31,8 +31,8 @@ export const ElectInvRegReg = () => {
                     </div>
                 </div>
                 <div className="continer-fluid d-flex justify-content-center">
-                    <div className="d-flex flex-row container justify-content-center">
-                        <table className="table table-hover" style={{ width: '1200px' }}>
+                    <div className="d-flex flex-row container justify-content-center registerForm">
+                        <table className="table table-hover" style={{ width: '1300px' }}>
                             <thead>
                                 <tr>
                                     <th className="text-center" scope="col">N°</th>
