@@ -37,7 +37,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			profNextPay: {},
 
-			profDescr: {}
+			profDescr: {},
+
+			contactForms: [],
 
 			// isAdministratorCreated: false,
 			// isProfessorCreated: false,
@@ -530,6 +532,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 			},
 
+
+
 			// Agregar estudiante
 			// actions.js
 			newStudent: async (formData) => {
@@ -585,6 +589,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			newContactForm: (data) => {
+				const actions = getActions()
+				return fetch(process.env.BACKEND_URL + "/api/contactform/new", {
+					method: "POST",
+					body: JSON.stringify(data),
+					headers: { "Content-Type": "application/json" }
+				})
+					.then(response => {
+						console.log(response)
+						if (response.ok) {
+							return response.json()
+						}
+						throw new Error("Ocurrio un error creando el form")
+					})
+					.then(data => {
+						console.log(data)
+
+						return true
+					})
+					.catch(error => {
+						console.log(error)
+						return false
+					})
+			}
+			,
+
+			getContactForms: () => {
+				fetch(process.env.BACKEND_URL + "/api/contactform/")
+					.then(response => {
+						return response.json();
+					})
+					.then((data) => {
+						console.log("Data:", data)
+						setStore({ contactForms: data.contact_forms })
+					})
+					.catch((error) => {
+						console.log(error)
+					})
+			},
 
 			// Agregar curso
 			newCourse: (data) => {

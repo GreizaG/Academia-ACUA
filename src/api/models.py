@@ -268,7 +268,8 @@ class ContactForm(db.Model):
             "id":  self.id,
             "user_name": self.body_name,
             "user_email" : self.body_email,
-            "user_requeriment" : self.body_requeriment
+            "user_requeriment" : self.body_requeriment,
+            "user_text": self.body_text,
         }
     
 class ProfessorNextPayment(db.Model):

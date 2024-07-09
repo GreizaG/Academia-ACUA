@@ -502,6 +502,15 @@ def new_contact_form():
 
     return jsonify({"new_contact_form": new_contact_form.serialize()}), 201
 
+@app.route('/api/contactform', methods=['GET'])
+def get_all_contactforms():
+    all_contact_forms = ContactForm.query.all()
+    contact_forms_serialized = []
+    for form in all_contact_forms:
+        contact_forms_serialized.append(form.serialize())
+        print(contact_forms_serialized)
+    return jsonify({"contact_forms": contact_forms_serialized}), 200
+
 @app.route('/api/createadministrator', methods=['POST'])
 def new_admin():
     body = request.get_json(silent=True)

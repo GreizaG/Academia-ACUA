@@ -9,6 +9,7 @@ import { CardAdminStudent } from "../component/Card/CardAdminStudent";
 import { Context } from "../store/appContext";
 import { ProfessorList } from "../component/Card/ProfessorList";
 import { StudentList } from "../component/Card/StudentList";
+import { ListContactForm } from "../component/Card/ListContactForm";
 
 
 export const HomeAdmin = () => {
@@ -23,8 +24,7 @@ export const HomeAdmin = () => {
 	useEffect(() => {
 		console.log("Se ejecuta por la dependencia")
 		actions.getSingleAdmin()
-		console.log(store.singleAdministrator)
-		console.log(store.professors)
+		console.log(store.contactForms)
 	}, [store.professors])
 
 
@@ -158,7 +158,7 @@ export const HomeAdmin = () => {
 							<>
 								{store.students && store.students.map((student) => {
 									return (
-										<CardAdminProfessor name={student.name} last_name={student.last_name} key={student.number_cardID} id={student.id} />
+										<CardAdminStudent name={student.name} last_name={student.last_name} key={student.number_cardID} id={student.id} />
 									)
 								})}
 							</>
@@ -193,12 +193,35 @@ export const HomeAdmin = () => {
 							</div>
 						</div>
 					</div>
+					<div className="container-fluid d-flex my-3 justify-content-center">
+						<Link to="/adminstudreg" className="text-decoration-none">
+							<MultiButton color='purple' text='Agregar nuevo estudiante' width='230' />
+						</Link>
+					</div>
 				</div>
-
-				<div className="container-fluid d-flex my-3 justify-content-center">
-					<Link to="/adminstudreg" className="text-decoration-none">
-						<MultiButton color='purple' text='Agregar nuevo estudiante' width='230' />
-					</Link>
+				<div className="d-flex align-content-center justify-content-center mb-3 mt-3 py-4 jumbo rounded-3">
+					<div className="container-fluid align-content-center">
+						<h4 className="py-2 ps-5 ms-5 fs-3 fw-bold">Mensajes recibidos</h4>
+					</div>
+				</div>
+				<div className="continer-fluid d-flex justify-content-center">
+					<div className="cardProfessor bg-white registerForm d-flex" style={{ width: '60vw' }}>
+						<table className="table table-hover">
+							<thead className="text-center">
+								<tr>
+									<th scope="col">N°</th>
+									<th scope="col">Nombre del usuario</th>
+									<th scope="col">Email</th>
+									<th scope="col">Mensaje</th>
+								</tr>
+							</thead>
+							<tbody>
+								{store.contactForms && store.contactForms.map(form =>
+									(<ListContactForm user_name={form.user_name} email={form.user_email} id={form.id} message={form.user_text} />)
+								)}
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</React.Fragment>
