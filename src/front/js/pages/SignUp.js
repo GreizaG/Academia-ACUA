@@ -44,8 +44,9 @@ export const SignUp = () => {
       setColorBorder('1px solid red');
       setErrorMessage('Las contraseñas no coinciden')
       setErrorFlag(true)
-    } else if (formData.password.trim().length < 6) {
-      setErrorMessage('Las contraseña debe tener mas de 6 caracteres')
+    } else if (formData.password.trim().length < 5) {
+      setErrorMessage('Las contraseña debe tener mas de 5 caracteres')
+      setErrorFlag(true)
     }
     else {
       setColorBorder('1px solid green');
@@ -57,11 +58,16 @@ export const SignUp = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const isCreated = await actions.newStudent(formData);
-    if (isCreated) {
-      showNotification("Estudiante registrado con éxito");
-      navigate("/login");
-    } else {
-      showNotification("Ocurrió un error al registrarse", "error");
+    if (errorFlag) {
+      showNotification("Hay un problema con tu contraseña", "error");
+    }
+    else {
+      if (isCreated) {
+        showNotification("Estudiante registrado con éxito");
+        navigate("/login");
+      } else {
+        showNotification("Ocurrió un error al registrarse", "error");
+      }
     }
   };
 

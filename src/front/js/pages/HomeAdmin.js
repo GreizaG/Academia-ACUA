@@ -24,6 +24,7 @@ export const HomeAdmin = () => {
 		console.log("Se ejecuta por la dependencia")
 		actions.getSingleAdmin()
 		console.log(store.singleAdministrator)
+		console.log(store.professors)
 	}, [store.professors])
 
 

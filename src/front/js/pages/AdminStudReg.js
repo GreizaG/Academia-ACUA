@@ -115,7 +115,7 @@ const AdminStudReg = () => {
                             <label className="form-label mediumWeight portraitSecundaryColor fs-6 mb-3">Tipo de identificación</label><br></br>
                             <select name="cardID_type" onChange={handleInputChange} style={{ borderRadius: '13px' }}>
                                 <option value="value1" defaultValue disabled>-----------</option>
-                                <option value="Cedula Naciona">Cedula Nacional</option>
+                                <option value="Cedula Nacional">Cedula Nacional</option>
                                 <option value="DIMEX">DIMEX</option>
                                 <option value="Pasaport">Pasaporte</option>
                             </select>
