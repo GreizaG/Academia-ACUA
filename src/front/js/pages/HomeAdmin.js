@@ -7,6 +7,8 @@ import { CardAdminProfessor } from "../component/Card/CardAdminProfessor";
 import { ListAdminCourse } from "../component/Card/ListAdminCourse";
 import { CardAdminStudent } from "../component/Card/CardAdminStudent";
 import { Context } from "../store/appContext";
+import { ProfessorList } from "../component/Card/ProfessorList";
+import { StudentList } from "../component/Card/StudentList";
 
 
 export const HomeAdmin = () => {
@@ -66,8 +68,34 @@ export const HomeAdmin = () => {
 							</>
 						</div>
 					</div>
-					{/* Tab with professor list */}
-					<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">List</div>
+					<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+						<div className="container d-flex flex-column justify-content-center bg-white registerForm" style={{ width: 'fit-content' }}>
+							<div className="d-flex flex-row container justify-content-center">
+								<table className="table table-hover" style={{ width: '55vw' }}>
+									<thead>
+										<tr>
+											<th className="text-center" scope="col">N°</th>
+											<th className="text-center" >Nombre</th>
+											<th className="text-center" >Apellido</th>
+											<th className="text-center" >Tipo identificación</th>
+											<th className="text-center" >N° identificación</th>
+											<th className="text-center" >N° teléfono</th>
+											<th className="text-center" >Provincia</th>
+											<th className="text-center" >Canton</th>
+											<th className="text-center" >Distrito</th>
+										</tr>
+									</thead>
+									<tbody>
+										{store.professors && store.professors.map((professor) => {
+											return (
+												<ProfessorList name={professor.name} last_name={professor.last_name} cardID_type={professor.cardID_type} number_cardID={professor.number_cardID} phone_number={professor.phone_number} province={professor.province} canton={professor.canton} district={professor.district} key={professor.number_cardID} id={professor.id} />
+											)
+										})}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div className="container-fluid d-flex justify-content-center my-3">
 					<Link to="/adminprofreg" className="text-decoration-none">
@@ -136,7 +164,34 @@ export const HomeAdmin = () => {
 						</div>
 					</div>
 					{/* Tab with professor list */}
-					<div class="tab-pane fade" id="nav-studList-tab" role="tabpanel" aria-labelledby="nav-studList-tab" tabindex="0">List</div>
+					<div class="tab-pane fade" id="nav-studList-tab" role="tabpanel" aria-labelledby="nav-studList-tab" tabindex="0">
+						<div className="container d-flex flex-column justify-content-center bg-white registerForm" style={{ width: 'fit-content' }}>
+							<div className="d-flex flex-row container justify-content-center">
+								<table className="table table-hover" style={{ width: '55vw' }}>
+									<thead>
+										<tr>
+											<th className="text-center" scope="col">N°</th>
+											<th className="text-center" >Nombre</th>
+											<th className="text-center" >Apellido</th>
+											<th className="text-center" >Tipo identificación</th>
+											<th className="text-center" >N° identificación</th>
+											<th className="text-center" >N° teléfono</th>
+											<th className="text-center" >Provincia</th>
+											<th className="text-center" >Canton</th>
+											<th className="text-center" >Distrito</th>
+										</tr>
+									</thead>
+									<tbody>
+										{store.students && store.students.map((student) => {
+											return (
+												<StudentList name={student.name} last_name={student.last_name} cardID_type={student.cardID_type} number_cardID={student.number_cardID} phone_number={student.phone_number} province={student.province} canton={student.canton} district={student.district} key={student.number_cardID} id={student.id} />
+											)
+										})}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<div className="container-fluid d-flex my-3 justify-content-center">
